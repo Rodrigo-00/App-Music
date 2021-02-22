@@ -7,7 +7,7 @@ import umu.tds.dominio.Usuario;
 import umu.tds.dominio.CatalogoUsuarios;
 //Segundo comentario 456456
 public final class Controlador {
-
+//Tercera comprobacion 
 	private Usuario usuarioActual;
 	private static Controlador unicaInstancia;
 	private FactoriaDAO factoria;
