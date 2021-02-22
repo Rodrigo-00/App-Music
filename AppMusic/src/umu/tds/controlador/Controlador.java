@@ -5,7 +5,7 @@ import umu.tds.dao.DAOException;
 import umu.tds.dao.FactoriaDAO;
 import umu.tds.dominio.Usuario;
 import umu.tds.dominio.CatalogoUsuarios;
-//Segundo comentario
+//Segundo comentario 456456
 public final class Controlador {
 
 	private Usuario usuarioActual;
