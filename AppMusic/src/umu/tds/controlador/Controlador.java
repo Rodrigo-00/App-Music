@@ -1,11 +1,11 @@
 package umu.tds.controlador;
-//Comprueba si cambia
+//Comprueba si cambia 
 import umu.tds.dao.UsuarioDAO;
 import umu.tds.dao.DAOException;
 import umu.tds.dao.FactoriaDAO;
 import umu.tds.dominio.Usuario;
 import umu.tds.dominio.CatalogoUsuarios;
-//otro
+//Segundo comentario
 public final class Controlador {
 
 	private Usuario usuarioActual;
