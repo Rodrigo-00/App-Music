@@ -6,10 +6,10 @@ import umu.tds.dominio.Usuario;
 
 public interface IAdaptadorUsuarioDAO {
 	
-	void create(Usuario asistente);
-	boolean delete(Usuario asistente);
-	void updatePerfil(Usuario asistente);
-	Usuario get(int id);
-	List<Usuario> getAll();
+	public void create(Usuario asistente);	//Será mas bien registrar cliente no?
+	public boolean delete(Usuario asistente);
+	public void updatePerfil(Usuario asistente);
+	public Usuario get(int id);
+	public List<Usuario> getAll();
 	
 }

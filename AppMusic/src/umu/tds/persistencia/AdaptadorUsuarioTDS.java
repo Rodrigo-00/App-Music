@@ -29,6 +29,15 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 	private static final String FECHA_NACIMIENTO = "fechaNacimiento";
 	
 	private ServicioPersistencia servPersistencia;
+	
+	private static AdaptadorUsuarioTDS unicaInstancia;
+
+	public static AdaptadorUsuarioTDS getUnicaInstancia() { // patron singleton
+		if (unicaInstancia == null)
+			return new AdaptadorUsuarioTDS();
+		else
+			return unicaInstancia;
+	}
 
 	public AdaptadorUsuarioTDS() {
 		servPersistencia = FactoriaServicioPersistencia.getInstance().getServicioPersistencia();
