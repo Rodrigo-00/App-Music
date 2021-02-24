@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import umu.tds.dao.DAOException;
-import umu.tds.dao.FactoriaDAO;
+import umu.tds.persistencia.FactoriaDAO;
 
 public class CatalogoUsuarios {
 	private static CatalogoUsuarios unicaInstancia;

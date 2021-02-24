@@ -2,8 +2,8 @@ package umu.tds.controlador;
 //Comprueba si cambia
 import umu.tds.dao.UsuarioDAO;
 import umu.tds.dao.DAOException;
-import umu.tds.dao.FactoriaDAO;
 import umu.tds.dominio.Usuario;
+import umu.tds.persistencia.FactoriaDAO;
 import umu.tds.dominio.CatalogoUsuarios;
 //Segundo comentario 456456
 public final class Controlador {

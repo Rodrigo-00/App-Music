@@ -1,5 +1,7 @@
 package umu.tds.dao;
 
+import umu.tds.persistencia.FactoriaDAO;
+
 /** 
  * Factoria concreta DAO para el Servidor de Persistencia de la asignatura TDS.
  * 
