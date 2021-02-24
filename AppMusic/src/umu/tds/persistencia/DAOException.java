@@ -1,10 +1,9 @@
-package umu.tds.dao;
+package umu.tds.persistencia;
 
 @SuppressWarnings("serial")
 public class DAOException extends Exception {
 
-	public DAOException(final String mensaje) {
+	public DAOException(String mensaje) {
 		super(mensaje);
 	}
-
 }
