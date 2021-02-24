@@ -1,4 +1,4 @@
-package umu.tds;
+package umu.tds.gui;
 //comprobar ejemplo CAMBIO 3
 import java.awt.EventQueue;
 

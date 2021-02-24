@@ -1,4 +1,4 @@
-package umu.tds;
+package umu.tds.gui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
