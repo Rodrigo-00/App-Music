@@ -1,10 +1,11 @@
 package umu.tds.dominio;
 
 import java.util.HashMap;
+
 import java.util.LinkedList;
 import java.util.List;
 
-import umu.tds.dao.DAOException;
+import umu.tds.persistencia.DAOException;
 import umu.tds.persistencia.FactoriaDAO;
 
 public class CatalogoUsuarios {

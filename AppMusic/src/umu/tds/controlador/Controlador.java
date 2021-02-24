@@ -1,5 +1,5 @@
 package umu.tds.controlador;
-import umu.tds.dao.DAOException;
+import umu.tds.persistencia.DAOException;
 import umu.tds.dominio.Usuario;
 import umu.tds.persistencia.IAdaptadorUsuarioDAO;
 import umu.tds.persistencia.FactoriaDAO;

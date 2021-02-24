@@ -189,4 +189,10 @@ public class VentanaLogin {
 		return frmAppmusic;
 	}
 	
+	public void mostrarVentana() {
+		frmAppmusic.setLocationRelativeTo(null);
+		frmAppmusic.setVisible(true);
+	}
+
+	
 }
