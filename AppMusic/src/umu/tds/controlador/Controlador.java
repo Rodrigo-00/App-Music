@@ -1,12 +1,9 @@
 package umu.tds.controlador;
-import umu.tds.persistencia.DAOException;
-import umu.tds.dominio.Usuario;
-import umu.tds.persistencia.IAdaptadorUsuarioDAO;
-import umu.tds.persistencia.FactoriaDAO;
-import umu.tds.dominio.CatalogoUsuarios;
-//Segundo comentario 456456
+import umu.tds.dominio.*;
+import umu.tds.persistencia.*;
+
 public final class Controlador {
-//Tercera comprobacion 
+ 
 	private Usuario usuarioActual;
 	private static Controlador unicaInstancia;
 	private FactoriaDAO factoria;
