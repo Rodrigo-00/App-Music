@@ -1,10 +1,10 @@
-package umu.tds.dao;
+package umu.tds.persistencia;
 
 import java.util.List;
 
 import umu.tds.dominio.Usuario;
 
-public interface UsuarioDAO {
+public interface IAdaptadorUsuarioDAO {
 	
 	void create(Usuario asistente);
 	boolean delete(Usuario asistente);

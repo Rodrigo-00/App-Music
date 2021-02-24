@@ -1,4 +1,4 @@
-package umu.tds.dao;
+package umu.tds.persistencia;
 
 import java.util.ArrayList;
 
@@ -17,7 +17,7 @@ import beans.Propiedad;
  * Clase que implementa el Adaptador DAO concreto de Usuario para el tipo H2.
  * 
  */
-public final class TDSUsuarioDAO implements UsuarioDAO {
+public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 
 	private static final String USUARIO = "Usuario";
 	
@@ -30,7 +30,7 @@ public final class TDSUsuarioDAO implements UsuarioDAO {
 	
 	private ServicioPersistencia servPersistencia;
 
-	public TDSUsuarioDAO() {
+	public AdaptadorUsuarioTDS() {
 		servPersistencia = FactoriaServicioPersistencia.getInstance().getServicioPersistencia();
 	}
 
