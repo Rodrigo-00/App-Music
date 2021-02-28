@@ -49,11 +49,11 @@ public final class Controlador {
 	}
 
 	public boolean esUsuarioRegistrado(String login) {
-		return CatalogoUsuarios.getUnicaInstancia().getUsuario(login) != null;
+		return catalogoUsuarios.getUsuario(login) != null;
 	}
 
 	public boolean loginUsuario(String nombre, String password) {
-		Usuario usuario = CatalogoUsuarios.getUnicaInstancia().getUsuario(nombre);
+		Usuario usuario = catalogoUsuarios.getUsuario(nombre);
 		if (usuario != null && usuario.getPassword().equals(password)) {
 			this.usuarioActual = usuario;
 			return true;
@@ -69,7 +69,7 @@ public final class Controlador {
 
 		adaptadorUsuario.registrarUsuario(usuario);
 
-		CatalogoUsuarios.getUnicaInstancia().addUsuario(usuario); 
+		catalogoUsuarios.addUsuario(usuario); 
 		return true;
 	}
 
@@ -79,7 +79,7 @@ public final class Controlador {
 
 		adaptadorUsuario.delete(usuario);
 
-		CatalogoUsuarios.getUnicaInstancia().removeUsuario(usuario);
+		catalogoUsuarios.removeUsuario(usuario);
 		return true;
 	}
 
