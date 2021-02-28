@@ -28,7 +28,7 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 	private static final String PASSWORD = "password";
 	private static final String FECHA_NACIMIENTO = "fechaNacimiento";
 	
-	private ServicioPersistencia servPersistencia;
+	private static ServicioPersistencia servPersistencia;
 	
 	private static AdaptadorUsuarioTDS unicaInstancia;
 
@@ -39,7 +39,7 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 			return unicaInstancia;
 	}
 
-	public AdaptadorUsuarioTDS() {
+	private AdaptadorUsuarioTDS() {
 		servPersistencia = FactoriaServicioPersistencia.getInstance().getServicioPersistencia();
 	}
 
