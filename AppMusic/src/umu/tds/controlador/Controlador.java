@@ -1,5 +1,6 @@
 package umu.tds.controlador;
 import umu.tds.dominio.*;
+import umu.tds.modelo.Usuario;
 import umu.tds.persistencia.*;
 
 public final class Controlador {

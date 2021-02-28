@@ -5,15 +5,18 @@ import java.time.LocalDate;
 public class Cancion {
 
 	private static final int REPRODUCCIONESINICIALES = 0;
+	private static final int IDINICIAL = 0;
 	
 	private String titulo;
 	private String interprete;
 	private String estilo;
 	private String rutaFichero;
 	private int numReproducciones;
+	private int id;
 	
 
 	public Cancion(String titulo, String interprete, String estilo, String rutaFichero) {
+		id=IDINICIAL;
 		this.titulo = titulo;
 		this.interprete = interprete;
 		this.estilo = estilo;
@@ -22,6 +25,16 @@ public class Cancion {
 	}
 	
 	
+	public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
 	public String getInterprete() {
 		return interprete;
 	}

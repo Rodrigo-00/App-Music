@@ -2,7 +2,7 @@ package umu.tds.persistencia;
 
 import java.util.List;
 
-import umu.tds.dominio.Usuario;
+import umu.tds.modelo.Usuario;
 
 public interface IAdaptadorUsuarioDAO {
 	

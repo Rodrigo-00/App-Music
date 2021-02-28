@@ -1,58 +1,80 @@
 package umu.tds.modelo;
 
-import java.time.LocalDate;
-
 public class Usuario {
-	private String usuario, clave;
-	private String nombre, apellido;
-	private String mail;
-	private LocalDate fecha;
 	
-	public Usuario(String usuario, String clave, String nombre, String apellido, String mail, LocalDate fecha) {
-		
-		setUsuario(usuario);
-		setClave(clave);
-		setNombre(nombre);
-		setApellido(apellido);
-		setMail(mail);
-		setFecha(fecha);
-		
+	private int id;
+	private String nombre;
+	private String apellidos;
+	private String email;
+	private String login;
+	private String password;
+	private String fechaNacimiento;
+
+	public Usuario(String nombre, String apellidos, String email, String login, String password,
+			String fechaNacimiento) {
+		this.id = 0;
+		this.nombre = nombre;
+		this.apellidos = apellidos;
+		this.email = email;
+		this.login = login;
+		this.password = password;
+		this.fechaNacimiento = fechaNacimiento;
 	}
-	
-	public String getUsuario() {
-		return usuario;
+
+	public int getId() {
+		return id;
 	}
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
+
+	public void setId(int id) {
+		this.id = id;
 	}
-	public String getClave() {
-		return clave;
-	}
-	public void setClave(String clave) {
-		this.clave = clave;
-	}
+
 	public String getNombre() {
 		return nombre;
 	}
+
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public String getApellido() {
-		return apellido;
+
+	public String getApellidos() {
+		return apellidos;
 	}
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
+
+	public void setApellidos(String apellidos) {
+		this.apellidos = apellidos;
 	}
-	public String getMail() {
-		return mail;
+
+	public String getEmail() {
+		return email;
 	}
-	public void setMail(String mail) {
-		this.mail = mail;
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
-	public LocalDate getFecha() {
-		return fecha;
+
+	public String getLogin() {
+		return login;
 	}
-	public void setFecha(LocalDate fecha) {
-		this.fecha = fecha;
+
+	public void setLogin(String login) {
+		this.login = login;
 	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getFechaNacimiento() {
+		return fechaNacimiento;
+	}
+
+	public void setFechaNacimiento(String fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
+	}
+
 }
