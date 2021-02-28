@@ -2,6 +2,9 @@ package umu.tds.modelo;
 
 public class Usuario {
 	
+	
+	private static final int IDINICIAL = 0;
+	
 	private int id;
 	private String nombre;
 	private String apellidos;
@@ -12,7 +15,7 @@ public class Usuario {
 
 	public Usuario(String nombre, String apellidos, String email, String login, String password,
 			String fechaNacimiento) {
-		this.id = 0;
+		this.id = IDINICIAL;
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.email = email;
