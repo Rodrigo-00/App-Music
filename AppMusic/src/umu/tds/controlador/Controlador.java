@@ -40,18 +40,16 @@ public final class Controlador {
 		return false;
 	}
 	
-	public boolean registrarUsuario(String nombre, String apellidos, String email, String login, String password,
-			String fechaNacimiento) {
+	public boolean registrarUsuario(String nombre, String apellidos, String email, String login, String password, String fechaNacimiento) {
 
-//		if (esUsuarioRegistrado(login))
-	//		return false;
+        if (esUsuarioRegistrado(login)) return false;
+        	
 		Usuario usuario = new Usuario(nombre, apellidos, email, login, password, fechaNacimiento);
 
-//		UsuarioDAO usuarioDAO = factoria
-	//			.getUsuarioDAO(); /* Adaptador DAO para almacenar el nuevo Usuario en la BD */
-//		usuarioDAO.create(usuario);
+		IAdaptadorUsuarioDAO usuarioDAO = factoria.getUsuarioDAO(); /* Adaptador DAO para almacenar el nuevo Usuario en la BD */
+		usuarioDAO.registrarUsuario(usuario);
 
-		CatalogoUsuarios.getUnicaInstancia().addUsuario(usuario);
+		CatalogoUsuarios.getUnicaInstancia().addUsuario(usuario); 
 		return true;
 	}
 
