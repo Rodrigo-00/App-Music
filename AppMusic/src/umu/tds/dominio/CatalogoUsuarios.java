@@ -25,9 +25,8 @@ public class CatalogoUsuarios {
 		asistentesPorID = new HashMap<Integer, Usuario>();
 		asistentesPorLogin = new HashMap<String, Usuario>();
 		
-	/*	try {
+		try {
 			factoria = FactoriaDAO.getInstancia();
-			
 			List<Usuario> listaAsistentes = factoria.getUsuarioDAO().getAll();
 			for (Usuario usuario : listaAsistentes) {
 				asistentesPorID.put(usuario.getId(), usuario);
@@ -35,7 +34,7 @@ public class CatalogoUsuarios {
 			}
 		} catch (DAOException eDAO) {
 			   eDAO.printStackTrace();
-		}*/
+		}
 	}
 	
 	public List<Usuario> getUsuarios() throws DAOException {

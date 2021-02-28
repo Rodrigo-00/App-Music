@@ -1,6 +1,7 @@
 package umu.tds.dominio;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 import umu.tds.persistencia.FactoriaDAO;
@@ -12,7 +13,9 @@ import umu.tds.persistencia.IAdaptadorCancionDAO;
 public class CatalogoCanciones {
 
 	//Buscar canciones con filtros de búsqueda el título, interprete y estilo musical
-	private Map<String,Cancion> canciones;
+	private Map<String,Cancion> cancionesInterprete;
+	private Map<String,Cancion> cancioneTitulo;
+	private Map<String,LinkedList<Cancion>> cancionesEstilo;
 	private static CatalogoCanciones unicaInstancia;
 	private IAdaptadorCancionDAO adaptadorCancion;
 	
@@ -30,7 +33,9 @@ public class CatalogoCanciones {
 		try {
 			FactoriaDAO dao = FactoriaDAO.getInstancia();
 			adaptadorCancion = dao.getCancionDAO();
-			canciones = new HashMap<String,Cancion>();
+			cancionesInterprete = new HashMap<String,Cancion>();
+			cancioneTitulo = new HashMap<String,Cancion>();
+			cancionesEstilo = new HashMap<String,LinkedList<Cancion>>();
 			cargarCanciones();
 		} catch (DAOException e) {
 			e.printStackTrace();
