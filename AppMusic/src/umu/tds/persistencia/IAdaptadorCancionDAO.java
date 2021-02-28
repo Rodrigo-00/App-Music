@@ -4,5 +4,5 @@ import umu.tds.modelo.Cancion;
 
 public interface IAdaptadorCancionDAO {
 
-	public void registrarCancion(Cancion song);
+	public void registrarCancion(Cancion cancion);
 }

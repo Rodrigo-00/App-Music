@@ -1,5 +1,6 @@
 package umu.tds.persistencia;
 
+import beans.Entidad;
 import tds.driver.FactoriaServicioPersistencia;
 import tds.driver.ServicioPersistencia;
 import umu.tds.modelo.Cancion;
@@ -21,9 +22,22 @@ public class AdaptadorCancionTDS implements IAdaptadorCancionDAO{
 	}
 
 	@Override
-	public void registrarCancion(Cancion song) {
-		// TODO Auto-generated method stub
+	public void registrarCancion(Cancion cancion) {
 		
+		Entidad eCancion;
+		boolean existe = true; 
+		
+		// Si la entidad está registrada no la registra de nuevo
+		try {
+			eCancion = servPersistencia.recuperarEntidad(cancion.getId());
+		} catch (NullPointerException e) {
+			existe = false;
+		}
+		if (existe) return;
+		
+		
+		//Crear entidad Cancion
+		eCancion = new Entidad();
 	}
 	
 }

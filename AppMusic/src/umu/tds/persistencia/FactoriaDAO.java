@@ -1,12 +1,5 @@
 package umu.tds.persistencia;
 
-/*import persistencia.DAOException;
-import persistencia.FactoriaDAO;
-import persistencia.IAdaptadorClienteDAO;
-import persistencia.IAdaptadorLineaVentaDAO;
-import persistencia.IAdaptadorProductoDAO;
-import persistencia.IAdaptadorVentaDAO;*/
-
 //Define una factoria abstracta que devuelve todos los DAO de la aplicacion
 
 public abstract class FactoriaDAO {
