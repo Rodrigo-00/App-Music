@@ -6,15 +6,18 @@ public final class Controlador {
  
 	private Usuario usuarioActual;
 	private static Controlador unicaInstancia;
-	private FactoriaDAO factoria;
+	
+	private IAdaptadorCancionDAO adaptadorCancion;
+	private IAdaptadorUsuarioDAO adaptadorUsuario;
+	private IAdaptadorPlaylistDAO adaptadorPlaylist;
 
+	private CatalogoCanciones catalogoCanciones;
+	private CatalogoUsuarios catalogoUsuarios;
+	
 	private Controlador() {
 		usuarioActual = null;
-		try {
-			factoria = FactoriaDAO.getInstancia();
-		} catch (DAOException e) {
-			e.printStackTrace();
-		}
+		inicializarAdaptadores();
+		inicializarCatalogos();
 	}
 
 	public static Controlador getUnicaInstancia() {
@@ -22,6 +25,24 @@ public final class Controlador {
 			unicaInstancia = new Controlador();
 		return unicaInstancia;
 	}
+	
+	private void inicializarAdaptadores() {
+		FactoriaDAO factoria = null;
+		try {
+			factoria = FactoriaDAO.getInstancia();
+		} catch (DAOException e) {
+			e.printStackTrace();
+		}
+		adaptadorCancion = factoria.getCancionDAO();
+		adaptadorUsuario = factoria.getUsuarioDAO();
+		adaptadorPlaylist = factoria.getPlaylistDAO();
+	}
+	
+	private void inicializarCatalogos() {
+		//catalogoCanciones = CatalogoCanciones.getUnicaInstancia();
+		catalogoUsuarios = CatalogoUsuarios.getUnicaInstancia();
+	}
+	
 
 	public Usuario getUsuarioActual() {
 		return usuarioActual;
@@ -46,8 +67,7 @@ public final class Controlador {
         	
 		Usuario usuario = new Usuario(nombre, apellidos, email, login, password, fechaNacimiento);
 
-		IAdaptadorUsuarioDAO usuarioDAO = factoria.getUsuarioDAO(); /* Adaptador DAO para almacenar el nuevo Usuario en la BD */
-		usuarioDAO.registrarUsuario(usuario);
+		adaptadorUsuario.registrarUsuario(usuario);
 
 		CatalogoUsuarios.getUnicaInstancia().addUsuario(usuario); 
 		return true;
@@ -57,8 +77,7 @@ public final class Controlador {
 		if (!esUsuarioRegistrado(usuario.getLogin()))
 			return false;
 
-		IAdaptadorUsuarioDAO usuarioDAO = factoria.getUsuarioDAO(); /* Adaptador DAO para borrar el Usuario de la BD */
-		usuarioDAO.delete(usuario);
+		adaptadorUsuario.delete(usuario);
 
 		CatalogoUsuarios.getUnicaInstancia().removeUsuario(usuario);
 		return true;
