@@ -8,7 +8,7 @@ import java.util.List;
 import umu.tds.modelo.Usuario;
 import umu.tds.persistencia.DAOException;
 import umu.tds.persistencia.FactoriaDAO;
-//Prueba as 
+//Prueba as
 public class CatalogoUsuarios {
 	private static CatalogoUsuarios unicaInstancia;
 	private FactoriaDAO factoria;
@@ -20,7 +20,7 @@ public class CatalogoUsuarios {
 		if (unicaInstancia == null) unicaInstancia = new CatalogoUsuarios();
 		return unicaInstancia;
 	}
-
+//comentario
 	private CatalogoUsuarios (){
 		asistentesPorID = new HashMap<Integer, Usuario>();
 		asistentesPorLogin = new HashMap<String, Usuario>();
