@@ -20,7 +20,7 @@ public class CatalogoUsuarios {
 		if (unicaInstancia == null) unicaInstancia = new CatalogoUsuarios();
 		return unicaInstancia;
 	}
-//comentario a
+
 	private CatalogoUsuarios (){
 		asistentesPorID = new HashMap<Integer, Usuario>();
 		asistentesPorLogin = new HashMap<String, Usuario>();
