@@ -20,14 +20,14 @@ public class AdaptadorCancionTDS implements IAdaptadorCancionDAO{
 	private AdaptadorCancionTDS() { 
 		servPersistencia = FactoriaServicioPersistencia.getInstance().getServicioPersistencia();
 	}
-
+//Mira a ver si te sale este comentario RODRIGOOOOOOOOOOOOO
 	@Override
 	public void registrarCancion(Cancion cancion) {
 		
 		Entidad eCancion;
 		boolean existe = true; 
 		
-		// Si la entidad está registrada no la registra de nuevo
+		// Si la entidad estï¿½ registrada no la registra de nuevo
 		try {
 			eCancion = servPersistencia.recuperarEntidad(cancion.getId());
 		} catch (NullPointerException e) {
