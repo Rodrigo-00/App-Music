@@ -20,7 +20,7 @@ public class AdaptadorCancionTDS implements IAdaptadorCancionDAO{
 	private AdaptadorCancionTDS() { 
 		servPersistencia = FactoriaServicioPersistencia.getInstance().getServicioPersistencia();
 	}
-//Mira a ver si te sale este comentario RODRIGOOOOOOOOOOOOO
+	
 	@Override
 	public void registrarCancion(Cancion cancion) {
 		
