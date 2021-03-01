@@ -4,7 +4,7 @@ import umu.tds.modelo.Usuario;
 import umu.tds.persistencia.*;
 
 public final class Controlador {
- 
+//Suuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuui
 	private Usuario usuarioActual;
 	private static Controlador unicaInstancia;
 	
