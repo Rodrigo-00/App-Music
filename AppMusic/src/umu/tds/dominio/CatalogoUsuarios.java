@@ -8,7 +8,7 @@ import java.util.List;
 import umu.tds.modelo.Usuario;
 import umu.tds.persistencia.DAOException;
 import umu.tds.persistencia.FactoriaDAO;
-
+//Prueba 
 public class CatalogoUsuarios {
 	private static CatalogoUsuarios unicaInstancia;
 	private FactoriaDAO factoria;
