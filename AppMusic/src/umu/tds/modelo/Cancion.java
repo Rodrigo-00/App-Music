@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 public class Cancion {
 
+
 	private static final int REPRODUCCIONESINICIALES = 0;
 	private static final int IDINICIAL = 0;
 	
@@ -11,7 +12,7 @@ public class Cancion {
 	private String interprete;
 	private String estilo;
 	private String rutaFichero;
-	private int numReproducciones;
+	private int reproducciones;
 	private int id;
 	
 
@@ -21,7 +22,12 @@ public class Cancion {
 		this.interprete = interprete;
 		this.estilo = estilo;
 		this.rutaFichero = rutaFichero;
-		numReproducciones = REPRODUCCIONESINICIALES;
+		reproducciones = REPRODUCCIONESINICIALES;
+	}
+	
+	
+	public int getReproducciones() {
+		return reproducciones;
 	}
 	
 	
