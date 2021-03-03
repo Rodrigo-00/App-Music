@@ -2,7 +2,9 @@ package umu.tds.persistencia;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import beans.Entidad;
 import beans.Propiedad;
@@ -46,6 +48,21 @@ public final class AdaptadorPlaylistTDS implements IAdaptadorPlaylistDAO{
 		return ePlaylist;
 	}
 	
+	private Playlist entidadToPlaylist(Entidad ePlaylist) {
+
+		List<Cancion> canciones = new LinkedList<Cancion>();
+		
+		String nombre = servPersistencia.recuperarPropiedadEntidad(ePlaylist, NOMBRE);
+		canciones = obtenerCancionesDesdeId(servPersistencia.recuperarPropiedadEntidad(ePlaylist, CANCIONES));
+
+		Playlist playlist = new Playlist(nombre);
+		playlist.setId(ePlaylist.getId());
+		
+		for (Cancion c : canciones)
+			playlist.addCancion(c);
+		
+		return playlist;
+	}
 	
 
 	@Override
@@ -66,6 +83,13 @@ public final class AdaptadorPlaylistTDS implements IAdaptadorPlaylistDAO{
 	}
 	
 	
+	@Override
+	public Playlist obtenerPlaylist(int id) {
+		
+		Entidad ePlaylist = servPersistencia.recuperarEntidad(id);
+		return entidadToPlaylist(ePlaylist);
+	}
+	
 	
 	private String obtenerIdCanciones(List<Cancion> listaCanciones) {
 		String aux = "";
@@ -73,5 +97,17 @@ public final class AdaptadorPlaylistTDS implements IAdaptadorPlaylistDAO{
 			aux += c.getId() + " ";
 		}
 		return aux.trim();
+	}
+	
+	
+	private List<Cancion> obtenerCancionesDesdeId(String canciones) {
+
+		List<Cancion> listaCanciones = new LinkedList<Cancion>();
+		StringTokenizer strTok = new StringTokenizer(canciones, " ");
+		AdaptadorCancionTDS adaptadorC = AdaptadorCancionTDS.getUnicaInstancia();
+		while (strTok.hasMoreTokens()) {
+			listaCanciones.add(adaptadorC.obtenerCancion(Integer.valueOf((String) strTok.nextElement())));
+		}
+		return listaCanciones;
 	}
 }

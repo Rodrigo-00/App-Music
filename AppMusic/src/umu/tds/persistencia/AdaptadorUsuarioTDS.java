@@ -105,7 +105,7 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 		servPersistencia.anadirPropiedadEntidad(eUsuario, EMAIL, usuario.getEmail());
 	}
 
-	public Usuario get(int id) {
+	public Usuario obtenerUsuario(int id) {
 		Entidad eUsuario = servPersistencia.recuperarEntidad(id);
 		
 		return entidadToUsuario(eUsuario);
@@ -116,7 +116,7 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 
 		List<Usuario> usuarios = new LinkedList<Usuario>();
 		for (Entidad eUsuario : entidades) {
-			usuarios.add(get(eUsuario.getId()));
+			usuarios.add(obtenerUsuario(eUsuario.getId()));
 		}
 		
 		return usuarios;

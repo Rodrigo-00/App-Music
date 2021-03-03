@@ -34,6 +34,20 @@ public class AdaptadorCancionTDS implements IAdaptadorCancionDAO{
 		servPersistencia = FactoriaServicioPersistencia.getInstance().getServicioPersistencia();
 	}
 	
+	
+	private Cancion entidadToCancion(Entidad eCancion) {
+
+		String titulo = servPersistencia.recuperarPropiedadEntidad(eCancion, TITULO);
+		String interprete = servPersistencia.recuperarPropiedadEntidad(eCancion, INTERPRETE);
+		String estilo = servPersistencia.recuperarPropiedadEntidad(eCancion, ESTILO);
+		String rutaFichero = servPersistencia.recuperarPropiedadEntidad(eCancion, RUTA_FICHERO);
+		
+		Cancion cancion = new Cancion(titulo, interprete, estilo, rutaFichero);
+		cancion.setId(eCancion.getId());
+		
+		return cancion;
+	}
+	
 	private Entidad cancionToEntidad(Cancion cancion) {
 		Entidad eCancion = new Entidad();
 		eCancion.setNombre(CANCION);
@@ -65,6 +79,13 @@ public class AdaptadorCancionTDS implements IAdaptadorCancionDAO{
 		eCancion = cancionToEntidad(cancion);
 		eCancion = servPersistencia.registrarEntidad(eCancion);
 		cancion.setId(eCancion.getId());
+	}
+
+	@Override
+	public Cancion obtenerCancion(int id) {
+		
+		Entidad eCancion = servPersistencia.recuperarEntidad(id);
+		return entidadToCancion(eCancion);
 	}
 	
 }
