@@ -55,7 +55,7 @@ public final class Controlador {
 
 	public boolean loginUsuario(String nombre, String password) {
 		Usuario usuario = catalogoUsuarios.getUsuario(nombre);
-		if (usuario != null && usuario.getPassword().equals(password)) {
+		if (usuario != null && usuario.getPassword().equals(password)) {	//¿NO HABRIA QUE COMPARARLO CON LA BASE DE DATOS?
 			this.usuarioActual = usuario;
 			return true;
 		}
