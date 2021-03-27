@@ -36,7 +36,7 @@ public class VentanaPrincipal {
 		initialize();
 	}
 	
-	public JFrame getJFrame() {
+	public JFrame getFrame() {
 		return frmVentanaPrincipal;
 	}
 	/**
@@ -127,6 +127,13 @@ public class VentanaPrincipal {
 		btnExplorar.setBackground(Color.LIGHT_GRAY);
 		btnExplorar.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/umu/tds/imagenes/lupa.png")));
 		panel_1.add(btnExplorar);
+		btnExplorar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaExplorar reg = new VentanaExplorar();
+				reg.getFrame().setVisible(true);
+				frmVentanaPrincipal.setVisible(false);
+			}
+		});
 		
 		JButton btnLista = new JButton("Nueva lista");
 		btnLista.setBorderPainted(false);
@@ -148,10 +155,6 @@ public class VentanaPrincipal {
 		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
 
 		//frmVentanaPrincipal.pack();
-	}
-
-	public JFrame getFrmVentanaPrincipal() {
-		return frmVentanaPrincipal;
 	}
 	
 

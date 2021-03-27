@@ -137,7 +137,7 @@ public class VentanaLogin {
 				}
 				else {
 					VentanaPrincipal reg = new VentanaPrincipal();
-					reg.getFrmVentanaPrincipal().setVisible(true);
+					reg.getFrame().setVisible(true);
 					frmAppmusic.setVisible(false);
 				}
 				

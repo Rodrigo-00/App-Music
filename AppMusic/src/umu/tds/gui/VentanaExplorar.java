@@ -47,7 +47,7 @@ public class VentanaExplorar {
 		initialize();
 	}
 	
-	public JFrame getJFrame() {
+	public JFrame getFrame() {
 		return frmVentanaPrincipal;
 	}
 	/**
