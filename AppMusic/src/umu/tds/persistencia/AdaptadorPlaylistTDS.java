@@ -12,7 +12,6 @@ import tds.driver.FactoriaServicioPersistencia;
 import tds.driver.ServicioPersistencia;
 import umu.tds.modelo.Cancion;
 import umu.tds.modelo.Playlist;
-import umu.tds.modelo.Usuario;
 
 public final class AdaptadorPlaylistTDS implements IAdaptadorPlaylistDAO{
 
@@ -98,6 +97,20 @@ public final class AdaptadorPlaylistTDS implements IAdaptadorPlaylistDAO{
 		return servPersistencia.borrarEntidad(ePlaylist);
 	}
 	
+	@Override
+	public void updatePlaylist(Playlist lista) {
+		Entidad ePlaylist;
+
+		ePlaylist = servPersistencia.recuperarEntidad(lista.getId());
+		
+		servPersistencia.eliminarPropiedadEntidad(ePlaylist, NOMBRE);
+		servPersistencia.anadirPropiedadEntidad(ePlaylist, NOMBRE, lista.getNombre());
+		
+		String canciones = obtenerIdCanciones(lista.getCanciones());
+		servPersistencia.eliminarPropiedadEntidad(ePlaylist, CANCIONES);
+		servPersistencia.anadirPropiedadEntidad(ePlaylist, CANCIONES, canciones);
+
+	}
 	
 	private String obtenerIdCanciones(List<Cancion> listaCanciones) {
 		String aux = "";
