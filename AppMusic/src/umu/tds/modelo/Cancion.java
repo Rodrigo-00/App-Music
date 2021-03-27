@@ -30,6 +30,10 @@ public class Cancion {
 		return reproducciones;
 	}
 	
+	public void setReproducciones(int repro) {
+		this.reproducciones = repro;
+	}
+	
 	
 	public int getId() {
 		return id;

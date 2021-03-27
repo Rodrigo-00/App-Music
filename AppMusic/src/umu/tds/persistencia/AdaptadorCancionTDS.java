@@ -21,6 +21,7 @@ public class AdaptadorCancionTDS implements IAdaptadorCancionDAO{
 	private static final String INTERPRETE = "interprete";
 	private static final String ESTILO = "estilo";
 	private static final String RUTA_FICHERO = "rutaFichero";
+	private static final String REPRODUCCIONES = "reproducciones";
 	
 	
 	public static AdaptadorCancionTDS getUnicaInstancia() { // patron singleton
@@ -41,8 +42,10 @@ public class AdaptadorCancionTDS implements IAdaptadorCancionDAO{
 		String interprete = servPersistencia.recuperarPropiedadEntidad(eCancion, INTERPRETE);
 		String estilo = servPersistencia.recuperarPropiedadEntidad(eCancion, ESTILO);
 		String rutaFichero = servPersistencia.recuperarPropiedadEntidad(eCancion, RUTA_FICHERO);
+		int reproducciones = Integer.parseInt(servPersistencia.recuperarPropiedadEntidad(eCancion, REPRODUCCIONES));
 		
 		Cancion cancion = new Cancion(titulo, interprete, estilo, rutaFichero);
+		cancion.setReproducciones(reproducciones);
 		cancion.setId(eCancion.getId());
 		
 		return cancion;
@@ -56,7 +59,8 @@ public class AdaptadorCancionTDS implements IAdaptadorCancionDAO{
 				new Propiedad(TITULO, cancion.getTitulo()),
 				new Propiedad(INTERPRETE, cancion.getInterprete()), 
 				new Propiedad(ESTILO, cancion.getEstilo()),
-				new Propiedad(RUTA_FICHERO, cancion.getRutaFichero()))));
+				new Propiedad(RUTA_FICHERO, cancion.getRutaFichero()),
+				new Propiedad(REPRODUCCIONES, String.valueOf(cancion.getReproducciones())))));
 		return eCancion;
 	}
 
@@ -88,11 +92,23 @@ public class AdaptadorCancionTDS implements IAdaptadorCancionDAO{
 		return entidadToCancion(eCancion);
 	}
 	
+	@Override
 	public boolean delete(Cancion cancion) {
 		Entidad eCancion;
 		eCancion = servPersistencia.recuperarEntidad(cancion.getId());
 		
 		return servPersistencia.borrarEntidad(eCancion);
+	}
+	
+	@Override
+	public void updateCancion(Cancion cancion) {
+		Entidad eCancion = servPersistencia.recuperarEntidad(cancion.getId());
+		servPersistencia.eliminarPropiedadEntidad(eCancion, RUTA_FICHERO);
+		servPersistencia.anadirPropiedadEntidad(eCancion, RUTA_FICHERO, cancion.getRutaFichero());
+		servPersistencia.eliminarPropiedadEntidad(eCancion, ESTILO);
+		servPersistencia.anadirPropiedadEntidad(eCancion, ESTILO, cancion.getEstilo());
+		servPersistencia.eliminarPropiedadEntidad(eCancion, REPRODUCCIONES);
+		servPersistencia.anadirPropiedadEntidad(eCancion, REPRODUCCIONES, String.valueOf(cancion.getReproducciones()));
 	}
 	
 }

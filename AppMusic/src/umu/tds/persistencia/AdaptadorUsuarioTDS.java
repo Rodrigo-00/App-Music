@@ -103,6 +103,10 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 		servPersistencia.anadirPropiedadEntidad(eUsuario, PASSWORD, usuario.getPassword());
 		servPersistencia.eliminarPropiedadEntidad(eUsuario, EMAIL);
 		servPersistencia.anadirPropiedadEntidad(eUsuario, EMAIL, usuario.getEmail());
+		servPersistencia.eliminarPropiedadEntidad(eUsuario, NOMBRE);
+		servPersistencia.anadirPropiedadEntidad(eUsuario, NOMBRE, usuario.getNombre());
+		servPersistencia.eliminarPropiedadEntidad(eUsuario, APELLIDOS);
+		servPersistencia.anadirPropiedadEntidad(eUsuario, APELLIDOS, usuario.getApellidos());
 	}
 
 	public Usuario obtenerUsuario(int id) {
