@@ -91,6 +91,14 @@ public final class AdaptadorPlaylistTDS implements IAdaptadorPlaylistDAO{
 	}
 	
 	
+	public boolean delete(Playlist lista) {
+		Entidad ePlaylist;
+		ePlaylist = servPersistencia.recuperarEntidad(lista.getId());
+		
+		return servPersistencia.borrarEntidad(ePlaylist);
+	}
+	
+	
 	private String obtenerIdCanciones(List<Cancion> listaCanciones) {
 		String aux = "";
 		for (Cancion c : listaCanciones) {

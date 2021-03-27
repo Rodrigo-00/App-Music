@@ -6,4 +6,5 @@ public interface IAdaptadorCancionDAO {
 
 	public void registrarCancion(Cancion cancion);
 	public Cancion obtenerCancion(int id);
+	public boolean delete(Cancion cancion);
 }

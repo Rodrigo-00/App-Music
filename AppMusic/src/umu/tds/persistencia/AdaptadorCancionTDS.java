@@ -88,4 +88,11 @@ public class AdaptadorCancionTDS implements IAdaptadorCancionDAO{
 		return entidadToCancion(eCancion);
 	}
 	
+	public boolean delete(Cancion cancion) {
+		Entidad eCancion;
+		eCancion = servPersistencia.recuperarEntidad(cancion.getId());
+		
+		return servPersistencia.borrarEntidad(eCancion);
+	}
+	
 }
