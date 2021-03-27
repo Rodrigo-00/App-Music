@@ -2,6 +2,8 @@ package umu.tds.persistencia;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 import beans.Entidad;
 import beans.Propiedad;
@@ -109,6 +111,16 @@ public class AdaptadorCancionTDS implements IAdaptadorCancionDAO{
 		servPersistencia.anadirPropiedadEntidad(eCancion, ESTILO, cancion.getEstilo());
 		servPersistencia.eliminarPropiedadEntidad(eCancion, REPRODUCCIONES);
 		servPersistencia.anadirPropiedadEntidad(eCancion, REPRODUCCIONES, String.valueOf(cancion.getReproducciones()));
+	}
+	
+	@Override
+	public List<Cancion> getAll() {
+		List<Entidad> entidades = servPersistencia.recuperarEntidades(CANCION);
+
+		List<Cancion> canciones = new LinkedList<Cancion>();
+		for (Entidad eCancion : entidades) canciones.add(obtenerCancion(eCancion.getId()));
+		
+		return canciones;
 	}
 	
 }

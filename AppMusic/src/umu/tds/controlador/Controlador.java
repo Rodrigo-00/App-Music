@@ -40,7 +40,7 @@ public final class Controlador {
 	}
 	
 	private void inicializarCatalogos() {
-		//catalogoCanciones = CatalogoCanciones.getUnicaInstancia();
+		catalogoCanciones = CatalogoCanciones.getUnicaInstancia();
 		catalogoUsuarios = CatalogoUsuarios.getUnicaInstancia();
 	}
 	

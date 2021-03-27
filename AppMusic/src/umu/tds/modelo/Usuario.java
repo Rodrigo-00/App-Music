@@ -12,6 +12,7 @@ public class Usuario {
 	private String login;
 	private String password;
 	private String fechaNacimiento;
+	private Boolean premium;
 
 	public Usuario(String nombre, String apellidos, String email, String login, String password,
 			String fechaNacimiento) {
@@ -22,6 +23,16 @@ public class Usuario {
 		this.login = login;
 		this.password = password;
 		this.fechaNacimiento = fechaNacimiento;
+		premium=false;
+	}
+	
+	
+	public Boolean getPremium() {
+		return premium;
+	}
+
+	public void setPremium(Boolean premium) {
+		this.premium = premium;
 	}
 
 	public int getId() {
