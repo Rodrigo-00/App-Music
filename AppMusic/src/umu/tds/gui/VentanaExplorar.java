@@ -119,6 +119,13 @@ public class VentanaExplorar {
 		gbc_btnSalir_1.gridx = 7;
 		gbc_btnSalir_1.gridy = 1;
 		panel.add(btnSalir_1, gbc_btnSalir_1);
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaLogin reg = new VentanaLogin();
+				reg.getFrame().setVisible(true);
+				frmVentanaExplorar.setVisible(false);
+			}
+		});
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Color.LIGHT_GRAY);
@@ -136,6 +143,13 @@ public class VentanaExplorar {
 		btnNewButton_2.setBackground(Color.LIGHT_GRAY);
 		btnNewButton_2.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/mas-positivo-suma-simbolo-matematico.png")));
 		panel_1.add(btnNewButton_2);
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CrearPlaylist reg = new CrearPlaylist();
+				reg.getFrame().setVisible(true);
+				frmVentanaExplorar.setVisible(false);
+			}
+		});
 		
 		JButton btnRecientes = new JButton("Reciente");
 		btnRecientes.setBorderPainted(false);

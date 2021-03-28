@@ -93,7 +93,7 @@ public class VentanaPrincipal {
 		
 		JButton btnHaztePremium = new JButton("Hazte Premium");
 		btnHaztePremium.setBorderPainted(false);
-		btnHaztePremium.setBackground(SystemColor.control);
+		btnHaztePremium.setBackground(Color.YELLOW);
 		GridBagConstraints gbc_btnHaztePremium = new GridBagConstraints();
 		gbc_btnHaztePremium.insets = new Insets(0, 0, 5, 5);
 		gbc_btnHaztePremium.gridx = 5;
@@ -140,6 +140,13 @@ public class VentanaPrincipal {
 		btnLista.setBackground(Color.LIGHT_GRAY);
 		btnLista.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/umu/tds/imagenes/mas-positivo-suma-simbolo-matematico.png")));
 		panel_1.add(btnLista);
+		btnLista.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CrearPlaylist reg = new CrearPlaylist();
+				reg.getFrame().setVisible(true);
+				frmVentanaPrincipal.setVisible(false);
+			}
+		});
 		
 		JButton btnRecientes = new JButton("Reciente");
 		btnRecientes.setBorderPainted(false);
