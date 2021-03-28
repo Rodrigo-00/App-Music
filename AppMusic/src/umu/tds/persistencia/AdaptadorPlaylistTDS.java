@@ -57,6 +57,8 @@ public final class AdaptadorPlaylistTDS implements IAdaptadorPlaylistDAO{
 		canciones = obtenerCancionesDesdeId(servPersistencia.recuperarPropiedadEntidad(ePlaylist, CANCIONES));
 		
 
+		System.out.println("LLAmado");
+		
 		Playlist playlist = new Playlist(nombre);
 		playlist.setId(ePlaylist.getId());
 		
@@ -70,6 +72,7 @@ public final class AdaptadorPlaylistTDS implements IAdaptadorPlaylistDAO{
 	@Override
 	public void registrarPlaylist(Playlist lista, int idUsuario) {
 		
+		System.out.println("entra");
 		boolean existe = true;
 		Entidad ePlaylist;
 		try {
@@ -77,6 +80,8 @@ public final class AdaptadorPlaylistTDS implements IAdaptadorPlaylistDAO{
 		}catch (NullPointerException e) {
 			existe = false;
 		}
+		
+		System.out.println("sale");
 		
 		if(existe) return;
 		ePlaylist = playlistToEntidad(lista, idUsuario);
@@ -152,6 +157,7 @@ public final class AdaptadorPlaylistTDS implements IAdaptadorPlaylistDAO{
 		List<Playlist> listas = new LinkedList<Playlist>();
 		for (Entidad ePlaylist : entidades) {
 			int usuario = Integer.parseInt(servPersistencia.recuperarPropiedadEntidad(ePlaylist, USUARIO));
+			System.out.println(usuario+" "+idUsuario);
 			if(usuario == idUsuario) listas.add(obtenerPlaylist(ePlaylist.getId()));
 		}
 		
