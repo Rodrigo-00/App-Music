@@ -27,6 +27,7 @@ import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
 
 public class VentanaPrincipal {
 
@@ -142,9 +143,13 @@ public class VentanaPrincipal {
 		panel_1.add(btnLista);
 		btnLista.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CrearPlaylist reg = new CrearPlaylist();
-				reg.getFrame().setVisible(true);
-				frmVentanaPrincipal.setVisible(false);
+				
+				int reply = JOptionPane.showConfirmDialog(null, "Desea Crear una nueva Playlist", "Crear Playlist", JOptionPane.YES_NO_OPTION);
+				if (reply == JOptionPane.YES_OPTION) {
+					CrearPlaylist reg = new CrearPlaylist();
+					reg.getFrame().setVisible(true);
+					frmVentanaPrincipal.setVisible(false);
+				}
 			}
 		});
 		
