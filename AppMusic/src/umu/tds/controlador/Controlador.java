@@ -1,8 +1,9 @@
 package umu.tds.controlador;
 import umu.tds.dominio.*;
-import umu.tds.modelo.Playlist;
-import umu.tds.modelo.Usuario;
+import umu.tds.modelo.*;
 import umu.tds.persistencia.*;
+import java.util.LinkedList;
+import java.util.List;
 
 public final class Controlador {
 
@@ -85,8 +86,14 @@ public final class Controlador {
 		return true;
 	}
 
-	public void crearPlaylist(String nombre) {
+	public boolean crearPlaylist(String nombre) {
+		List<Playlist> listas = adaptadorPlaylist.getAll(usuarioActual.getId());	//Obtenemos todas las playlist del cliente
+		for(Playlist list : listas) {
+			if(list.getNombre().equals(nombre)) return false;
+		}
+		
 		Playlist lista = new Playlist(nombre);
-		//boolean registrar = adaptadorPlaylist.registrarPlaylist(lista);
+		adaptadorPlaylist.registrarPlaylist(lista, usuarioActual.getId());
+		return true;
 	}
 }

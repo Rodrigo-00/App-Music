@@ -100,21 +100,25 @@ public class CrearPlaylist {
 			}
 		});
 		
-		JButton btnAceptar = new JButton("Crear");
-		GridBagConstraints gbc_btnAceptar = new GridBagConstraints();
-		gbc_btnAceptar.insets = new Insets(0, 0, 0, 5);
-		gbc_btnAceptar.gridx = 5;
-		gbc_btnAceptar.gridy = 7;
-		panel.add(btnAceptar, gbc_btnAceptar);
-		btnAceptar.addActionListener(new ActionListener() {
+		JButton btnCrear = new JButton("Crear");
+		GridBagConstraints gbc_btnCrear = new GridBagConstraints();
+		gbc_btnCrear.insets = new Insets(0, 0, 0, 5);
+		gbc_btnCrear.gridx = 5;
+		gbc_btnCrear.gridy = 7;
+		panel.add(btnCrear, gbc_btnCrear);
+		btnCrear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				String nombre=textField.getText();
-				Controlador.getUnicaInstancia().crearPlaylist(nombre);
-				JOptionPane.showMessageDialog(btnAceptar,"Playlist creada correctamente", "Mensaje", JOptionPane.PLAIN_MESSAGE);
-				VentanaPrincipal reg = new VentanaPrincipal();
-				reg.getFrame().setVisible(true);
-				frmCrearPlaylist.setVisible(false);
+				boolean reply = Controlador.getUnicaInstancia().crearPlaylist(nombre);
+				if(reply == false) {
+					JOptionPane.showMessageDialog(btnCrear, "Ya existe una lista con ese nombre", "Lista existente", JOptionPane.ERROR_MESSAGE, null);
+				}else {
+					JOptionPane.showMessageDialog(btnCrear,"Playlist creada correctamente", "Mensaje", JOptionPane.PLAIN_MESSAGE);
+					VentanaPrincipal reg = new VentanaPrincipal();
+					reg.getFrame().setVisible(true);
+					frmCrearPlaylist.setVisible(false);
+				}
 			}
 		});
 	}
