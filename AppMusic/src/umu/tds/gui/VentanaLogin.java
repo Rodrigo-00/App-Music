@@ -1,5 +1,5 @@
 package umu.tds.gui;
-//comprobar ejemplo CAMBIO 3
+
 import java.awt.EventQueue;
 
 
@@ -12,7 +12,6 @@ import javax.swing.SwingConstants;
 
 import umu.tds.controlador.Controlador;
 import umu.tds.dominio.CatalogoUsuarios;
-import umu.tds.modelo.AppMusic;
 
 import java.awt.Font;
 import javax.swing.JPanel;
@@ -130,7 +129,7 @@ public class VentanaLogin {
 				String usuario=textUsuario.getText();
 				String clave = new String(passwordField.getPassword());
 				 
-				boolean logueado = AppMusic.getInstancia().login(usuario, clave);
+				boolean logueado = Controlador.getUnicaInstancia().loginUsuario(usuario, clave);
 
 				if(!logueado) {
 					JOptionPane.showMessageDialog(btnLogin, "Identificador " + usuario +" incorrecto", "Login incorrecto", JOptionPane.ERROR_MESSAGE, null);

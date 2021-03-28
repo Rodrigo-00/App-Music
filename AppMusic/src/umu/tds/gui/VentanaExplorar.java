@@ -38,7 +38,7 @@ import java.awt.event.ActionEvent;
 
 public class VentanaExplorar {
 
-	private JFrame frmVentanaPrincipal;
+	private JFrame frmVentanaExplorar;
 	private JTextField txtInterprete;
 	private JTextField txtTitulo;
 	private JTable table;
@@ -48,7 +48,7 @@ public class VentanaExplorar {
 	}
 	
 	public JFrame getFrame() {
-		return frmVentanaPrincipal;
+		return frmVentanaExplorar;
 	}
 	/**
 	 * Launch the application.
@@ -58,7 +58,7 @@ public class VentanaExplorar {
 			public void run() {
 				try {
 					VentanaExplorar frame = new VentanaExplorar();
-					frame.frmVentanaPrincipal.setVisible(true);
+					frame.frmVentanaExplorar.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -67,57 +67,62 @@ public class VentanaExplorar {
 	}
 
 	public void mostrarVentana() {
-		frmVentanaPrincipal.setLocationRelativeTo(null);
-		frmVentanaPrincipal.setVisible(true);
+		frmVentanaExplorar.setLocationRelativeTo(null);
+		frmVentanaExplorar.setVisible(true);
 	}
 	
 	public void initialize() {
-		frmVentanaPrincipal = new JFrame();
-		frmVentanaPrincipal.setTitle("AppMusic");
-		frmVentanaPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmVentanaExplorar = new JFrame();
+		frmVentanaExplorar.setTitle("AppMusic");
+		frmVentanaExplorar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		JPanel contentPane = (JPanel) frmVentanaPrincipal.getContentPane();
-		frmVentanaPrincipal.getContentPane().setLayout(new BorderLayout(0, 0));
+		JPanel contentPane = (JPanel) frmVentanaExplorar.getContentPane();
+		frmVentanaExplorar.getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.LIGHT_GRAY);
-		frmVentanaPrincipal.getContentPane().add(panel, BorderLayout.NORTH);
+		frmVentanaExplorar.getContentPane().add(panel, BorderLayout.NORTH);
 		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[]{10, 10, 10, 0, 10, 0, 0, 10, 0};
+		gbl_panel.columnWidths = new int[]{10, 10, 10, 0, 0, 0, 10, 68, 10, -3, 0};
 		gbl_panel.rowHeights = new int[]{10, 0, 20, 0};
-		gbl_panel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_panel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
 		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
-		JLabel lblNewLabel = new JLabel("Hola "+ Controlador.getUnicaInstancia().getUsuarioActual().getLogin());
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 20));
-		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-		gbc_lblNewLabel.fill = GridBagConstraints.HORIZONTAL;
-		gbc_lblNewLabel.gridwidth = 3;
-		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel.anchor = GridBagConstraints.NORTH;
-		gbc_lblNewLabel.gridx = 1;
-		gbc_lblNewLabel.gridy = 1;
-		panel.add(lblNewLabel, gbc_lblNewLabel);
-		
-		JButton btnHaztePremium = new JButton("Hazte Premium");
-		GridBagConstraints gbc_btnHaztePremium = new GridBagConstraints();
-		gbc_btnHaztePremium.insets = new Insets(0, 0, 5, 5);
-		gbc_btnHaztePremium.gridx = 5;
-		gbc_btnHaztePremium.gridy = 1;
-		panel.add(btnHaztePremium, gbc_btnHaztePremium);
-		
-		JButton btnSalir = new JButton("Salir");
+		JButton btnSalir = new JButton("Atr\u00E1s");
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaPrincipal reg = new VentanaPrincipal();
+				reg.getFrame().setVisible(true);
+				frmVentanaExplorar.setVisible(false);
+			}
+		});
 		GridBagConstraints gbc_btnSalir = new GridBagConstraints();
 		gbc_btnSalir.insets = new Insets(0, 0, 5, 5);
-		gbc_btnSalir.gridx = 6;
+		gbc_btnSalir.gridx = 1;
 		gbc_btnSalir.gridy = 1;
 		panel.add(btnSalir, gbc_btnSalir);
 		
+		JButton btnHaztePremium = new JButton("Hazte Premium");
+		btnHaztePremium.setBackground(Color.YELLOW);
+		btnHaztePremium.setForeground(Color.BLACK);
+		GridBagConstraints gbc_btnHaztePremium = new GridBagConstraints();
+		gbc_btnHaztePremium.insets = new Insets(0, 0, 5, 5);
+		gbc_btnHaztePremium.gridx = 4;
+		gbc_btnHaztePremium.gridy = 1;
+		panel.add(btnHaztePremium, gbc_btnHaztePremium);
+		
+		JButton btnSalir_1 = new JButton("Salir");
+		GridBagConstraints gbc_btnSalir_1 = new GridBagConstraints();
+		gbc_btnSalir_1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnSalir_1.insets = new Insets(0, 0, 5, 5);
+		gbc_btnSalir_1.gridx = 7;
+		gbc_btnSalir_1.gridy = 1;
+		panel.add(btnSalir_1, gbc_btnSalir_1);
+		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Color.LIGHT_GRAY);
-		frmVentanaPrincipal.getContentPane().add(panel_1, BorderLayout.WEST);
+		frmVentanaExplorar.getContentPane().add(panel_1, BorderLayout.WEST);
 		panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.Y_AXIS));
 		
 		JButton btnNewButton_1 = new JButton("Explorar");
@@ -145,7 +150,7 @@ public class VentanaExplorar {
 		panel_1.add(btnMisL);
 		
 		JPanel panel_2 = new JPanel();
-		frmVentanaPrincipal.getContentPane().add(panel_2, BorderLayout.CENTER);
+		frmVentanaExplorar.getContentPane().add(panel_2, BorderLayout.CENTER);
 		panel_2.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel_3 = new JPanel();
@@ -212,6 +217,5 @@ public class VentanaExplorar {
 		panel_7.add(btnAdelantar);
 		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
 
-		//frmVentanaPrincipal.pack();
 	}
 }
