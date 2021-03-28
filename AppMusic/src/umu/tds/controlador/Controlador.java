@@ -87,6 +87,6 @@ public final class Controlador {
 
 	public void crearPlaylist(String nombre) {
 		Playlist lista = new Playlist(nombre);
-		adaptadorPlaylist.registrarPlaylist(lista);
+		//boolean registrar = adaptadorPlaylist.registrarPlaylist(lista);
 	}
 }

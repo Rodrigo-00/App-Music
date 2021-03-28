@@ -21,6 +21,7 @@ public final class AdaptadorPlaylistTDS implements IAdaptadorPlaylistDAO{
 	private static final String PLAYLIST = "Playlist";
 	private static final String NOMBRE = "nombre";
 	private static final String CANCIONES = "canciones";
+	private static final String USUARIO = "idUsuario";
 	
 	
 	
@@ -36,13 +37,14 @@ public final class AdaptadorPlaylistTDS implements IAdaptadorPlaylistDAO{
 	}
 	
 	
-	private Entidad playlistToEntidad(Playlist lista) {
+	private Entidad playlistToEntidad(Playlist lista, int idUsuario) {
 		Entidad ePlaylist = new Entidad();
 		ePlaylist.setNombre(PLAYLIST);
 		
 		ePlaylist.setPropiedades(new ArrayList<Propiedad>(Arrays.asList(
 								 new Propiedad(NOMBRE, lista.getNombre()),
-								 new Propiedad(CANCIONES, obtenerIdCanciones(lista.getCanciones())))));
+								 new Propiedad(CANCIONES, obtenerIdCanciones(lista.getCanciones())),
+								 new Propiedad(USUARIO, String.valueOf(idUsuario)))));
 		
 		return ePlaylist;
 	}
@@ -53,6 +55,7 @@ public final class AdaptadorPlaylistTDS implements IAdaptadorPlaylistDAO{
 		
 		String nombre = servPersistencia.recuperarPropiedadEntidad(ePlaylist, NOMBRE);
 		canciones = obtenerCancionesDesdeId(servPersistencia.recuperarPropiedadEntidad(ePlaylist, CANCIONES));
+		
 
 		Playlist playlist = new Playlist(nombre);
 		playlist.setId(ePlaylist.getId());
@@ -65,7 +68,7 @@ public final class AdaptadorPlaylistTDS implements IAdaptadorPlaylistDAO{
 	
 
 	@Override
-	public void registrarPlaylist(Playlist lista) {
+	public void registrarPlaylist(Playlist lista, int idUsuario) {
 		
 		boolean existe = true;
 		Entidad ePlaylist;
@@ -76,7 +79,7 @@ public final class AdaptadorPlaylistTDS implements IAdaptadorPlaylistDAO{
 		}
 		
 		if(existe) return;
-		ePlaylist = playlistToEntidad(lista);
+		ePlaylist = playlistToEntidad(lista, idUsuario);
 		ePlaylist = servPersistencia.registrarEntidad(ePlaylist);
 		lista.setId(ePlaylist.getId());
 	}
@@ -130,5 +133,28 @@ public final class AdaptadorPlaylistTDS implements IAdaptadorPlaylistDAO{
 			listaCanciones.add(adaptadorC.obtenerCancion(Integer.valueOf((String) strTok.nextElement())));
 		}
 		return listaCanciones;
+	}
+	
+	@Override
+	public List<Playlist> getAll() {
+		List<Entidad> entidades = servPersistencia.recuperarEntidades(PLAYLIST);
+
+		List<Playlist> listas = new LinkedList<Playlist>();
+		for (Entidad ePlaylist : entidades) listas.add(obtenerPlaylist(ePlaylist.getId()));
+		
+		return listas;
+	}
+	
+	@Override
+	public List<Playlist> getAll(int idUsuario) {
+		List<Entidad> entidades = servPersistencia.recuperarEntidades(PLAYLIST);
+
+		List<Playlist> listas = new LinkedList<Playlist>();
+		for (Entidad ePlaylist : entidades) {
+			int usuario = Integer.parseInt(servPersistencia.recuperarPropiedadEntidad(ePlaylist, USUARIO));
+			if(usuario == idUsuario) listas.add(obtenerPlaylist(ePlaylist.getId()));
+		}
+		
+		return listas;
 	}
 }
