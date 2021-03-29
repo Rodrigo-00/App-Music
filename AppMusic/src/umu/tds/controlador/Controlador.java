@@ -24,8 +24,10 @@ public final class Controlador {
 	}
 
 	public static Controlador getUnicaInstancia() {
-		if (unicaInstancia == null)
+		if (unicaInstancia == null) {
+			System.out.println("Crea nueva instancia");
 			unicaInstancia = new Controlador();
+		}
 		return unicaInstancia;
 	}
 	
@@ -87,6 +89,9 @@ public final class Controlador {
 	}
 
 	public boolean crearPlaylist(String nombre) {
+		
+		Usuario usu = adaptadorUsuario.obtenerUsuario(usuarioActual.getId());
+		System.out.println(usu.getNombre());
 		
 		List<Playlist> listas = adaptadorPlaylist.getAll();	//Obtenemos todas las playlist del cliente
 		for(Playlist list : listas) {

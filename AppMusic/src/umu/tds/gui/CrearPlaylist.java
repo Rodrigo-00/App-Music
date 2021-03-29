@@ -108,7 +108,7 @@ public class CrearPlaylist {
 		panel.add(btnCrear, gbc_btnCrear);
 		btnCrear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				Controlador.getUnicaInstancia().getUsuarioActual();
 				String nombre=textField.getText();
 				boolean reply = Controlador.getUnicaInstancia().crearPlaylist(nombre);
 				if(reply == false) {
