@@ -41,6 +41,8 @@ public final class AdaptadorPlaylistTDS implements IAdaptadorPlaylistDAO{
 		Entidad ePlaylist = new Entidad();
 		ePlaylist.setNombre(PLAYLIST);
 		
+		System.out.println("nombre de la lista a registrar "+ lista.getNombre());
+		
 		ePlaylist.setPropiedades(new ArrayList<Propiedad>(Arrays.asList(
 								 new Propiedad(NOMBRE, lista.getNombre()),
 								 new Propiedad(CANCIONES, obtenerIdCanciones(lista.getCanciones())),
@@ -56,11 +58,11 @@ public final class AdaptadorPlaylistTDS implements IAdaptadorPlaylistDAO{
 		String nombre = servPersistencia.recuperarPropiedadEntidad(ePlaylist, NOMBRE);
 		canciones = obtenerCancionesDesdeId(servPersistencia.recuperarPropiedadEntidad(ePlaylist, CANCIONES));
 		
-
-		System.out.println("LLAmado");
 		
 		Playlist playlist = new Playlist(nombre);
 		playlist.setId(ePlaylist.getId());
+		
+		System.out.println("nombre de la lista "+ nombre);
 		
 		for (Cancion c : canciones)
 			playlist.addCancion(c);
@@ -72,6 +74,7 @@ public final class AdaptadorPlaylistTDS implements IAdaptadorPlaylistDAO{
 	@Override
 	public void registrarPlaylist(Playlist lista, int idUsuario) {
 		
+		System.out.println("Id de lista "+ lista.getId());
 		Entidad ePlaylist;
 		if(lista.getId() != 0) {
 			boolean existe = true;
@@ -82,9 +85,11 @@ public final class AdaptadorPlaylistTDS implements IAdaptadorPlaylistDAO{
 			}
 			if(existe) return;
 		}
-		
+		System.out.println("nombre de la lista a registrar "+ lista.getNombre());
+		System.out.println("Se crea la playlist");
 		ePlaylist = playlistToEntidad(lista, idUsuario);
 		ePlaylist = servPersistencia.registrarEntidad(ePlaylist);
+		System.out.println("Id de lista adjudicado "+ ePlaylist.getId());
 		lista.setId(ePlaylist.getId());
 	}
 	
@@ -152,14 +157,17 @@ public final class AdaptadorPlaylistTDS implements IAdaptadorPlaylistDAO{
 	@Override
 	public List<Playlist> getAll(int idUsuario) {
 		List<Entidad> entidades = servPersistencia.recuperarEntidades(PLAYLIST);
-
+		System.out.println("LLama");
 		List<Playlist> listas = new LinkedList<Playlist>();
 		for (Entidad ePlaylist : entidades) {
 			int usuario = Integer.parseInt(servPersistencia.recuperarPropiedadEntidad(ePlaylist, USUARIO));
 			System.out.println(usuario+" "+idUsuario);
+			System.out.println("Siguiente s");
 			if(usuario == idUsuario) listas.add(obtenerPlaylist(ePlaylist.getId()));
+			System.out.println("Seguimos");
 		}
 		
+		System.out.println("devolvemos la lista");
 		return listas;
 	}
 }

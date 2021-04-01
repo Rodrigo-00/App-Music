@@ -90,16 +90,22 @@ public final class Controlador {
 
 	public boolean crearPlaylist(String nombre) {
 		
-		System.out.println(usuarioActual.getNombre()+ " id "+ usuarioActual.getId());
-		Usuario usu = adaptadorUsuario.obtenerUsuario(usuarioActual.getId());
 		
-		List<Playlist> listas = adaptadorPlaylist.getAll();	//Obtenemos todas las playlist del cliente
+		System.out.println("Nombre de la playlist a crear " + nombre);
+		
+		List<Playlist> listas = adaptadorPlaylist.getAll(usuarioActual.getId());	//Obtenemos todas las playlist del cliente
+		
 		for(Playlist list : listas) {
 			System.out.println(list.getNombre());
-			if(list.getNombre().equals(nombre)) return false;
+			if(list.getNombre().equals(nombre)) {
+				System.out.println("Existe ya una con el nombre");
+				return false;
+			}
 		}
 		
+		System.out.println("El nombre sigue siendo "+ nombre);
 		Playlist lista = new Playlist(nombre);
+		System.out.println("El nombre sigue siendo "+ lista.getNombre());
 		adaptadorPlaylist.registrarPlaylist(lista, usuarioActual.getId());
 		return true;
 	}

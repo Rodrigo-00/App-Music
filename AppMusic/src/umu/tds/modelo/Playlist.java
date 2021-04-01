@@ -13,7 +13,7 @@ public class Playlist {
 	private List<Cancion> canciones;
 	
 	public Playlist(String nombre) {
-		nombre = this.nombre;
+		this.nombre = nombre;
 		canciones = new LinkedList<Cancion>();
 	}
 

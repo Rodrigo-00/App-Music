@@ -19,7 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
 
-public class CrearPlaylist {
+public class VentanaCrearPlaylist {
 
 	private JFrame frmCrearPlaylist;
 	private JTextField textField;
@@ -35,7 +35,7 @@ public class CrearPlaylist {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CrearPlaylist window = new CrearPlaylist();
+					VentanaCrearPlaylist window = new VentanaCrearPlaylist();
 					window.frmCrearPlaylist.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -47,7 +47,7 @@ public class CrearPlaylist {
 	/**
 	 * Create the application.
 	 */
-	public CrearPlaylist() {
+	public VentanaCrearPlaylist() {
 		initialize();
 	}
 
@@ -108,8 +108,9 @@ public class CrearPlaylist {
 		panel.add(btnCrear, gbc_btnCrear);
 		btnCrear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Controlador.getUnicaInstancia().getUsuarioActual();
+				
 				String nombre=textField.getText();
+				System.out.println("EL NOMBRE ES "+nombre);
 				boolean reply = Controlador.getUnicaInstancia().crearPlaylist(nombre);
 				if(reply == false) {
 					JOptionPane.showMessageDialog(btnCrear, "Ya existe una lista con ese nombre", "Lista existente", JOptionPane.ERROR_MESSAGE, null);

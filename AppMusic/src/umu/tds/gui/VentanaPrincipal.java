@@ -146,7 +146,7 @@ public class VentanaPrincipal {
 				
 				int reply = JOptionPane.showConfirmDialog(null, "Desea Crear una nueva Playlist", "Crear Playlist", JOptionPane.YES_NO_OPTION);
 				if (reply == JOptionPane.YES_OPTION) {
-					CrearPlaylist reg = new CrearPlaylist();
+					VentanaCrearPlaylist reg = new VentanaCrearPlaylist();
 					reg.getFrame().setVisible(true);
 					frmVentanaPrincipal.setVisible(false);
 				}

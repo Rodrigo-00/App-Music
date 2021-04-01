@@ -145,7 +145,7 @@ public class VentanaExplorar {
 		panel_1.add(btnNewButton_2);
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CrearPlaylist reg = new CrearPlaylist();
+				VentanaCrearPlaylist reg = new VentanaCrearPlaylist();
 				reg.getFrame().setVisible(true);
 				frmVentanaExplorar.setVisible(false);
 			}
