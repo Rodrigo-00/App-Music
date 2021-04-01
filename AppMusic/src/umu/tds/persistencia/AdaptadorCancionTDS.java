@@ -70,16 +70,17 @@ public class AdaptadorCancionTDS implements IAdaptadorCancionDAO{
 	public void registrarCancion(Cancion cancion) {
 		
 		Entidad eCancion;
-		boolean existe = true; 
-		
+
 		// Si la entidad esta registrada no la registra de nuevo
-		try {
-			eCancion = servPersistencia.recuperarEntidad(cancion.getId());
-		} catch (NullPointerException e) {
-			existe = false;
+		if(cancion.getId() != 0) {
+			boolean existe = true;
+			try {
+				eCancion = servPersistencia.recuperarEntidad(cancion.getId());
+			}catch (NullPointerException e) {
+				existe = false;
+			}
+			if(existe) return;
 		}
-		if (existe) return;
-		
 		
 		//Crear entidad Cancion
 		eCancion = cancionToEntidad(cancion);

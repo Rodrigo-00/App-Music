@@ -90,8 +90,8 @@ public final class Controlador {
 
 	public boolean crearPlaylist(String nombre) {
 		
+		System.out.println(usuarioActual.getNombre()+ " id "+ usuarioActual.getId());
 		Usuario usu = adaptadorUsuario.obtenerUsuario(usuarioActual.getId());
-		System.out.println(usu.getNombre());
 		
 		List<Playlist> listas = adaptadorPlaylist.getAll();	//Obtenemos todas las playlist del cliente
 		for(Playlist list : listas) {

@@ -6,15 +6,13 @@ import java.util.List;
 
 
 public class Playlist {
-	
-	private static final int IDINICIAL = 0;
+
 	
 	private String nombre;
 	private int id;
 	private List<Cancion> canciones;
 	
 	public Playlist(String nombre) {
-		id = IDINICIAL;
 		nombre = this.nombre;
 		canciones = new LinkedList<Cancion>();
 	}

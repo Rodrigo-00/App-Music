@@ -6,7 +6,6 @@ public class Cancion {
 
 
 	private static final int REPRODUCCIONESINICIALES = 0;
-	private static final int IDINICIAL = 0;
 	
 	private String titulo;
 	private String interprete;
@@ -17,7 +16,6 @@ public class Cancion {
 	
 
 	public Cancion(String titulo, String interprete, String estilo, String rutaFichero) {
-		id=IDINICIAL;
 		this.titulo = titulo;
 		this.interprete = interprete;
 		this.estilo = estilo;

@@ -73,17 +73,23 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 	}
 
 	public void registrarUsuario(Usuario usuario) {
-		boolean existe = true;
 		Entidad eUsuario;
-		try {
-			eUsuario = servPersistencia.recuperarEntidad(usuario.getId());
-		}catch (NullPointerException e) {
-			existe = false;
+		System.out.println("Usuario id " + usuario.getId());
+		if(usuario.getId() != 0) {
+			boolean existe = true;
+			try {
+				eUsuario = servPersistencia.recuperarEntidad(usuario.getId());
+			}catch (NullPointerException e) {
+				existe = false;
+			}
+			if(existe) return;
 		}
 		
-		if(existe) return;
+		System.out.println("Entra");
+		System.out.println("Sigue");
 		eUsuario = this.usuarioToEntidad(usuario);
 		eUsuario = servPersistencia.registrarEntidad(eUsuario);
+		System.out.println("Usuario con id "+eUsuario.getId());
 		usuario.setId(eUsuario.getId());
 	}
 

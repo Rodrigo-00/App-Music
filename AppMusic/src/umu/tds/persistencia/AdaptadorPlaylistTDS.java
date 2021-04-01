@@ -72,18 +72,17 @@ public final class AdaptadorPlaylistTDS implements IAdaptadorPlaylistDAO{
 	@Override
 	public void registrarPlaylist(Playlist lista, int idUsuario) {
 		
-		System.out.println("entra");
-		boolean existe = true;
 		Entidad ePlaylist;
-		try {
-			ePlaylist = servPersistencia.recuperarEntidad(lista.getId());
-		}catch (NullPointerException e) {
-			existe = false;
+		if(lista.getId() != 0) {
+			boolean existe = true;
+			try {
+				ePlaylist = servPersistencia.recuperarEntidad(lista.getId());
+			}catch (NullPointerException e) {
+				existe = false;
+			}
+			if(existe) return;
 		}
 		
-		System.out.println("sale");
-		
-		if(existe) return;
 		ePlaylist = playlistToEntidad(lista, idUsuario);
 		ePlaylist = servPersistencia.registrarEntidad(ePlaylist);
 		lista.setId(ePlaylist.getId());
