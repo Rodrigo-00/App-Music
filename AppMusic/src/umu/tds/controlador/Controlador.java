@@ -87,7 +87,18 @@ public final class Controlador {
 		catalogoUsuarios.removeUsuario(usuario);
 		return true;
 	}
-
+	
+	public List<String> nombresListas(){
+		
+		List<String> nombres = new LinkedList<String>();
+		List<Playlist> listas = adaptadorPlaylist.getAll(usuarioActual.getId());
+		
+		for(Playlist list : listas) nombres.add(list.getNombre());
+		
+		return nombres;
+		
+	}
+	
 	public boolean crearPlaylist(String nombre) {
 		
 		

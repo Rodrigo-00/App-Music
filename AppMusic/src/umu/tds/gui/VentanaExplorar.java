@@ -83,9 +83,9 @@ public class VentanaExplorar {
 		panel.setBackground(Color.LIGHT_GRAY);
 		frmVentanaExplorar.getContentPane().add(panel, BorderLayout.NORTH);
 		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[]{10, 10, 10, 0, 0, 0, 10, 68, 10, -3, 0};
+		gbl_panel.columnWidths = new int[]{10, 0, 10, 10, 0, 0, 0, 10, 68, 10, -3, 0};
 		gbl_panel.rowHeights = new int[]{10, 0, 20, 0};
-		gbl_panel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_panel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
@@ -99,7 +99,7 @@ public class VentanaExplorar {
 		});
 		GridBagConstraints gbc_btnSalir = new GridBagConstraints();
 		gbc_btnSalir.insets = new Insets(0, 0, 5, 5);
-		gbc_btnSalir.gridx = 1;
+		gbc_btnSalir.gridx = 2;
 		gbc_btnSalir.gridy = 1;
 		panel.add(btnSalir, gbc_btnSalir);
 		
@@ -108,7 +108,7 @@ public class VentanaExplorar {
 		btnHaztePremium.setForeground(Color.BLACK);
 		GridBagConstraints gbc_btnHaztePremium = new GridBagConstraints();
 		gbc_btnHaztePremium.insets = new Insets(0, 0, 5, 5);
-		gbc_btnHaztePremium.gridx = 4;
+		gbc_btnHaztePremium.gridx = 5;
 		gbc_btnHaztePremium.gridy = 1;
 		panel.add(btnHaztePremium, gbc_btnHaztePremium);
 		
@@ -116,7 +116,7 @@ public class VentanaExplorar {
 		GridBagConstraints gbc_btnSalir_1 = new GridBagConstraints();
 		gbc_btnSalir_1.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnSalir_1.insets = new Insets(0, 0, 5, 5);
-		gbc_btnSalir_1.gridx = 7;
+		gbc_btnSalir_1.gridx = 8;
 		gbc_btnSalir_1.gridy = 1;
 		panel.add(btnSalir_1, gbc_btnSalir_1);
 		btnSalir.addActionListener(new ActionListener() {
