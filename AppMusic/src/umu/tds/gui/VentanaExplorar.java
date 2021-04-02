@@ -74,6 +74,7 @@ public class VentanaExplorar {
 	public void initialize() {
 		frmVentanaExplorar = new JFrame();
 		frmVentanaExplorar.setTitle("AppMusic");
+		frmVentanaExplorar.setBounds(100, 100, 450, 300);
 		frmVentanaExplorar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel contentPane = (JPanel) frmVentanaExplorar.getContentPane();
