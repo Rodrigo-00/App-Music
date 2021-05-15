@@ -28,6 +28,7 @@ import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
+import pulsador.Luz;
 
 public class VentanaPrincipal {
 
@@ -164,6 +165,9 @@ public class VentanaPrincipal {
 		btnMisL.setBackground(Color.LIGHT_GRAY);
 		btnMisL.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/umu/tds/imagenes/lista-de-reproduccion.png")));
 		panel_1.add(btnMisL);
+		
+		Luz luz = new Luz();
+		panel_1.add(luz);
 		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
 		btnMisL.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
