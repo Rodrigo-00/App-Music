@@ -1,6 +1,8 @@
 package umu.tds.gui;
 
+import umu.tds.pulsador.*;
 import java.awt.BorderLayout;
+
 import java.awt.Font;
 
 import javax.swing.JFrame;
@@ -27,6 +29,8 @@ import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import javax.swing.JOptionPane;
 import pulsador.Luz;
 
@@ -165,10 +169,6 @@ public class VentanaPrincipal {
 		btnMisL.setBackground(Color.LIGHT_GRAY);
 		btnMisL.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/umu/tds/imagenes/lista-de-reproduccion.png")));
 		panel_1.add(btnMisL);
-		
-		Luz luz = new Luz();
-		panel_1.add(luz);
-		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
 		btnMisL.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VentanaMisListas reg = new VentanaMisListas();
@@ -176,6 +176,12 @@ public class VentanaPrincipal {
 				frmVentanaPrincipal.setVisible(false);
 			}
 		});
+		
+		Luz luz = new Luz();
+		panel_1.add(luz);
+		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
+		
+		
 	}
 	
 
