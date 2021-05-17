@@ -37,7 +37,7 @@ public final class Controlador implements PropertyChangeListener{
 	}
 	
 	public void propertyChange(PropertyChangeEvent evento) {
-		
+		System.out.println("Canciones añadidas");
 	}
 	
 	private void inicializarAdaptadores() {

@@ -46,7 +46,7 @@ public class CatalogoCanciones {
 	public void addCancion(Cancion cancion) {
 		cancionesInterprete.put(cancion.getInterprete(), cancion);
 		cancionesTitulo.put(cancion.getTitulo(), cancion);
-		if(cancionesEstilo.containsKey(cancion.getEstilo())) {
+		if(!cancionesEstilo.containsKey(cancion.getEstilo())) {
 			List<Cancion> canciones = new LinkedList<Cancion>();
 			canciones.add(cancion);
 			cancionesEstilo.put(cancion.getEstilo(), canciones);
