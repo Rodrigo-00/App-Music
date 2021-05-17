@@ -9,6 +9,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public final class Controlador implements PropertyChangeListener{
 
@@ -37,7 +38,6 @@ public final class Controlador implements PropertyChangeListener{
 	}
 	
 	public void propertyChange(PropertyChangeEvent evento) {
-		System.out.println("Canciones añadidas");
 	}
 	
 	private void inicializarAdaptadores() {
