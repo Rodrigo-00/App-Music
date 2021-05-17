@@ -17,6 +17,7 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.BoxLayout;
 import java.awt.GridLayout;
 import java.awt.GridBagLayout;
@@ -29,17 +30,26 @@ import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.File;
+
 import javax.swing.JOptionPane;
 import pulsador.Luz;
 
-public class VentanaPrincipal {
+public class VentanaPrincipal implements PropertyChangeListener{
 
 	private JFrame frmVentanaPrincipal;
 	
 	public VentanaPrincipal() {
 		initialize();
+	}
+	public void propertyChange(PropertyChangeEvent evento) {
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.showOpenDialog(frmVentanaPrincipal);	
+		File currentFile = fileChooser.getSelectedFile();
+		Controlador.getUnicaInstancia().cargarCanciones(currentFile.getAbsolutePath());
 	}
 	
 	public JFrame getFrame() {
@@ -180,6 +190,7 @@ public class VentanaPrincipal {
 		Luz luz = new Luz();
 		panel_1.add(luz);
 		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
+		luz.addEncendidoListener(this);
 		
 		
 	}

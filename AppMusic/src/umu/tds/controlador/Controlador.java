@@ -1,11 +1,16 @@
 package umu.tds.controlador;
+import umu.tds.cargadorCanciones.CargadorCanciones;
 import umu.tds.dominio.*;
 import umu.tds.modelo.*;
 import umu.tds.persistencia.*;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
-public final class Controlador {
+public final class Controlador implements PropertyChangeListener{
 
 	private Usuario usuarioActual;
 	private static Controlador unicaInstancia;
@@ -29,6 +34,10 @@ public final class Controlador {
 			unicaInstancia = new Controlador();
 		}
 		return unicaInstancia;
+	}
+	
+	public void propertyChange(PropertyChangeEvent evento) {
+		
 	}
 	
 	private void inicializarAdaptadores() {
@@ -119,5 +128,9 @@ public final class Controlador {
 		System.out.println("El nombre sigue siendo "+ lista.getNombre());
 		adaptadorPlaylist.registrarPlaylist(lista, usuarioActual.getId());
 		return true;
+	}
+	
+	public void cargarCanciones(String fichero) {
+		CargadorCanciones.getUnicaInstancia().setArchivoCanciones(fichero);
 	}
 }
