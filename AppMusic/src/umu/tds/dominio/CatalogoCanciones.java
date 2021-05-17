@@ -12,7 +12,7 @@ import umu.tds.persistencia.IAdaptadorCancionDAO;
 
 public class CatalogoCanciones {
 
-	//Buscar canciones con filtros de búsqueda el título, interprete y estilo musical
+	//Buscar canciones con filtros de bï¿½squeda el tï¿½tulo, interprete y estilo musical
 	private Map<String,Cancion> cancionesInterprete;
 	private Map<String,Cancion> cancionesTitulo;
 	private Map<String,List<Cancion>> cancionesEstilo;
@@ -61,8 +61,9 @@ public class CatalogoCanciones {
 	
 	
 	private void cargarCanciones() throws DAOException {
-		 List<Cancion> canciones = adaptadorCancion.getAll();		 
-		 for (Cancion cancion: canciones) addCancion(cancion); 
+		 List<Cancion> canciones = adaptadorCancion.getAll();
+			 for (Cancion cancion: canciones) 
+				 addCancion(cancion); 
 	}
 	
 }

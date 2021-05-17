@@ -2,10 +2,7 @@ package umu.tds.cargadorCanciones;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.io.File;
 import java.io.Serializable;
-
-import umu.tds.controlador.Controlador;
 
 
 public class CargadorCanciones implements Serializable{
@@ -15,7 +12,6 @@ public class CargadorCanciones implements Serializable{
 	
 	private CargadorCanciones() {
 		nuevaCancion = new PropertyChangeSupport(this);
-		nuevaCancion.addCancionesListener(Controlador.getUnicaInstancia());
 	}
 	
 	public static CargadorCanciones getUnicaInstancia() {

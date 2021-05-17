@@ -1,12 +1,12 @@
 package umu.tds.controlador;
+import umu.tds.cargadorCanciones.Canciones;
 import umu.tds.cargadorCanciones.CargadorCanciones;
+
 import umu.tds.dominio.*;
 import umu.tds.modelo.*;
 import umu.tds.persistencia.*;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -131,6 +131,13 @@ public final class Controlador implements PropertyChangeListener{
 	}
 	
 	public void cargarCanciones(String fichero) {
-		CargadorCanciones.getUnicaInstancia().setArchivoCanciones(fichero);
+		CargadorCanciones cargador = CargadorCanciones.getUnicaInstancia();
+		cargador.addCancionesListener(this);
+		Canciones canciones = cargador.setArchivoCanciones(fichero);
+		for(umu.tds.cargadorCanciones.Cancion cancion: canciones.getCancion()) {
+			Cancion song = new Cancion(cancion.getTitulo(), cancion.getInterprete(), cancion.getEstilo(), cancion.getURL());
+			adaptadorCancion.registrarCancion(song);
+			catalogoCanciones.addCancion(song);
+		}
 	}
 }

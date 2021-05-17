@@ -49,7 +49,7 @@ public class VentanaPrincipal implements PropertyChangeListener{
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.showOpenDialog(frmVentanaPrincipal);	
 		File currentFile = fileChooser.getSelectedFile();
-		Controlador.getUnicaInstancia().cargarCanciones(currentFile.getAbsolutePath());
+		Controlador.getUnicaInstancia().cargarCanciones(currentFile.getPath());
 	}
 	
 	public JFrame getFrame() {
