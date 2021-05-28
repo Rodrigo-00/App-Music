@@ -204,7 +204,7 @@ public class VentanaExplorar {
 		panel_3.add(panel_5, BorderLayout.SOUTH);
 		
 		JButton btnNewButton_3 = new JButton("Cancelar");
-		panel_5.add(btnNewButton_3);
+		panel_5.add(btnNewButton_3); 
 		
 		JPanel panel_6 = new JPanel();
 		panel_2.add(panel_6, BorderLayout.CENTER);
