@@ -209,12 +209,20 @@ public class VentanaExplorar {
 		panel_2.add(panel_6, BorderLayout.CENTER);
 		panel_6.setLayout(new BorderLayout(0, 0));	
 		
-		//frmVentanaExplorar.setVisible(false);
-		
-		/*
-		 DefaultTableModel model = new DefaultTableModel();s
-		    JTable table = new JTable(model);*/
-		
+		//Tabla
+		String[] columns = {"Column 1","Column 2"};
+		DefaultTableModel model = new DefaultTableModel(columns, 0);
+		JTable table = new JTable(model);
+		table.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				JTable table = (JTable) e.getSource();
+				int column = table.columnAtPoint(e.getPoint());
+				int row = table.rowAtPoint(e.getPoint());
+				
+				System.out.println(column);
+				System.out.println(row);
+			}
+		});
 		
 		
 		JButton btnNewButton = new JButton("Buscar");
@@ -228,10 +236,19 @@ public class VentanaExplorar {
 				    model.addRow(new Object[] { "r2" });
 				    model.addRow(new Object[] { "r3" });*/
 				//model.addRow(new Object[] { "data1", "data2" });
-				mostrarCanciones(panel_6);
+				//mostrarCanciones(panel_6);
+				frmVentanaExplorar.setVisible(false);
+				LinkedList<Cancion> canciones = (LinkedList<Cancion>) Controlador.getUnicaInstancia().getAllCanciones();
+				for(Cancion c : canciones ) {
+					model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
+				}
+				panel_6.add(table, BorderLayout.CENTER);
+				frmVentanaExplorar.setVisible(true);
+				
 			}
 		});
 		
+		//finTabla
 		
 		JPanel panel_7 = new JPanel();
 		panel_2.add(panel_7, BorderLayout.SOUTH);
