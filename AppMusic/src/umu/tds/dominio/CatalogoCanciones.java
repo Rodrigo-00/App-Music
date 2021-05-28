@@ -80,5 +80,26 @@ public class CatalogoCanciones {
 		return new LinkedList<Cancion>(canciones);
 	}
 	
+	public List<Cancion> getCancionesInterprete(String interprete){
+		return new LinkedList<Cancion>(cancionesInterprete.get(interprete));
+	}
+	
+	public Cancion getCancionTitulo(String titulo){
+		return cancionesTitulo.get(titulo);
+	}
+	
+	public Cancion getCancion(String titulo, String interprete){
+		
+		if(!cancionesInterprete.containsKey(interprete)) return null; //Si no existe el interprete o no tiene canciones
+		
+		LinkedList<Cancion> canciones = (LinkedList<Cancion>) cancionesInterprete.get(interprete);
+		for(Cancion c : canciones) {
+			if(c.getTitulo().equals(titulo)) return c; //Si la cancion es del interprete, la devolvemos
+		}
+		return null;
+	}
+	
+	
+	
 }
 

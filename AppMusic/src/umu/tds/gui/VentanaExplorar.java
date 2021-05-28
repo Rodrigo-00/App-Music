@@ -38,6 +38,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JSplitPane;
 import java.awt.Component;
@@ -213,6 +214,8 @@ public class VentanaExplorar {
 		String[] columns = {"Column 1","Column 2"};
 		DefaultTableModel model = new DefaultTableModel(columns, 0);
 		JTable table = new JTable(model);
+		table.setEditingRow(-2);
+		table.setEditingColumn(-2);
 		table.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				JTable table = (JTable) e.getSource();
@@ -224,29 +227,47 @@ public class VentanaExplorar {
 			}
 		});
 		
-		
 		JButton btnNewButton = new JButton("Buscar");
 		panel_5.add(btnNewButton);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				/*model.addColumn("Col1");
-				  model.addColumn("Col2");
-				    model.addRow(new Object[] { "r1" });
-				    model.addRow(new Object[] { "r2" });
-				    model.addRow(new Object[] { "r3" });*/
-				//model.addRow(new Object[] { "data1", "data2" });
-				//mostrarCanciones(panel_6);
 				frmVentanaExplorar.setVisible(false);
-				LinkedList<Cancion> canciones = (LinkedList<Cancion>) Controlador.getUnicaInstancia().getAllCanciones();
-				for(Cancion c : canciones ) {
-					model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
+				String interprete = txtInterprete.getText();
+				String titulo = txtTitulo.getText();
+				
+				int filas = model.getRowCount();
+				System.out.println("Eliminamo "+filas);
+				for(int i = 1; i <= filas; i++) {
+					System.out.println(i);
+					model.removeRow(0);    //Eliminamos todas las lineas de la tabla
+				}
+				
+				if((interprete.equals("Interprete") && titulo.equals("Titulo")) || (interprete.equals("") && titulo.equals(""))) {
+					LinkedList<Cancion> canciones = (LinkedList<Cancion>) Controlador.getUnicaInstancia().getAllCanciones();
+					for(Cancion c : canciones ) {
+						model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
+					}
+				}else if((interprete.equals("Interprete") && !titulo.equals("Titulo")) || interprete.equals("") && !titulo.equals("Titulo")) {
+					//Buscar por titulo
+					Cancion cancion = Controlador.getUnicaInstancia().getCancionTitulo(titulo);
+					model.addRow(new Object[] { cancion.getTitulo(), cancion.getInterprete() });
+				}else if((!interprete.equals("Interprete") && titulo.equals("Titulo")) || !interprete.equals("Interprete") && titulo.equals("")) {
+					//Buscar por interprete
+					LinkedList<Cancion> canciones = (LinkedList<Cancion>) Controlador.getUnicaInstancia().getCancionesInterprete(interprete);
+					for(Cancion c : canciones ) {
+						model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
+					}
+				}else {
+					//buscar cancion exacta
+					Cancion cancion = Controlador.getUnicaInstancia().getCancionTituloeInter(titulo, interprete);
+					if(cancion != null) model.addRow(new Object[] { cancion.getTitulo(), cancion.getInterprete() });
 				}
 				panel_6.add(table, BorderLayout.CENTER);
 				frmVentanaExplorar.setVisible(true);
 				
 			}
 		});
+		
 		
 		//finTabla
 		
