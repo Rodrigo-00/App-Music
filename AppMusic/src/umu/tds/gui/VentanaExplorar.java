@@ -29,12 +29,18 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import umu.tds.controlador.Controlador;
+import umu.tds.modelo.Cancion;
 
 import javax.swing.DefaultComboBoxModel;
 import java.awt.SystemColor;
 import javax.swing.UIManager;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.LinkedList;
 import java.awt.event.ActionEvent;
+import javax.swing.JSplitPane;
+import java.awt.Component;
 
 public class VentanaExplorar {
 
@@ -42,6 +48,10 @@ public class VentanaExplorar {
 	private JTextField txtInterprete;
 	private JTextField txtTitulo;
 	private JTable table;
+	private JTable table_1;
+	private JTable table_2;
+	private JTable table_3;
+	private JTable table_4;
 	
 	public VentanaExplorar() {
 		initialize();
@@ -74,7 +84,7 @@ public class VentanaExplorar {
 	public void initialize() {
 		frmVentanaExplorar = new JFrame();
 		frmVentanaExplorar.setTitle("AppMusic");
-		frmVentanaExplorar.setBounds(100, 100, 450, 300);
+		frmVentanaExplorar.setBounds(100, 100, 483, 368);
 		frmVentanaExplorar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel contentPane = (JPanel) frmVentanaExplorar.getContentPane();
@@ -90,8 +100,8 @@ public class VentanaExplorar {
 		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
-		JButton btnSalir = new JButton("Atr\u00E1s");
-		btnSalir.addActionListener(new ActionListener() {
+		JButton btnAtras = new JButton("Atr\u00E1s");
+		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VentanaPrincipal reg = new VentanaPrincipal();
 				reg.getFrame().setVisible(true);
@@ -102,7 +112,7 @@ public class VentanaExplorar {
 		gbc_btnSalir.insets = new Insets(0, 0, 5, 5);
 		gbc_btnSalir.gridx = 2;
 		gbc_btnSalir.gridy = 1;
-		panel.add(btnSalir, gbc_btnSalir);
+		panel.add(btnAtras, gbc_btnSalir);
 		
 		JButton btnHaztePremium = new JButton("Hazte Premium");
 		btnHaztePremium.setBackground(Color.YELLOW);
@@ -113,13 +123,13 @@ public class VentanaExplorar {
 		gbc_btnHaztePremium.gridy = 1;
 		panel.add(btnHaztePremium, gbc_btnHaztePremium);
 		
-		JButton btnSalir_1 = new JButton("Salir");
+		JButton btnSalir = new JButton("Salir");
 		GridBagConstraints gbc_btnSalir_1 = new GridBagConstraints();
 		gbc_btnSalir_1.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnSalir_1.insets = new Insets(0, 0, 5, 5);
 		gbc_btnSalir_1.gridx = 8;
 		gbc_btnSalir_1.gridy = 1;
-		panel.add(btnSalir_1, gbc_btnSalir_1);
+		panel.add(btnSalir, gbc_btnSalir_1);
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VentanaLogin reg = new VentanaLogin();
@@ -192,17 +202,36 @@ public class VentanaExplorar {
 		JPanel panel_5 = new JPanel();
 		panel_3.add(panel_5, BorderLayout.SOUTH);
 		
-		JButton btnNewButton = new JButton("Buscar");
-		panel_5.add(btnNewButton);
-		
 		JButton btnNewButton_3 = new JButton("Cancelar");
 		panel_5.add(btnNewButton_3);
 		
 		JPanel panel_6 = new JPanel();
 		panel_2.add(panel_6, BorderLayout.CENTER);
+		panel_6.setLayout(new BorderLayout(0, 0));	
 		
-		table = new JTable();
-		panel_6.add(table);
+		//frmVentanaExplorar.setVisible(false);
+		
+		/*
+		 DefaultTableModel model = new DefaultTableModel();s
+		    JTable table = new JTable(model);*/
+		
+		
+		
+		JButton btnNewButton = new JButton("Buscar");
+		panel_5.add(btnNewButton);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				/*model.addColumn("Col1");
+				  model.addColumn("Col2");
+				    model.addRow(new Object[] { "r1" });
+				    model.addRow(new Object[] { "r2" });
+				    model.addRow(new Object[] { "r3" });*/
+				//model.addRow(new Object[] { "data1", "data2" });
+				mostrarCanciones(panel_6);
+			}
+		});
+		
 		
 		JPanel panel_7 = new JPanel();
 		panel_2.add(panel_7, BorderLayout.SOUTH);
@@ -232,5 +261,49 @@ public class VentanaExplorar {
 		panel_7.add(btnAdelantar);
 		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
 
+	}
+	
+	private void mostrarCanciones(JPanel panel_6) {
+		frmVentanaExplorar.setVisible(false);
+		LinkedList<Cancion> canciones = (LinkedList<Cancion>) Controlador.getUnicaInstancia().getAllCanciones();
+		String[] columns = {"Column 1","Column 2"};
+		DefaultTableModel model = new DefaultTableModel(columns, 0);
+		JTable table = new JTable(model);
+		for(Cancion c : canciones ) {
+			model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
+		}
+			/*new Object[][] {
+				{null, null},
+				{"dasdas", null},
+				{"asdsda", null},
+			},
+			new String[] {
+				"New column", ""
+			}
+		));*/
+		
+		while(true) {
+			frmVentanaExplorar.setVisible(false);
+		table.addMouseListener(new MouseAdapter() {
+
+			public void mouseClicked(MouseEvent e) {
+				JTable table = (JTable) e.getSource();
+				int column = table.columnAtPoint(e.getPoint());
+				int row = table.rowAtPoint(e.getPoint());
+				
+				System.out.println(column);
+				System.out.println(row);
+			}
+			
+		});
+		panel_6.add(table, BorderLayout.CENTER);
+		frmVentanaExplorar.setVisible(true);
+		}
+		/*model.addRow(new Object[] { "sdsada", "sdsada" });
+		model.addRow(new Object[] { "sdsada", "sdsada" });
+		model.addRow(new Object[] { "sdsada", "sdsada" });
+		model.addRow(new Object[] { "sdsada", "sdsada" });
+		model.addRow(new Object[] { "sdsada", "sdsada" });*/
+		
 	}
 }

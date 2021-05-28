@@ -13,7 +13,8 @@ import umu.tds.persistencia.IAdaptadorCancionDAO;
 public class CatalogoCanciones {
 
 	//Buscar canciones con filtros de b�squeda el t�tulo, interprete y estilo musical
-	private Map<String,Cancion> cancionesInterprete;
+	private List<Cancion> canciones;
+	private Map<String,List<Cancion>> cancionesInterprete;
 	private Map<String,Cancion> cancionesTitulo;
 	private Map<String,List<Cancion>> cancionesEstilo;
 	private static CatalogoCanciones unicaInstancia;
@@ -33,7 +34,8 @@ public class CatalogoCanciones {
 		try {
 			FactoriaDAO dao = FactoriaDAO.getInstancia();
 			adaptadorCancion = dao.getCancionDAO();
-			cancionesInterprete = new HashMap<String,Cancion>();
+			canciones = new LinkedList<Cancion>();
+			cancionesInterprete = new HashMap<String,List<Cancion>>();
 			cancionesTitulo = new HashMap<String,Cancion>();
 			cancionesEstilo = new HashMap<String,List<Cancion>>();
 			cargarCanciones();
@@ -44,8 +46,16 @@ public class CatalogoCanciones {
 	}
 	
 	public void addCancion(Cancion cancion) {
-		cancionesInterprete.put(cancion.getInterprete(), cancion);
+		
+		canciones.add(cancion);
+		if(!cancionesInterprete.containsKey(cancion.getInterprete())) {
+			List<Cancion> canciones = new LinkedList<Cancion>();
+			canciones.add(cancion);
+			cancionesInterprete.put(cancion.getInterprete(), canciones);
+		}else cancionesInterprete.get(cancion.getInterprete()).add(cancion);
+		
 		cancionesTitulo.put(cancion.getTitulo(), cancion);
+		
 		if(!cancionesEstilo.containsKey(cancion.getEstilo())) {
 			List<Cancion> canciones = new LinkedList<Cancion>();
 			canciones.add(cancion);
@@ -54,7 +64,7 @@ public class CatalogoCanciones {
 		}else cancionesEstilo.get(cancion.getEstilo()).add(cancion);
 	}
 	
-	
+
 	public void removeCancion (Cancion cancion) {
 		
 	}
@@ -64,6 +74,10 @@ public class CatalogoCanciones {
 		 List<Cancion> canciones = adaptadorCancion.getAll();
 			 for (Cancion cancion: canciones) 
 				 addCancion(cancion); 
+	}
+	
+	public List<Cancion> getAll() {
+		return new LinkedList<Cancion>(canciones);
 	}
 	
 }

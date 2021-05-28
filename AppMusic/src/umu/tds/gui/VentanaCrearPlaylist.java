@@ -56,7 +56,7 @@ public class VentanaCrearPlaylist {
 	 */
 	private void initialize() {
 		frmCrearPlaylist = new JFrame();
-		frmCrearPlaylist.setBounds(100, 100, 450, 300);
+		frmCrearPlaylist.setBounds(100, 100, 483, 368);
 		frmCrearPlaylist.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel panel = new JPanel();

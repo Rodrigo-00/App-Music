@@ -9,7 +9,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 public final class Controlador implements PropertyChangeListener{
 
@@ -139,5 +138,9 @@ public final class Controlador implements PropertyChangeListener{
 			adaptadorCancion.registrarCancion(song);
 			catalogoCanciones.addCancion(song);
 		}
+	}
+	
+	public List<Cancion> getAllCanciones(){
+		return catalogoCanciones.getAll();
 	}
 }
