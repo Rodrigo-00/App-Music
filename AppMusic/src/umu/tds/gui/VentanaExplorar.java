@@ -85,7 +85,7 @@ public class VentanaExplorar {
 	public void initialize() {
 		frmVentanaExplorar = new JFrame();
 		frmVentanaExplorar.setTitle("AppMusic");
-		frmVentanaExplorar.setBounds(100, 100, 483, 368);
+		frmVentanaExplorar.setBounds(100, 100, 583, 368);
 		frmVentanaExplorar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel contentPane = (JPanel) frmVentanaExplorar.getContentPane();
@@ -197,7 +197,7 @@ public class VentanaExplorar {
 		txtTitulo.setColumns(10);
 		
 		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Estilo","POP","JAZZ","ROCK"}));
+		comboBox.setModel(new DefaultComboBoxModel(Controlador.getUnicaInstancia().getEstilos()));
 		panel_4.add(comboBox);
 		
 		JPanel panel_5 = new JPanel();
@@ -232,8 +232,10 @@ public class VentanaExplorar {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmVentanaExplorar.setVisible(false);
+				
 				String interprete = txtInterprete.getText();
 				String titulo = txtTitulo.getText();
+				String estilo = (String) comboBox.getSelectedItem();
 				
 				int filas = model.getRowCount();
 				System.out.println("Eliminamo "+filas);
@@ -242,7 +244,7 @@ public class VentanaExplorar {
 					model.removeRow(0);    //Eliminamos todas las lineas de la tabla
 				}
 				
-				if((interprete.equals("Interprete") && titulo.equals("Titulo")) || (interprete.equals("") && titulo.equals(""))) {
+				if((interprete.equals("Interprete") && titulo.equals("Titulo") && comboBox.getSelectedItem().equals("Estilo")) || (interprete.equals("") && titulo.equals("") && comboBox.getSelectedItem().equals("Estilo"))) {
 					LinkedList<Cancion> canciones = (LinkedList<Cancion>) Controlador.getUnicaInstancia().getAllCanciones();
 					for(Cancion c : canciones ) {
 						model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
@@ -250,10 +252,25 @@ public class VentanaExplorar {
 				}else if((interprete.equals("Interprete") && !titulo.equals("Titulo")) || interprete.equals("") && !titulo.equals("Titulo")) {
 					//Buscar por titulo
 					Cancion cancion = Controlador.getUnicaInstancia().getCancionTitulo(titulo);
-					model.addRow(new Object[] { cancion.getTitulo(), cancion.getInterprete() });
+					if(cancion != null) model.addRow(new Object[] { cancion.getTitulo(), cancion.getInterprete() });
+					
 				}else if((!interprete.equals("Interprete") && titulo.equals("Titulo")) || !interprete.equals("Interprete") && titulo.equals("")) {
 					//Buscar por interprete
 					LinkedList<Cancion> canciones = (LinkedList<Cancion>) Controlador.getUnicaInstancia().getCancionesInterprete(interprete);
+					for(Cancion c : canciones ) {
+						model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
+					}
+					
+				}if((interprete.equals("Interprete") && titulo.equals("Titulo") && !comboBox.getSelectedItem().equals("Estilo")) || (interprete.equals("") && titulo.equals("") && !comboBox.getSelectedItem().equals("Estilo"))) {
+					//Buscar por estilo
+					LinkedList<Cancion> canciones = (LinkedList<Cancion>) Controlador.getUnicaInstancia().getCancionesEstilo(estilo);
+					for(Cancion c : canciones ) {
+						model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
+					}
+					
+				}if((interprete.equals("Interprete") && titulo.equals("Titulo") && !comboBox.getSelectedItem().equals("Estilo")) || (interprete.equals("") && titulo.equals("") && !comboBox.getSelectedItem().equals("Estilo"))) {
+					//Buscar por estilo y autor
+					LinkedList<Cancion> canciones = (LinkedList<Cancion>) Controlador.getUnicaInstancia().getCancionesEstiloInter(estilo, interprete);
 					for(Cancion c : canciones ) {
 						model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
 					}
@@ -264,7 +281,6 @@ public class VentanaExplorar {
 				}
 				panel_6.add(table, BorderLayout.CENTER);
 				frmVentanaExplorar.setVisible(true);
-				
 			}
 		});
 		

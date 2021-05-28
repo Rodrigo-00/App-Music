@@ -155,4 +155,17 @@ public final class Controlador implements PropertyChangeListener{
 	public Cancion getCancionTituloeInter(String titulo, String interprete){
 		return catalogoCanciones.getCancion(titulo, interprete);
 	}
+	
+	public List<Cancion> getCancionesEstilo(String estilo){
+		return  catalogoCanciones.getCancionesEstilo(estilo);
+	}
+	
+	public List<Cancion> getCancionesEstiloInter(String estilo, String interprete){
+		return  catalogoCanciones.getCancionesEstiloInter(estilo, interprete);
+	}
+	
+	public String[] getEstilos() {
+		return  catalogoCanciones.getEstilos();
+	}
+	
 }

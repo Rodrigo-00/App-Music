@@ -65,7 +65,7 @@ public class VentanaMisListas{
 	public void initialize() {
 		frmVentanaMisListas = new JFrame();
 		frmVentanaMisListas.setTitle("AppMusic");
-		frmVentanaMisListas.setBounds(100, 100, 483, 368);
+		frmVentanaMisListas.setBounds(100, 100, 583, 368);
 		frmVentanaMisListas.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel contentPane = (JPanel) frmVentanaMisListas.getContentPane();

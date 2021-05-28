@@ -81,10 +81,12 @@ public class CatalogoCanciones {
 	}
 	
 	public List<Cancion> getCancionesInterprete(String interprete){
+		if(!cancionesInterprete.containsKey(interprete)) return new LinkedList(); //Si no hay se encuentra el interprete
 		return new LinkedList<Cancion>(cancionesInterprete.get(interprete));
 	}
 	
 	public Cancion getCancionTitulo(String titulo){
+		if(!cancionesTitulo.containsKey(titulo)) return null;
 		return cancionesTitulo.get(titulo);
 	}
 	
@@ -99,7 +101,32 @@ public class CatalogoCanciones {
 		return null;
 	}
 	
+	public List<Cancion> getCancionesEstilo(String estilo){
+		if(!cancionesEstilo.containsKey(estilo)) return new LinkedList(); //Si no hay canciones de ese estilo
+		return new LinkedList<Cancion>(cancionesEstilo.get(estilo));
+	}
 	
+	public List<Cancion> getCancionesEstiloInter(String estilo, String interprete){
+		
+		List<Cancion> lista = new LinkedList<Cancion>();
+		if(!cancionesInterprete.containsKey(interprete)) return lista; //Si no existe el interprete o no tiene canciones
+		for (Cancion c : cancionesInterprete.get(interprete)) {
+			if(c.getEstilo().equals(estilo)) lista.add(c);
+		}
+		return lista;
+	}
+	
+	public String[] getEstilos(){	//Proporcionamos todos los estilos disponibles
+		int tamaño = cancionesEstilo.keySet().size();
+		String[] estilos = new String[tamaño+1];
+		estilos[0] = "Estilo";
+		int es = 1;
+		for (String e: cancionesEstilo.keySet()) {
+			estilos[es] = e;
+			es++;
+		}
+		return estilos;
+	}
 	
 }
 
