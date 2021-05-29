@@ -201,7 +201,7 @@ public class VentanaExplorar {
 		txtTitulo.setColumns(10);
 		
 		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(Controlador.getUnicaInstancia().getEstilos()));
+		comboBox.setModel(new DefaultComboBoxModel(Controlador.getUnicaInstancia().getEstilos()));	//Obtenemos todos los estilos
 		panel_4.add(comboBox);
 		
 		JPanel panel_5 = new JPanel();
@@ -209,6 +209,13 @@ public class VentanaExplorar {
 		
 		JButton btnNewButton_3 = new JButton("Cancelar");
 		panel_5.add(btnNewButton_3); 
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				txtInterprete.setText("Interprete");
+				txtTitulo.setText("Titulo");
+				comboBox.setSelectedItem("Estilo");
+			}
+		});
 		
 		JPanel panel_6 = new JPanel();
 		panel_2.add(panel_6, BorderLayout.CENTER);
@@ -289,14 +296,14 @@ public class VentanaExplorar {
 						model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
 					}
 					
-				}if((interprete.equals("Interprete") && titulo.equals("Titulo") && !comboBox.getSelectedItem().equals("Estilo")) || (interprete.equals("") && titulo.equals("") && !comboBox.getSelectedItem().equals("Estilo"))) {
+				}if((interprete.equals("Interprete") || interprete.equals("")) && (titulo.equals("Titulo") || titulo.equals("")) && !comboBox.getSelectedItem().equals("Estilo")) {
 					//Buscar por estilo
 					LinkedList<Cancion> canciones = (LinkedList<Cancion>) Controlador.getUnicaInstancia().getCancionesEstilo(estilo);
 					for(Cancion c : canciones ) {
 						model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
 					}
 					
-				}if((interprete.equals("Interprete") && titulo.equals("Titulo") && !comboBox.getSelectedItem().equals("Estilo")) || (interprete.equals("") && titulo.equals("") && !comboBox.getSelectedItem().equals("Estilo"))) {
+				}if((!interprete.equals("Interprete") && !interprete.equals("") && titulo.equals("Titulo") && !comboBox.getSelectedItem().equals("Estilo")) || (!interprete.equals("Interprete") && !interprete.equals("") && titulo.equals("") && !comboBox.getSelectedItem().equals("Estilo"))) {
 					//Buscar por estilo y autor
 					LinkedList<Cancion> canciones = (LinkedList<Cancion>) Controlador.getUnicaInstancia().getCancionesEstiloInter(estilo, interprete);
 					for(Cancion c : canciones ) {
