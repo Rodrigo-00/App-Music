@@ -42,10 +42,13 @@ import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JSplitPane;
 import java.awt.Component;
+import javax.swing.DropMode;
+import java.awt.Cursor;
+import javax.swing.JSlider;
 
 public class VentanaExplorar {
 
-	private JFrame frmVentanaExplorar;
+	JFrame frmVentanaExplorar;
 	private JTextField txtInterprete;
 	private JTextField txtTitulo;
 	private JTable table;
@@ -53,6 +56,7 @@ public class VentanaExplorar {
 	private JTable table_2;
 	private JTable table_3;
 	private JTable table_4;
+	private JTable table_5;
 	
 	public VentanaExplorar() {
 		initialize();
@@ -208,12 +212,24 @@ public class VentanaExplorar {
 		
 		JPanel panel_6 = new JPanel();
 		panel_2.add(panel_6, BorderLayout.CENTER);
-		panel_6.setLayout(new BorderLayout(0, 0));	
+		panel_6.setLayout(new BorderLayout(0, 0));
+		
+		
+		JSlider slider = new JSlider();
+		slider.setOrientation(SwingConstants.VERTICAL);
+		panel_6.add(slider, BorderLayout.EAST);
+		
 		
 		//Tabla
 		String[] columns = {"Column 1","Column 2"};
 		DefaultTableModel model = new DefaultTableModel(columns, 0);
 		JTable table = new JTable(model);
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		table.setEnabled(false);
+		table.setBounds(5, 5, 5, 5);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		table.setAutoCreateColumnsFromModel(false);
 		table.setEditingRow(-2);
 		table.setEditingColumn(-2);
 		table.addMouseListener(new MouseAdapter() {
@@ -226,13 +242,24 @@ public class VentanaExplorar {
 				System.out.println(row);
 			}
 		});
+		model.addRow(new Object[] { "dasdas", "dasdasd" });
+		model.addRow(new Object[] { "dasdas", "dasdasd" });
+		model.addRow(new Object[] { "dasdas", "dasdasd" });
+		model.addRow(new Object[] { "dasdas", "dasdasd" });
+		model.addRow(new Object[] { "dasdas", "dasdasd" });
+		model.addRow(new Object[] { "dasdas", "dasdasd" });
+		model.addRow(new Object[] { "dasdas", "dasdasd" });
+		model.addRow(new Object[] { "dasdas", "dasdasd" });
+		model.addRow(new Object[] { "dasdas", "dasdasd" });
+		model.addRow(new Object[] { "dasdas", "dasdasd" });
+		panel_6.add(table, BorderLayout.CENTER);
 		
 		JButton btnNewButton = new JButton("Buscar");
 		panel_5.add(btnNewButton);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmVentanaExplorar.setVisible(false);
-				
+
 				String interprete = txtInterprete.getText();
 				String titulo = txtTitulo.getText();
 				String estilo = (String) comboBox.getSelectedItem();
@@ -243,6 +270,7 @@ public class VentanaExplorar {
 					System.out.println(i);
 					model.removeRow(0);    //Eliminamos todas las lineas de la tabla
 				}
+				
 				
 				if((interprete.equals("Interprete") && titulo.equals("Titulo") && comboBox.getSelectedItem().equals("Estilo")) || (interprete.equals("") && titulo.equals("") && comboBox.getSelectedItem().equals("Estilo"))) {
 					LinkedList<Cancion> canciones = (LinkedList<Cancion>) Controlador.getUnicaInstancia().getAllCanciones();

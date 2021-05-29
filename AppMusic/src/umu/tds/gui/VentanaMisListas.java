@@ -185,7 +185,7 @@ public class VentanaMisListas{
 		JList<String> list = new JList(listas.toArray());
 		list.setSelectedIndex(0);
 		
-		list.setBounds(0, 0, 113, 109);
+		list.setBounds(0, 0, 142, 109);
 		panel_3.add(list);
 		
 		JButton btnReproducir = new JButton("Reproducir");
