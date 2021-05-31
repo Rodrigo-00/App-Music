@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import umu.tds.persistencia.FactoriaDAO;
 import umu.tds.modelo.Cancion;
@@ -12,11 +13,9 @@ import umu.tds.persistencia.IAdaptadorCancionDAO;
 
 public class CatalogoCanciones {
 
-	//Buscar canciones con filtros de bï¿½squeda el tï¿½tulo, interprete y estilo musical
+	//Buscar canciones con filtros de busqueda el titulo, interprete y estilo musical
+	
 	private List<Cancion> canciones;
-	private Map<String,List<Cancion>> cancionesInterprete;
-	private Map<String,Cancion> cancionesTitulo;
-	private Map<String,List<Cancion>> cancionesEstilo;
 	private static CatalogoCanciones unicaInstancia;
 	private IAdaptadorCancionDAO adaptadorCancion;
 	
@@ -35,9 +34,6 @@ public class CatalogoCanciones {
 			FactoriaDAO dao = FactoriaDAO.getInstancia();
 			adaptadorCancion = dao.getCancionDAO();
 			canciones = new LinkedList<Cancion>();
-			cancionesInterprete = new HashMap<String,List<Cancion>>();
-			cancionesTitulo = new HashMap<String,Cancion>();
-			cancionesEstilo = new HashMap<String,List<Cancion>>();
 			cargarCanciones();
 		} catch (DAOException e) {
 			e.printStackTrace();
@@ -47,26 +43,10 @@ public class CatalogoCanciones {
 	
 	public void addCancion(Cancion cancion) {
 		
-		canciones.add(cancion);
-		if(!cancionesInterprete.containsKey(cancion.getInterprete())) {
-			List<Cancion> canciones = new LinkedList<Cancion>();
-			canciones.add(cancion);
-			cancionesInterprete.put(cancion.getInterprete(), canciones);
-		}else cancionesInterprete.get(cancion.getInterprete()).add(cancion);
+		boolean contiene = canciones.stream()
+				.anyMatch(c -> c.getTitulo().equals(cancion.getTitulo()) && c.getInterprete().equals(cancion.getInterprete()) && c.getEstilo().equals(cancion.getEstilo())); //Suponemos que si el titulo, el interprete y el estilo es el mismo la canción es la misma
 		
-		cancionesTitulo.put(cancion.getTitulo(), cancion);
-		
-		if(!cancionesEstilo.containsKey(cancion.getEstilo())) {
-			List<Cancion> canciones = new LinkedList<Cancion>();
-			canciones.add(cancion);
-			cancionesEstilo.put(cancion.getEstilo(), canciones);
-		
-		}else cancionesEstilo.get(cancion.getEstilo()).add(cancion);
-	}
-	
-
-	public void removeCancion (Cancion cancion) {
-		
+		if(!contiene) canciones.add(cancion);
 	}
 	
 	
@@ -76,56 +56,70 @@ public class CatalogoCanciones {
 				 addCancion(cancion); 
 	}
 	
+	public void removeCancion (Cancion cancion) {
+		canciones.remove(cancion);
+	}
+	
 	public List<Cancion> getAll() {
 		return new LinkedList<Cancion>(canciones);
 	}
 	
 	public List<Cancion> getCancionesInterprete(String interprete){
-		if(!cancionesInterprete.containsKey(interprete)) return new LinkedList(); //Si no hay se encuentra el interprete
-		return new LinkedList<Cancion>(cancionesInterprete.get(interprete));
+		return canciones.stream()
+				.filter(ca -> ca.isInterprete(interprete))
+				.collect(Collectors.toList());
 	}
 	
 	public Cancion getCancionTitulo(String titulo){
-		if(!cancionesTitulo.containsKey(titulo)) return null;
-		return cancionesTitulo.get(titulo);
+		for(Cancion c:canciones) {
+			if(c.getTitulo().equals(titulo)) return c;
+		}
+		return null;
 	}
 	
-	public Cancion getCancion(String titulo, String interprete){
-		
-		if(!cancionesInterprete.containsKey(interprete)) return null; //Si no existe el interprete o no tiene canciones
-		
-		LinkedList<Cancion> canciones = (LinkedList<Cancion>) cancionesInterprete.get(interprete);
-		for(Cancion c : canciones) {
-			if(c.getTitulo().equals(titulo)) return c; //Si la cancion es del interprete, la devolvemos
+	public Cancion getCancion(String titulo, String interprete){		
+		for(Cancion c:canciones) {
+			if(c.getTitulo().equals(titulo) && c.getInterprete().equals(interprete)) return c;
 		}
 		return null;
 	}
 	
 	public List<Cancion> getCancionesEstilo(String estilo){
-		if(!cancionesEstilo.containsKey(estilo)) return new LinkedList(); //Si no hay canciones de ese estilo
-		return new LinkedList<Cancion>(cancionesEstilo.get(estilo));
+		return canciones.stream()
+				.filter(ca -> ca.isEstilo(estilo))
+				.collect(Collectors.toList());
 	}
 	
 	public List<Cancion> getCancionesEstiloInter(String estilo, String interprete){
 		
-		List<Cancion> lista = new LinkedList<Cancion>();
-		if(!cancionesInterprete.containsKey(interprete)) return lista; //Si no existe el interprete o no tiene canciones
-		for (Cancion c : cancionesInterprete.get(interprete)) {
-			if(c.getEstilo().equals(estilo)) lista.add(c);
-		}
-		return lista;
+		return canciones.stream()
+				.filter(ca -> ca.isInterprete(interprete) && ca.isEstilo(estilo))
+				.collect(Collectors.toList());
 	}
 	
-	public String[] getEstilos(){	//Proporcionamos todos los estilos disponibles
-		int tamaño = cancionesEstilo.keySet().size();
-		String[] estilos = new String[tamaño+1];
-		estilos[0] = "Estilo";
-		int es = 1;
-		for (String e: cancionesEstilo.keySet()) {
-			estilos[es] = e;
-			es++;
+	
+	public Cancion getCancionTituloyEsti(String titulo, String estilo) {
+		for(Cancion c:canciones) {
+			if(c.getTitulo().equals(titulo) && c.getEstilo().equals(estilo)) return c;
 		}
-		return estilos;
+		return null;
+	}
+	
+	public Cancion getCancionTitInterEsti(String titulo, String interprete, String estilo) {
+		for(Cancion c:canciones) {
+			if(c.getTitulo().equals(titulo) && c.getInterprete().equals(interprete) && c.getEstilo().equals(estilo)) return c;
+		}
+		return null;
+	}
+	
+	public List<String> getEstilos(){	//Proporcionamos todos los estilos disponibles
+		
+		List<String> lista = canciones.stream()
+				.map(ca -> ca.getEstilo())
+				.distinct()
+				.collect(Collectors.toList());
+		lista.add(0, "Estilo");
+		return lista;
 	}
 	
 }

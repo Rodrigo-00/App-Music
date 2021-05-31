@@ -24,6 +24,14 @@ public class Cancion {
 	}
 	
 	
+	public boolean isInterprete(String interpre) {
+		return interprete.equals(interpre);
+	}
+	
+	public boolean isEstilo(String esti) {
+		return estilo.equals(esti);
+	}
+	
 	public int getReproducciones() {
 		return reproducciones;
 	}

@@ -201,7 +201,7 @@ public class VentanaExplorar {
 		txtTitulo.setColumns(10);
 		
 		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(Controlador.getUnicaInstancia().getEstilos()));	//Obtenemos todos los estilos
+		comboBox.setModel(new DefaultComboBoxModel(Controlador.getUnicaInstancia().getEstilos().toArray()));	//Obtenemos todos los estilos
 		panel_4.add(comboBox);
 		
 		JPanel panel_5 = new JPanel();
@@ -266,7 +266,8 @@ public class VentanaExplorar {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmVentanaExplorar.setVisible(false);
-
+				
+				//Extraemos los datos seleccionados
 				String interprete = txtInterprete.getText();
 				String titulo = txtTitulo.getText();
 				String estilo = (String) comboBox.getSelectedItem();
@@ -279,38 +280,52 @@ public class VentanaExplorar {
 				}
 				
 				
-				if((interprete.equals("Interprete") && titulo.equals("Titulo") && comboBox.getSelectedItem().equals("Estilo")) || (interprete.equals("") && titulo.equals("") && comboBox.getSelectedItem().equals("Estilo"))) {
-					LinkedList<Cancion> canciones = (LinkedList<Cancion>) Controlador.getUnicaInstancia().getAllCanciones();
+				if(((interprete.equals("Interprete") || interprete.equals("")) && (titulo.equals("") || titulo.equals("Titulo")) && comboBox.getSelectedItem().equals("Estilo"))) {
+					//Buscar todas las canciones
+					List<Cancion> canciones = Controlador.getUnicaInstancia().getAllCanciones();
 					for(Cancion c : canciones ) {
 						model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
 					}
-				}else if((interprete.equals("Interprete") && !titulo.equals("Titulo")) || interprete.equals("") && !titulo.equals("Titulo")) {
+				}else if(((interprete.equals("Interprete") || interprete.equals("")) && (!titulo.equals("") && !titulo.equals("Titulo")) && comboBox.getSelectedItem().equals("Estilo"))) {
 					//Buscar por titulo
 					Cancion cancion = Controlador.getUnicaInstancia().getCancionTitulo(titulo);
 					if(cancion != null) model.addRow(new Object[] { cancion.getTitulo(), cancion.getInterprete() });
 					
-				}else if((!interprete.equals("Interprete") && titulo.equals("Titulo")) || !interprete.equals("Interprete") && titulo.equals("")) {
+				}else if(((!interprete.equals("Interprete") && !interprete.equals("")) && (titulo.equals("") || titulo.equals("Titulo")) && comboBox.getSelectedItem().equals("Estilo"))) {
 					//Buscar por interprete
-					LinkedList<Cancion> canciones = (LinkedList<Cancion>) Controlador.getUnicaInstancia().getCancionesInterprete(interprete);
+					List<Cancion> canciones = Controlador.getUnicaInstancia().getCancionesInterprete(interprete);
 					for(Cancion c : canciones ) {
 						model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
 					}
 					
-				}if((interprete.equals("Interprete") || interprete.equals("")) && (titulo.equals("Titulo") || titulo.equals("")) && !comboBox.getSelectedItem().equals("Estilo")) {
+				}else if(((interprete.equals("Interprete") || interprete.equals("")) && (titulo.equals("") || titulo.equals("Titulo")) && !comboBox.getSelectedItem().equals("Estilo"))) {
 					//Buscar por estilo
-					LinkedList<Cancion> canciones = (LinkedList<Cancion>) Controlador.getUnicaInstancia().getCancionesEstilo(estilo);
+					List<Cancion> canciones = Controlador.getUnicaInstancia().getCancionesEstilo(estilo);
 					for(Cancion c : canciones ) {
 						model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
 					}
 					
-				}if((!interprete.equals("Interprete") && !interprete.equals("") && titulo.equals("Titulo") && !comboBox.getSelectedItem().equals("Estilo")) || (!interprete.equals("Interprete") && !interprete.equals("") && titulo.equals("") && !comboBox.getSelectedItem().equals("Estilo"))) {
+				}else if(((!interprete.equals("Interprete") && !interprete.equals("")) && (titulo.equals("") || titulo.equals("Titulo")) && !comboBox.getSelectedItem().equals("Estilo"))) {
 					//Buscar por estilo y autor
-					LinkedList<Cancion> canciones = (LinkedList<Cancion>) Controlador.getUnicaInstancia().getCancionesEstiloInter(estilo, interprete);
+					System.out.println("entra");
+					List<Cancion> canciones = Controlador.getUnicaInstancia().getCancionesEstiloInter(estilo, interprete);
 					for(Cancion c : canciones ) {
+						System.out.println("Cancion encontrada ");
 						model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
 					}
+				} if(((interprete.equals("Interprete") || interprete.equals("")) && (!titulo.equals("") && !titulo.equals("Titulo")) && !comboBox.getSelectedItem().equals("Estilo"))) {
+					//Buscar por estilo y titulo
+					Cancion cancion = Controlador.getUnicaInstancia().getCancionTituloyEsti(titulo, estilo);
+					if(cancion != null) model.addRow(new Object[] { cancion.getTitulo(), cancion.getInterprete() });
+					
+				} if(((!interprete.equals("Interprete") && !interprete.equals("")) && (!titulo.equals("") && !titulo.equals("Titulo")) && !comboBox.getSelectedItem().equals("Estilo"))){	
+					//Buscar por titulo, autor y estilo
+					Cancion cancion = Controlador.getUnicaInstancia().getCancionTitInterEsti(titulo, interprete, estilo);
+					if(cancion != null) model.addRow(new Object[] { cancion.getTitulo(), cancion.getInterprete() });
+					
+					
 				}else {
-					//buscar cancion exacta
+					//buscar por autor y titulo
 					Cancion cancion = Controlador.getUnicaInstancia().getCancionTituloeInter(titulo, interprete);
 					if(cancion != null) model.addRow(new Object[] { cancion.getTitulo(), cancion.getInterprete() });
 				}
