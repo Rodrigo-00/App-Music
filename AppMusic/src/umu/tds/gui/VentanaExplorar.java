@@ -45,6 +45,7 @@ import java.awt.Component;
 import javax.swing.DropMode;
 import java.awt.Cursor;
 import javax.swing.JSlider;
+import javax.swing.JScrollPane;
 
 public class VentanaExplorar {
 
@@ -57,6 +58,10 @@ public class VentanaExplorar {
 	private JTable table_3;
 	private JTable table_4;
 	private JTable table_5;
+	private JTable table_6;
+	private JTable table_7;
+	private JTable table_8;
+	private JTable table_9;
 	
 	public VentanaExplorar() {
 		initialize();
@@ -216,26 +221,22 @@ public class VentanaExplorar {
 				comboBox.setSelectedItem("Estilo");
 			}
 		});
+
+
 		
-		JPanel panel_6 = new JPanel();
-		panel_2.add(panel_6, BorderLayout.CENTER);
-		panel_6.setLayout(new BorderLayout(0, 0));
-		
-		
-		JSlider slider = new JSlider();
-		slider.setOrientation(SwingConstants.VERTICAL);
-		panel_6.add(slider, BorderLayout.EAST);
-		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setMinimumSize(new Dimension(800, 800));
+		panel_2.add(scrollPane, BorderLayout.CENTER);
 		
 		//Tabla
-		String[] columns = {"Column 1","Column 2"};
+		String[] columns = {"Titulo","Interprete"};
 		DefaultTableModel model = new DefaultTableModel(columns, 0);
 		JTable table = new JTable(model);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		table.setEnabled(false);
 		table.setBounds(5, 5, 5, 5);
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		table.setAutoCreateColumnsFromModel(false);
 		table.setEditingRow(-2);
 		table.setEditingColumn(-2);
@@ -259,7 +260,10 @@ public class VentanaExplorar {
 		model.addRow(new Object[] { "dasdas", "dasdasd" });
 		model.addRow(new Object[] { "dasdas", "dasdasd" });
 		model.addRow(new Object[] { "dasdas", "dasdasd" });
-		panel_6.add(table, BorderLayout.CENTER);
+
+		scrollPane.setViewportView(table);
+	
+		
 		
 		JButton btnNewButton = new JButton("Buscar");
 		panel_5.add(btnNewButton);
@@ -329,13 +333,15 @@ public class VentanaExplorar {
 					Cancion cancion = Controlador.getUnicaInstancia().getCancionTituloeInter(titulo, interprete);
 					if(cancion != null) model.addRow(new Object[] { cancion.getTitulo(), cancion.getInterprete() });
 				}
-				panel_6.add(table, BorderLayout.CENTER);
+				
+				scrollPane.setViewportView(table);
 				frmVentanaExplorar.setVisible(true);
 			}
 		});
 		
 		
 		//finTabla
+		
 		
 		JPanel panel_7 = new JPanel();
 		panel_2.add(panel_7, BorderLayout.SOUTH);
@@ -363,6 +369,7 @@ public class VentanaExplorar {
 		btnAdelantar.setPreferredSize(new Dimension(50, 50));
 		btnAdelantar.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/next_music_player_play_media-512.png")));
 		panel_7.add(btnAdelantar);
+		
 		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
 
 	}
