@@ -52,16 +52,6 @@ public class VentanaExplorar {
 	JFrame frmVentanaExplorar;
 	private JTextField txtInterprete;
 	private JTextField txtTitulo;
-	private JTable table;
-	private JTable table_1;
-	private JTable table_2;
-	private JTable table_3;
-	private JTable table_4;
-	private JTable table_5;
-	private JTable table_6;
-	private JTable table_7;
-	private JTable table_8;
-	private JTable table_9;
 	
 	public VentanaExplorar() {
 		initialize();
