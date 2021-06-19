@@ -9,6 +9,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.LinkedList;
 import java.util.List;
+import java.io.File;
+import javafx.scene.media.Media; 
+import javafx.scene.media.MediaPlayer; 
 
 public final class Controlador implements PropertyChangeListener{
 
@@ -174,6 +177,10 @@ public final class Controlador implements PropertyChangeListener{
 	
 	public List<String> getEstilos() {
 		return  catalogoCanciones.getEstilos();
+	}
+	
+	public void reproducirCancion(Cancion c) {
+		
 	}
 	
 }
