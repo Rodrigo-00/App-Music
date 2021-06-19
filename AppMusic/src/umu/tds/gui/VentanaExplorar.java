@@ -54,6 +54,10 @@ public class VentanaExplorar {
 	private JTextField txtInterprete;
 	private JTextField txtTitulo;
 	private List<Cancion> canciones;	//Lista donde se almacenan las canciones que se van a mostrar en la tabla de la ventana
+	private Cancion cancActual;	//Cancion que actualmente esta en ejecución o pausada
+	private DefaultTableModel model;
+	private JComboBox comboBox;
+	
 	
 	public VentanaExplorar() {
 		initialize();
@@ -197,7 +201,7 @@ public class VentanaExplorar {
 		panel_4.add(txtTitulo);
 		txtTitulo.setColumns(10);
 		
-		JComboBox comboBox = new JComboBox();
+		comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(Controlador.getUnicaInstancia().getEstilos().toArray()));	//Obtenemos todos los estilos
 		panel_4.add(comboBox);
 		
@@ -222,7 +226,7 @@ public class VentanaExplorar {
 		
 		//Tabla
 		String[] columns = {"Titulo","Interprete"};
-		DefaultTableModel model = new DefaultTableModel(columns, 0);
+		model = new DefaultTableModel(columns, 0);
 		
 		@SuppressWarnings("serial")
 		JTable table = new JTable(model) {
@@ -244,6 +248,7 @@ public class VentanaExplorar {
 				if (e.getClickCount() == 2) {	//Si se han producido dos clicks se ejecuta la cancion
 					JTable table = (JTable) e.getSource();
 					int row = table.rowAtPoint(e.getPoint());
+					System.out.println(canciones.size());
 					try {
 						Controlador.getUnicaInstancia().reproducirCancion(canciones.get(row));	//Llamamos al controlador para reproducir la cancion
 					} catch (MalformedURLException e1) {
@@ -274,64 +279,7 @@ public class VentanaExplorar {
 				String titulo = txtTitulo.getText();
 				String estilo = (String) comboBox.getSelectedItem();
 				
-				int filas = model.getRowCount();
-				System.out.println("Eliminamo "+filas);
-				for(int i = 1; i <= filas; i++) {
-					System.out.println(i);
-					model.removeRow(0);    //Eliminamos todas las lineas de la tabla
-				}
-				
-				canciones.clear();//Vaciamos la lista de canciones
-				
-				if(((interprete.equals("Interprete") || interprete.equals("")) && (titulo.equals("") || titulo.equals("Titulo")) && comboBox.getSelectedItem().equals("Estilo"))) {
-					//Buscar todas las canciones
-					canciones = Controlador.getUnicaInstancia().getAllCanciones();
-					for(Cancion c : canciones ) {
-						model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
-					}
-				}else if(((interprete.equals("Interprete") || interprete.equals("")) && (!titulo.equals("") && !titulo.equals("Titulo")) && comboBox.getSelectedItem().equals("Estilo"))) {
-					//Buscar por titulo
-					Cancion cancion = Controlador.getUnicaInstancia().getCancionTitulo(titulo);
-					if(cancion != null) model.addRow(new Object[] { cancion.getTitulo(), cancion.getInterprete() });
-					
-				}else if(((!interprete.equals("Interprete") && !interprete.equals("")) && (titulo.equals("") || titulo.equals("Titulo")) && comboBox.getSelectedItem().equals("Estilo"))) {
-					//Buscar por interprete
-					canciones = Controlador.getUnicaInstancia().getCancionesInterprete(interprete);
-					for(Cancion c : canciones ) {
-						model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
-					}
-					
-				}else if(((interprete.equals("Interprete") || interprete.equals("")) && (titulo.equals("") || titulo.equals("Titulo")) && !comboBox.getSelectedItem().equals("Estilo"))) {
-					//Buscar por estilo
-					canciones = Controlador.getUnicaInstancia().getCancionesEstilo(estilo);
-					for(Cancion c : canciones ) {
-						model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
-					}
-					
-				}else if(((!interprete.equals("Interprete") && !interprete.equals("")) && (titulo.equals("") || titulo.equals("Titulo")) && !comboBox.getSelectedItem().equals("Estilo"))) {
-					//Buscar por estilo y autor
-					System.out.println("entra");
-					canciones = Controlador.getUnicaInstancia().getCancionesEstiloInter(estilo, interprete);
-					for(Cancion c : canciones ) {
-						System.out.println("Cancion encontrada ");
-						model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
-					}
-				} if(((interprete.equals("Interprete") || interprete.equals("")) && (!titulo.equals("") && !titulo.equals("Titulo")) && !comboBox.getSelectedItem().equals("Estilo"))) {
-					//Buscar por estilo y titulo
-					Cancion cancion = Controlador.getUnicaInstancia().getCancionTituloyEsti(titulo, estilo);
-					if(cancion != null) model.addRow(new Object[] { cancion.getTitulo(), cancion.getInterprete() });
-					
-				} if(((!interprete.equals("Interprete") && !interprete.equals("")) && (!titulo.equals("") && !titulo.equals("Titulo")) && !comboBox.getSelectedItem().equals("Estilo"))){	
-					//Buscar por titulo, autor y estilo
-					Cancion cancion = Controlador.getUnicaInstancia().getCancionTitInterEsti(titulo, interprete, estilo);
-					if(cancion != null) model.addRow(new Object[] { cancion.getTitulo(), cancion.getInterprete() });
-					
-					
-				}else {
-					//buscar por autor y titulo
-					Cancion cancion = Controlador.getUnicaInstancia().getCancionTituloeInter(titulo, interprete);
-					if(cancion != null) model.addRow(new Object[] { cancion.getTitulo(), cancion.getInterprete() });
-				}
+				mostrarCanciones(interprete, titulo, estilo);	//Mostramos las canciones en la tabla
 				
 				scrollPane.setViewportView(table);
 				frmVentanaExplorar.setVisible(true);
@@ -361,7 +309,7 @@ public class VentanaExplorar {
 		btnReproducir.setPreferredSize(new Dimension(50, 50));
 		btnReproducir.setBackground(UIManager.getColor("CheckBox.background"));
 		btnReproducir.setForeground(Color.WHITE);
-		btnReproducir.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/pause.png")));
+		btnReproducir.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/play.png")));
 		panel_7.add(btnReproducir);
 		btnReproducir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -369,6 +317,7 @@ public class VentanaExplorar {
 				if(row != -1 && canciones.size() > 0) {	//Si hay seleccionada alguna fila de la tabla y la tabla contiene canciones
 					try {
 						System.out.println("Se ejecuta "+ canciones.get(row).getTitulo());
+						btnReproducir.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/pause.png")));
 						Controlador.getUnicaInstancia().reproducirCancion(canciones.get(row));	//Llamamos al controlador para reproducir la cancion
 					} catch (MalformedURLException e1) {
 						// TODO Auto-generated catch block
@@ -390,38 +339,70 @@ public class VentanaExplorar {
 
 	}
 	
-	private void mostrarCanciones(JPanel panel_6) {
-		frmVentanaExplorar.setVisible(false);
-		LinkedList<Cancion> canciones = (LinkedList<Cancion>) Controlador.getUnicaInstancia().getAllCanciones();
-		String[] columns = {"Column 1","Column 2"};
-		DefaultTableModel model = new DefaultTableModel(columns, 0);
-		JTable table = new JTable(model);
-		for(Cancion c : canciones ) {
-			model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
+	private void mostrarCanciones(String interprete, String titulo, String estilo) {
+		
+		Cancion cancion;
+		
+		int filas = model.getRowCount();
+		System.out.println("Eliminamo "+filas);
+		for(int i = 1; i <= filas; i++) {
+			System.out.println(i);
+			model.removeRow(0);    //Eliminamos todas las lineas de la tabla
 		}
 		
-		while(true) {
-			frmVentanaExplorar.setVisible(false);
-		table.addMouseListener(new MouseAdapter() {
-
-			public void mouseClicked(MouseEvent e) {
-				JTable table = (JTable) e.getSource();
-				int column = table.columnAtPoint(e.getPoint());
-				int row = table.rowAtPoint(e.getPoint());
-				
-				System.out.println(column);
-				System.out.println(row);
+		canciones.clear();//Vaciamos la lista de canciones
+		
+		if(((interprete.equals("Interprete") || interprete.equals("")) && (titulo.equals("") || titulo.equals("Titulo")) && comboBox.getSelectedItem().equals("Estilo"))) {
+			//Buscar todas las canciones
+			canciones = Controlador.getUnicaInstancia().getAllCanciones();
+			for(Cancion c : canciones ) {
+				model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
+			}
+		}else if(((interprete.equals("Interprete") || interprete.equals("")) && (!titulo.equals("") && !titulo.equals("Titulo")) && comboBox.getSelectedItem().equals("Estilo"))) {
+			//Buscar por titulo
+			cancion = Controlador.getUnicaInstancia().getCancionTitulo(titulo);
+			canciones.add(cancion);
+			if(cancion != null) model.addRow(new Object[] { cancion.getTitulo(), cancion.getInterprete() });
+			
+		}else if(((!interprete.equals("Interprete") && !interprete.equals("")) && (titulo.equals("") || titulo.equals("Titulo")) && comboBox.getSelectedItem().equals("Estilo"))) {
+			//Buscar por interprete
+			canciones = Controlador.getUnicaInstancia().getCancionesInterprete(interprete);
+			for(Cancion c : canciones ) {
+				model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
 			}
 			
-		});
-		panel_6.add(table, BorderLayout.CENTER);
-		frmVentanaExplorar.setVisible(true);
+		}else if(((interprete.equals("Interprete") || interprete.equals("")) && (titulo.equals("") || titulo.equals("Titulo")) && !comboBox.getSelectedItem().equals("Estilo"))) {
+			//Buscar por estilo
+			canciones = Controlador.getUnicaInstancia().getCancionesEstilo(estilo);
+			for(Cancion c : canciones ) {
+				model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
+			}
+			
+		}else if(((!interprete.equals("Interprete") && !interprete.equals("")) && (titulo.equals("") || titulo.equals("Titulo")) && !comboBox.getSelectedItem().equals("Estilo"))) {
+			//Buscar por estilo y autor
+			canciones = Controlador.getUnicaInstancia().getCancionesEstiloInter(estilo, interprete);
+			for(Cancion c : canciones ) {
+				model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
+			}
+		} if(((interprete.equals("Interprete") || interprete.equals("")) && (!titulo.equals("") && !titulo.equals("Titulo")) && !comboBox.getSelectedItem().equals("Estilo"))) {
+			//Buscar por estilo y titulo
+			cancion = Controlador.getUnicaInstancia().getCancionTituloyEsti(titulo, estilo);
+			canciones.add(cancion);
+			if(cancion != null) model.addRow(new Object[] { cancion.getTitulo(), cancion.getInterprete() });
+			
+		} if(((!interprete.equals("Interprete") && !interprete.equals("")) && (!titulo.equals("") && !titulo.equals("Titulo")) && !comboBox.getSelectedItem().equals("Estilo"))){	
+			//Buscar por titulo, autor y estilo
+			cancion = Controlador.getUnicaInstancia().getCancionTitInterEsti(titulo, interprete, estilo);
+			canciones.add(cancion);
+			if(cancion != null) model.addRow(new Object[] { cancion.getTitulo(), cancion.getInterprete() });
+			
+			
+		}else {
+			//buscar por autor y titulo
+			cancion = Controlador.getUnicaInstancia().getCancionTituloeInter(titulo, interprete);
+			canciones.add(cancion);
+			if(cancion != null) model.addRow(new Object[] { cancion.getTitulo(), cancion.getInterprete() });
 		}
-		/*model.addRow(new Object[] { "sdsada", "sdsada" });
-		model.addRow(new Object[] { "sdsada", "sdsada" });
-		model.addRow(new Object[] { "sdsada", "sdsada" });
-		model.addRow(new Object[] { "sdsada", "sdsada" });
-		model.addRow(new Object[] { "sdsada", "sdsada" });*/
 		
 	}
 }
