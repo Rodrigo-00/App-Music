@@ -10,6 +10,9 @@ import java.beans.PropertyChangeListener;
 import java.util.LinkedList;
 import java.util.List;
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import javafx.scene.media.Media; 
 import javafx.scene.media.MediaPlayer; 
 
@@ -29,6 +32,7 @@ public final class Controlador implements PropertyChangeListener{
 		usuarioActual = null;
 		inicializarAdaptadores();
 		inicializarCatalogos();
+		activarReproductor();
 	}
 
 	public static Controlador getUnicaInstancia() {
@@ -57,6 +61,16 @@ public final class Controlador implements PropertyChangeListener{
 	private void inicializarCatalogos() {
 		catalogoCanciones = CatalogoCanciones.getUnicaInstancia();
 		catalogoUsuarios = CatalogoUsuarios.getUnicaInstancia();
+	}
+	
+	private void activarReproductor() {
+		try {
+			com.sun.javafx.application.PlatformImpl.startup(() -> {
+			});
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.out.println("Exception: " + ex.getMessage());
+		}
 	}
 	
 
@@ -179,8 +193,11 @@ public final class Controlador implements PropertyChangeListener{
 		return  catalogoCanciones.getEstilos();
 	}
 	
-	public void reproducirCancion(Cancion c) {
-		
+	public void reproducirCancion(Cancion c) throws MalformedURLException {
+		URL url = new URL(c.getRutaFichero());
+		Media hit = new Media(url.toString()); 
+		MediaPlayer mediaPlayer = new MediaPlayer(hit); 
+		mediaPlayer.play();
 	}
 	
 }

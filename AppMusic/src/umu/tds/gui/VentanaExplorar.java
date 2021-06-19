@@ -37,6 +37,7 @@ import javax.swing.UIManager;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.net.MalformedURLException;
 import java.util.LinkedList;
 import java.util.List;
 import java.awt.event.ActionEvent;
@@ -52,6 +53,7 @@ public class VentanaExplorar {
 	JFrame frmVentanaExplorar;
 	private JTextField txtInterprete;
 	private JTextField txtTitulo;
+	private List<Cancion> canciones;	//Lista donde se almacenan las canciones que se van a mostrar en la tabla de la ventana
 	
 	public VentanaExplorar() {
 		initialize();
@@ -235,7 +237,13 @@ public class VentanaExplorar {
 				JTable table = (JTable) e.getSource();
 				int column = table.columnAtPoint(e.getPoint());
 				int row = table.rowAtPoint(e.getPoint());
-				
+				System.out.println("Cancion a reproducir "+ canciones.get(row).getTitulo());
+				try {
+					Controlador.getUnicaInstancia().reproducirCancion(canciones.get(row));	//Llamamos al controlador para reproducir la cancion
+				} catch (MalformedURLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}   	
 				System.out.println(column);
 				System.out.println(row);
 			}
@@ -276,7 +284,7 @@ public class VentanaExplorar {
 				
 				if(((interprete.equals("Interprete") || interprete.equals("")) && (titulo.equals("") || titulo.equals("Titulo")) && comboBox.getSelectedItem().equals("Estilo"))) {
 					//Buscar todas las canciones
-					List<Cancion> canciones = Controlador.getUnicaInstancia().getAllCanciones();
+					canciones = Controlador.getUnicaInstancia().getAllCanciones();
 					for(Cancion c : canciones ) {
 						model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
 					}
@@ -287,14 +295,14 @@ public class VentanaExplorar {
 					
 				}else if(((!interprete.equals("Interprete") && !interprete.equals("")) && (titulo.equals("") || titulo.equals("Titulo")) && comboBox.getSelectedItem().equals("Estilo"))) {
 					//Buscar por interprete
-					List<Cancion> canciones = Controlador.getUnicaInstancia().getCancionesInterprete(interprete);
+					canciones = Controlador.getUnicaInstancia().getCancionesInterprete(interprete);
 					for(Cancion c : canciones ) {
 						model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
 					}
 					
 				}else if(((interprete.equals("Interprete") || interprete.equals("")) && (titulo.equals("") || titulo.equals("Titulo")) && !comboBox.getSelectedItem().equals("Estilo"))) {
 					//Buscar por estilo
-					List<Cancion> canciones = Controlador.getUnicaInstancia().getCancionesEstilo(estilo);
+					canciones = Controlador.getUnicaInstancia().getCancionesEstilo(estilo);
 					for(Cancion c : canciones ) {
 						model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
 					}
@@ -302,7 +310,7 @@ public class VentanaExplorar {
 				}else if(((!interprete.equals("Interprete") && !interprete.equals("")) && (titulo.equals("") || titulo.equals("Titulo")) && !comboBox.getSelectedItem().equals("Estilo"))) {
 					//Buscar por estilo y autor
 					System.out.println("entra");
-					List<Cancion> canciones = Controlador.getUnicaInstancia().getCancionesEstiloInter(estilo, interprete);
+					canciones = Controlador.getUnicaInstancia().getCancionesEstiloInter(estilo, interprete);
 					for(Cancion c : canciones ) {
 						System.out.println("Cancion encontrada ");
 						model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
@@ -373,15 +381,6 @@ public class VentanaExplorar {
 		for(Cancion c : canciones ) {
 			model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
 		}
-			/*new Object[][] {
-				{null, null},
-				{"dasdas", null},
-				{"asdsda", null},
-			},
-			new String[] {
-				"New column", ""
-			}
-		));*/
 		
 		while(true) {
 			frmVentanaExplorar.setVisible(false);
