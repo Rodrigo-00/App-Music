@@ -226,7 +226,7 @@ public class VentanaExplorar {
 		JTable table = new JTable(model);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-		table.setEnabled(false);
+		table.setEnabled(true);
 		table.setBounds(5, 5, 5, 5);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		table.setAutoCreateColumnsFromModel(false);
@@ -246,17 +246,12 @@ public class VentanaExplorar {
 				}
 			}
 		});
-		model.addRow(new Object[] { "dasdas", "dasdasd" });
-		model.addRow(new Object[] { "dasdas", "dasdasd" });
-		model.addRow(new Object[] { "dasdas", "dasdasd" });
-		model.addRow(new Object[] { "dasdas", "dasdasd" });
-		model.addRow(new Object[] { "dasdas", "dasdasd" });
-		model.addRow(new Object[] { "dasdas", "dasdasd" });
-		model.addRow(new Object[] { "dasdas", "dasdasd" });
-		model.addRow(new Object[] { "dasdas", "dasdasd" });
-		model.addRow(new Object[] { "dasdas", "dasdasd" });
-		model.addRow(new Object[] { "dasdas", "dasdasd" });
-
+		
+		//Añadimos inicialmente todas las canciones a la tabla
+		canciones = Controlador.getUnicaInstancia().getAllCanciones();
+		for(Cancion c : canciones ) {
+			model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
+		}
 		scrollPane.setViewportView(table);
 	
 		
@@ -279,6 +274,7 @@ public class VentanaExplorar {
 					model.removeRow(0);    //Eliminamos todas las lineas de la tabla
 				}
 				
+				canciones.clear();//Vaciamos la lista de canciones
 				
 				if(((interprete.equals("Interprete") || interprete.equals("")) && (titulo.equals("") || titulo.equals("Titulo")) && comboBox.getSelectedItem().equals("Estilo"))) {
 					//Buscar todas las canciones
@@ -352,15 +348,31 @@ public class VentanaExplorar {
 		btnAtrasar.setBorderPainted(false);
 		btnAtrasar.setPreferredSize(new Dimension(50, 50));
 		btnAtrasar.setMinimumSize(new Dimension(92, 25));
-		//btnAtrasar.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/next_music_player_play_media-512alreves.png")));
+		btnAtrasar.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/next_music_player_play_media-512alreves.png")));
 		panel_7.add(btnAtrasar);
 		
-		JButton btnNewButton_5 = new JButton("");
-		btnNewButton_5.setPreferredSize(new Dimension(50, 50));
-		btnNewButton_5.setBackground(UIManager.getColor("CheckBox.background"));
-		btnNewButton_5.setForeground(Color.WHITE);
-		btnNewButton_5.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/pause.png")));
-		panel_7.add(btnNewButton_5);
+		JButton btnReproducir = new JButton("");
+		btnReproducir.setPreferredSize(new Dimension(50, 50));
+		btnReproducir.setBackground(UIManager.getColor("CheckBox.background"));
+		btnReproducir.setForeground(Color.WHITE);
+		btnReproducir.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/pause.png")));
+		panel_7.add(btnReproducir);
+		btnReproducir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int row = table.getSelectedRow();
+				if(row != -1 && canciones.size() > 0) {	//Si hay seleccionada alguna fila de la tabla y la tabla contiene canciones
+					try {
+						System.out.println("Se ejecuta "+ canciones.get(row).getTitulo());
+						Controlador.getUnicaInstancia().reproducirCancion(canciones.get(row));	//Llamamos al controlador para reproducir la cancion
+					} catch (MalformedURLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}	
+				}
+				
+			}
+		});
+		
 		
 		JButton btnAdelantar = new JButton("");
 		btnAdelantar.setForeground(Color.WHITE);
