@@ -181,6 +181,13 @@ public class VentanaExplorar {
 		btnMisL.setBackground(Color.LIGHT_GRAY);
 		btnMisL.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/lista-de-reproduccion.png")));
 		panel_1.add(btnMisL);
+		btnMisL.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaMisListas reg = new VentanaMisListas();
+				reg.getFrame().setVisible(true);
+				frmVentanaExplorar.setVisible(false);
+			}
+		});
 		
 		JPanel panel_2 = new JPanel();
 		frmVentanaExplorar.getContentPane().add(panel_2, BorderLayout.CENTER);

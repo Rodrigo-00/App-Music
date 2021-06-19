@@ -155,7 +155,7 @@ public final class AdaptadorPlaylistTDS implements IAdaptadorPlaylistDAO{
 	}
 	
 	@Override
-	public List<Playlist> getAll(int idUsuario) {
+	public List<Playlist> getAll(int idUsuario) {	//Devuelve las playlist de un usuario
 		List<Entidad> entidades = servPersistencia.recuperarEntidades(PLAYLIST);
 		System.out.println("LLama");
 		List<Playlist> listas = new LinkedList<Playlist>();

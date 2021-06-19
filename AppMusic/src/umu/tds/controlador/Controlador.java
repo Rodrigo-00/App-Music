@@ -7,8 +7,10 @@ import umu.tds.modelo.*;
 import umu.tds.persistencia.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -200,9 +202,13 @@ public final class Controlador implements PropertyChangeListener{
 		Media hit = new Media(url.toString()); 
 		mediaPlayer = new MediaPlayer(hit); 
 		mediaPlayer.play();
+		usuarioActual.addReciente(c);	//Añadimos la cancion a la lista de canciones recientes del usuario
 	}
 	
 	public void pausarCancion() {
 		mediaPlayer.stop();
 	}
+	
+	
+	
 }

@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import tds.driver.FactoriaServicioPersistencia;
 import tds.driver.ServicioPersistencia;
+import umu.tds.modelo.Cancion;
 import umu.tds.modelo.Usuario;
 import beans.Entidad;
 import beans.Propiedad;
@@ -27,6 +29,7 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 	private static final String LOGIN = "login";
 	private static final String PASSWORD = "password";
 	private static final String FECHA_NACIMIENTO = "fechaNacimiento";
+	private static final String RECIENTES = "recientes";
 	
 	private static ServicioPersistencia servPersistencia;
 	
@@ -45,15 +48,20 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 
 	private Usuario entidadToUsuario(Entidad eUsuario) {
 
+		List<Cancion> recientes = new LinkedList<Cancion>();
+		
 		String nombre = servPersistencia.recuperarPropiedadEntidad(eUsuario, NOMBRE);
 		String apellidos = servPersistencia.recuperarPropiedadEntidad(eUsuario, APELLIDOS);
 		String email = servPersistencia.recuperarPropiedadEntidad(eUsuario, EMAIL);
 		String login = servPersistencia.recuperarPropiedadEntidad(eUsuario, LOGIN);
 		String password = servPersistencia.recuperarPropiedadEntidad(eUsuario, PASSWORD);
 		String fechaNacimiento = servPersistencia.recuperarPropiedadEntidad(eUsuario, FECHA_NACIMIENTO);
-
+		recientes = obtenerCancionesDesdeId(servPersistencia.recuperarPropiedadEntidad(eUsuario, RECIENTES));
+		
 		Usuario usuario = new Usuario(nombre, apellidos, email, login, password, fechaNacimiento);
 		usuario.setId(eUsuario.getId());
+		for (Cancion c : recientes)
+			usuario.addReciente(c);
 		
 		return usuario;
 	}
@@ -68,8 +76,29 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 				new Propiedad(EMAIL, usuario.getEmail()),
 				new Propiedad(LOGIN, usuario.getLogin()), 
 				new Propiedad(PASSWORD, usuario.getPassword()),
-				new Propiedad(FECHA_NACIMIENTO, usuario.getFechaNacimiento()))));
+				new Propiedad(FECHA_NACIMIENTO, usuario.getFechaNacimiento()),
+				new Propiedad(RECIENTES, obtenerIdCanciones(usuario.getRecientes())))));
 		return eUsuario;
+	}
+	
+	
+	private List<Cancion> obtenerCancionesDesdeId(String canciones) {
+
+		List<Cancion> listaCanciones = new LinkedList<Cancion>();
+		StringTokenizer strTok = new StringTokenizer(canciones, " ");
+		AdaptadorCancionTDS adaptadorC = AdaptadorCancionTDS.getUnicaInstancia();
+		while (strTok.hasMoreTokens()) {
+			listaCanciones.add(adaptadorC.obtenerCancion(Integer.valueOf((String) strTok.nextElement())));
+		}
+		return listaCanciones;
+	}
+	
+	private String obtenerIdCanciones(List<Cancion> listaCanciones) {
+		String aux = "";
+		for (Cancion c : listaCanciones) {
+			aux += c.getId() + " ";
+		}
+		return aux.trim();
 	}
 
 	public void registrarUsuario(Usuario usuario) {
@@ -84,12 +113,9 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 			}
 			if(existe) return;
 		}
-		
-		System.out.println("Entra");
-		System.out.println("Sigue");
+
 		eUsuario = this.usuarioToEntidad(usuario);
 		eUsuario = servPersistencia.registrarEntidad(eUsuario);
-		System.out.println("Usuario con id "+eUsuario.getId());
 		usuario.setId(eUsuario.getId());
 	}
 

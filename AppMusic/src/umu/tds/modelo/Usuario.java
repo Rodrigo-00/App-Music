@@ -1,5 +1,8 @@
 package umu.tds.modelo;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class Usuario {
 	
 	
@@ -11,9 +14,9 @@ public class Usuario {
 	private String password;
 	private String fechaNacimiento;
 	private Boolean premium;
+	private List<Cancion> recientes;
 
-	public Usuario(String nombre, String apellidos, String email, String login, String password,
-			String fechaNacimiento) {
+	public Usuario(String nombre, String apellidos, String email, String login, String password, String fechaNacimiento) {
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.email = email;
@@ -21,8 +24,16 @@ public class Usuario {
 		this.password = password;
 		this.fechaNacimiento = fechaNacimiento;
 		premium=false;
+		recientes = new LinkedList<Cancion>();
 	}
 	
+	
+	public void addReciente(Cancion c) {
+		if(!recientes.contains(c)) {
+			if(recientes.size()==10) recientes.remove(9);	//Borramos la ultima cancion 
+			recientes.add(0, c);	//Añadimos al inicio la cancion
+		}
+	}
 	
 	public Boolean getPremium() {
 		return premium;
@@ -86,6 +97,10 @@ public class Usuario {
 
 	public void setFechaNacimiento(String fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
+	}
+	
+	public List<Cancion> getRecientes() {
+		return new LinkedList<Cancion>(recientes);
 	}
 
 }
