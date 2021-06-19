@@ -57,6 +57,7 @@ public class VentanaExplorar {
 	private Cancion cancActual;	//Cancion que actualmente esta en ejecución o pausada
 	private DefaultTableModel model;
 	private JComboBox comboBox;
+	private Boolean reproduciendo;	//Nos sirve para comprobar si se esta reproduciendo o no una cancion
 	
 	
 	public VentanaExplorar() {
@@ -92,6 +93,7 @@ public class VentanaExplorar {
 		frmVentanaExplorar.setTitle("AppMusic");
 		frmVentanaExplorar.setBounds(100, 100, 583, 368);
 		frmVentanaExplorar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		reproduciendo = false;
 		
 		JPanel contentPane = (JPanel) frmVentanaExplorar.getContentPane();
 		frmVentanaExplorar.getContentPane().setLayout(new BorderLayout(0, 0));
@@ -243,21 +245,7 @@ public class VentanaExplorar {
 		table.setAutoCreateColumnsFromModel(false);
 		table.setEditingRow(-2);
 		table.setEditingColumn(-2);
-		table.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 2) {	//Si se han producido dos clicks se ejecuta la cancion
-					JTable table = (JTable) e.getSource();
-					int row = table.rowAtPoint(e.getPoint());
-					System.out.println(canciones.size());
-					try {
-						Controlador.getUnicaInstancia().reproducirCancion(canciones.get(row));	//Llamamos al controlador para reproducir la cancion
-					} catch (MalformedURLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}   	
-				}
-			}
-		});
+
 		
 		//Añadimos inicialmente todas las canciones a la tabla
 		canciones = Controlador.getUnicaInstancia().getAllCanciones();
@@ -305,26 +293,49 @@ public class VentanaExplorar {
 		btnAtrasar.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/next_music_player_play_media-512alreves.png")));
 		panel_7.add(btnAtrasar);
 		
-		JButton btnReproducir = new JButton("");
-		btnReproducir.setPreferredSize(new Dimension(50, 50));
-		btnReproducir.setBackground(UIManager.getColor("CheckBox.background"));
-		btnReproducir.setForeground(Color.WHITE);
-		btnReproducir.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/play.png")));
-		panel_7.add(btnReproducir);
-		btnReproducir.addActionListener(new ActionListener() {
+		JButton btnReproducirPausar = new JButton("");
+		btnReproducirPausar.setPreferredSize(new Dimension(50, 50));
+		btnReproducirPausar.setBackground(UIManager.getColor("CheckBox.background"));
+		btnReproducirPausar.setForeground(Color.WHITE);
+		btnReproducirPausar.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/play.png")));
+		panel_7.add(btnReproducirPausar);
+		btnReproducirPausar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int row = table.getSelectedRow();
-				if(row != -1 && canciones.size() > 0) {	//Si hay seleccionada alguna fila de la tabla y la tabla contiene canciones
+				if(reproduciendo) {
+					reproduciendo = false;
+					Controlador.getUnicaInstancia().pausarCancion();	//Llamamos al controlador para pausar la cancion
+					btnReproducirPausar.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/pause.png")));
+					
+				}else if(row != -1 && canciones.size() > 0) {	//Si hay seleccionada alguna fila de la tabla y la tabla contiene canciones 	
 					try {
 						System.out.println("Se ejecuta "+ canciones.get(row).getTitulo());
-						btnReproducir.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/pause.png")));
+						btnReproducirPausar.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/pause.png")));
 						Controlador.getUnicaInstancia().reproducirCancion(canciones.get(row));	//Llamamos al controlador para reproducir la cancion
+						reproduciendo = true;
 					} catch (MalformedURLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}	
 				}
 				
+			}
+		});
+		
+		table.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {	//Si se han producido dos clicks se ejecuta la cancion
+					JTable table = (JTable) e.getSource();
+					int row = table.rowAtPoint(e.getPoint());
+					try {
+						Controlador.getUnicaInstancia().reproducirCancion(canciones.get(row));	//Llamamos al controlador para reproducir la cancion
+						btnReproducirPausar.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/pause.png")));	//Cambiamos el icono del boton central
+						reproduciendo = true;
+					} catch (MalformedURLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}   	
+				}
 			}
 		});
 		
@@ -338,6 +349,9 @@ public class VentanaExplorar {
 		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
 
 	}
+	
+	
+	
 	
 	private void mostrarCanciones(String interprete, String titulo, String estilo) {
 		

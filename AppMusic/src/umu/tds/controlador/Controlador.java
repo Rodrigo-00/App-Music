@@ -14,7 +14,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import javafx.scene.media.Media; 
-import javafx.scene.media.MediaPlayer; 
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaPlayer.Status; 
 
 public final class Controlador implements PropertyChangeListener{
 
@@ -27,6 +28,7 @@ public final class Controlador implements PropertyChangeListener{
 
 	private CatalogoCanciones catalogoCanciones;
 	private CatalogoUsuarios catalogoUsuarios;
+	private MediaPlayer mediaPlayer;
 	
 	private Controlador() {
 		usuarioActual = null;
@@ -196,8 +198,11 @@ public final class Controlador implements PropertyChangeListener{
 	public void reproducirCancion(Cancion c) throws MalformedURLException {
 		URL url = new URL(c.getRutaFichero());
 		Media hit = new Media(url.toString()); 
-		MediaPlayer mediaPlayer = new MediaPlayer(hit); 
+		mediaPlayer = new MediaPlayer(hit); 
 		mediaPlayer.play();
 	}
 	
+	public void pausarCancion() {
+		mediaPlayer.stop();
+	}
 }
