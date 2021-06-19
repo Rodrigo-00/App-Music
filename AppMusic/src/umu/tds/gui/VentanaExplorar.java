@@ -223,7 +223,14 @@ public class VentanaExplorar {
 		//Tabla
 		String[] columns = {"Titulo","Interprete"};
 		DefaultTableModel model = new DefaultTableModel(columns, 0);
-		JTable table = new JTable(model);
+		
+		@SuppressWarnings("serial")
+		JTable table = new JTable(model) {
+			@Override
+			public boolean isCellEditable(int row, int column) {	//Evitamos que las celdas sean modificables
+				return false;
+			}
+		};
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		table.setEnabled(true);
@@ -332,8 +339,7 @@ public class VentanaExplorar {
 		});
 		
 		
-		//finTabla
-		
+	
 		
 		JPanel panel_7 = new JPanel();
 		panel_2.add(panel_7, BorderLayout.SOUTH);
