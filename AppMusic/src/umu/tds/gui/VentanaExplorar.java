@@ -234,18 +234,16 @@ public class VentanaExplorar {
 		table.setEditingColumn(-2);
 		table.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				JTable table = (JTable) e.getSource();
-				int column = table.columnAtPoint(e.getPoint());
-				int row = table.rowAtPoint(e.getPoint());
-				System.out.println("Cancion a reproducir "+ canciones.get(row).getTitulo());
-				try {
-					Controlador.getUnicaInstancia().reproducirCancion(canciones.get(row));	//Llamamos al controlador para reproducir la cancion
-				} catch (MalformedURLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}   	
-				System.out.println(column);
-				System.out.println(row);
+				if (e.getClickCount() == 2) {	//Si se han producido dos clicks se ejecuta la cancion
+					JTable table = (JTable) e.getSource();
+					int row = table.rowAtPoint(e.getPoint());
+					try {
+						Controlador.getUnicaInstancia().reproducirCancion(canciones.get(row));	//Llamamos al controlador para reproducir la cancion
+					} catch (MalformedURLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}   	
+				}
 			}
 		});
 		model.addRow(new Object[] { "dasdas", "dasdasd" });
@@ -344,17 +342,18 @@ public class VentanaExplorar {
 		JPanel panel_7 = new JPanel();
 		panel_2.add(panel_7, BorderLayout.SOUTH);
 		
-		JButton btnNewButton_4 = new JButton("");
-		btnNewButton_4.setMaximumSize(new Dimension(92, 25));
-		btnNewButton_4.addActionListener(new ActionListener() {
+		JButton btnAtrasar = new JButton("");
+		btnAtrasar.setForeground(Color.WHITE);
+		btnAtrasar.setMaximumSize(new Dimension(92, 25));
+		btnAtrasar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		btnNewButton_4.setBorderPainted(false);
-		btnNewButton_4.setPreferredSize(new Dimension(50, 50));
-		btnNewButton_4.setMinimumSize(new Dimension(92, 25));
-		btnNewButton_4.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/next_music_player_play_media-512alreves.png")));
-		panel_7.add(btnNewButton_4);
+		btnAtrasar.setBorderPainted(false);
+		btnAtrasar.setPreferredSize(new Dimension(50, 50));
+		btnAtrasar.setMinimumSize(new Dimension(92, 25));
+		//btnAtrasar.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/next_music_player_play_media-512alreves.png")));
+		panel_7.add(btnAtrasar);
 		
 		JButton btnNewButton_5 = new JButton("");
 		btnNewButton_5.setPreferredSize(new Dimension(50, 50));
@@ -364,8 +363,9 @@ public class VentanaExplorar {
 		panel_7.add(btnNewButton_5);
 		
 		JButton btnAdelantar = new JButton("");
+		btnAdelantar.setForeground(Color.WHITE);
 		btnAdelantar.setPreferredSize(new Dimension(50, 50));
-		btnAdelantar.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/next_music_player_play_media-512.png")));
+		//btnAdelantar.setIcon(new ImageIcon(VentanaExplorar.class.getResource("umu/tds/imagenes/next_music_player_play_media-512.png")));
 		panel_7.add(btnAdelantar);
 		
 		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
