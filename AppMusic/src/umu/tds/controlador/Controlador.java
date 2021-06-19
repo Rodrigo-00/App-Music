@@ -203,6 +203,10 @@ public final class Controlador implements PropertyChangeListener{
 		mediaPlayer = new MediaPlayer(hit); 
 		mediaPlayer.play();
 		usuarioActual.addReciente(c);	//Añadimos la cancion a la lista de canciones recientes del usuario
+		adaptadorUsuario.updatePerfil(usuarioActual);	//Actualizamos en la base de datos el usuario actual
+		
+		for(Cancion ca: usuarioActual.getRecientes())
+			System.out.println("CONTIENE "+ca.getTitulo());
 	}
 	
 	public void pausarCancion() {

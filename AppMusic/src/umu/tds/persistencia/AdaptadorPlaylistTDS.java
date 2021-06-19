@@ -134,12 +134,15 @@ public final class AdaptadorPlaylistTDS implements IAdaptadorPlaylistDAO{
 	
 	
 	private List<Cancion> obtenerCancionesDesdeId(String canciones) {
-
+		
 		List<Cancion> listaCanciones = new LinkedList<Cancion>();
-		StringTokenizer strTok = new StringTokenizer(canciones, " ");
-		AdaptadorCancionTDS adaptadorC = AdaptadorCancionTDS.getUnicaInstancia();
-		while (strTok.hasMoreTokens()) {
-			listaCanciones.add(adaptadorC.obtenerCancion(Integer.valueOf((String) strTok.nextElement())));
+		
+		if(canciones != null) {
+			StringTokenizer strTok = new StringTokenizer(canciones, " ");
+			AdaptadorCancionTDS adaptadorC = AdaptadorCancionTDS.getUnicaInstancia();
+			while (strTok.hasMoreTokens()) {
+				listaCanciones.add(adaptadorC.obtenerCancion(Integer.valueOf((String) strTok.nextElement())));
+			}
 		}
 		return listaCanciones;
 	}

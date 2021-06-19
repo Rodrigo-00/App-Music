@@ -85,11 +85,14 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 	private List<Cancion> obtenerCancionesDesdeId(String canciones) {
 
 		List<Cancion> listaCanciones = new LinkedList<Cancion>();
-		StringTokenizer strTok = new StringTokenizer(canciones, " ");
-		AdaptadorCancionTDS adaptadorC = AdaptadorCancionTDS.getUnicaInstancia();
-		while (strTok.hasMoreTokens()) {
-			listaCanciones.add(adaptadorC.obtenerCancion(Integer.valueOf((String) strTok.nextElement())));
-		}
+		
+		if(canciones!= null) {
+			StringTokenizer strTok = new StringTokenizer(canciones, " ");
+			AdaptadorCancionTDS adaptadorC = AdaptadorCancionTDS.getUnicaInstancia();
+			while (strTok.hasMoreTokens()) {
+				listaCanciones.add(adaptadorC.obtenerCancion(Integer.valueOf((String) strTok.nextElement())));
+			}
+		}else System.out.println("No hay canciones recientes");
 		return listaCanciones;
 	}
 	
@@ -139,6 +142,10 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 		servPersistencia.anadirPropiedadEntidad(eUsuario, NOMBRE, usuario.getNombre());
 		servPersistencia.eliminarPropiedadEntidad(eUsuario, APELLIDOS);
 		servPersistencia.anadirPropiedadEntidad(eUsuario, APELLIDOS, usuario.getApellidos());
+		
+		String canciones = obtenerIdCanciones(usuario.getRecientes());
+		servPersistencia.eliminarPropiedadEntidad(eUsuario, RECIENTES);
+		servPersistencia.anadirPropiedadEntidad(eUsuario, RECIENTES, canciones);
 	}
 
 	public Usuario obtenerUsuario(int id) {
