@@ -118,7 +118,9 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 			aux += c.getId() + " ";
 			System.out.println("La lista queda "+ aux);
 		}
-		return aux.trim();
+		
+		return aux;
+		//return aux.trim();
 	}
 
 	public void registrarUsuario(Usuario usuario) {
