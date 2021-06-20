@@ -47,7 +47,8 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 	}
 
 	private Usuario entidadToUsuario(Entidad eUsuario) {
-
+		
+		System.out.println("ENTRAMOS EN ENTIDADTOUSUARIO");
 		List<Cancion> recientes = new LinkedList<Cancion>();
 		
 		String nombre = servPersistencia.recuperarPropiedadEntidad(eUsuario, NOMBRE);
@@ -57,12 +58,15 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 		String password = servPersistencia.recuperarPropiedadEntidad(eUsuario, PASSWORD);
 		String fechaNacimiento = servPersistencia.recuperarPropiedadEntidad(eUsuario, FECHA_NACIMIENTO);
 		recientes = obtenerCancionesDesdeId(servPersistencia.recuperarPropiedadEntidad(eUsuario, RECIENTES));
+		System.out.println("HEMOS LLAMADO A OBTENERCANCIONESDESDEID");
 		
 		Usuario usuario = new Usuario(nombre, apellidos, email, login, password, fechaNacimiento);
 		usuario.setId(eUsuario.getId());
-		for (Cancion c : recientes)
-			usuario.addReciente(c);
 		
+		for (Cancion c : recientes) {
+			System.out.println("Añadimos en el adaptador "+ c.getTitulo());
+			usuario.addReciente(c);
+		}
 		return usuario;
 	}
 
@@ -84,22 +88,35 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 	
 	private List<Cancion> obtenerCancionesDesdeId(String canciones) {
 
+		System.out.println("ENTRA EN OBTENERCANCIONES");
 		List<Cancion> listaCanciones = new LinkedList<Cancion>();
 		
+		System.out.println(canciones);
+		
 		if(canciones!= null) {
+			System.out.println("ENTRA");
 			StringTokenizer strTok = new StringTokenizer(canciones, " ");
 			AdaptadorCancionTDS adaptadorC = AdaptadorCancionTDS.getUnicaInstancia();
 			while (strTok.hasMoreTokens()) {
 				listaCanciones.add(adaptadorC.obtenerCancion(Integer.valueOf((String) strTok.nextElement())));
 			}
-		}else System.out.println("No hay canciones recientes");
+		}else System.out.println("No hay canciones en el adaptador");
+		
+		if(listaCanciones.size()==0) System.out.println("LISTA de canciones VACIA");
+		
+		for (Cancion c : listaCanciones) {
+			System.out.println("Añadimos a la lista a devolver "+ c.getTitulo());
+		}
+		
 		return listaCanciones;
 	}
 	
 	private String obtenerIdCanciones(List<Cancion> listaCanciones) {
 		String aux = "";
 		for (Cancion c : listaCanciones) {
+			System.out.println("Obtenemos id de "+ c.getTitulo());
 			aux += c.getId() + " ";
+			System.out.println("La lista queda "+ aux);
 		}
 		return aux.trim();
 	}
@@ -146,6 +163,11 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 		String canciones = obtenerIdCanciones(usuario.getRecientes());
 		servPersistencia.eliminarPropiedadEntidad(eUsuario, RECIENTES);
 		servPersistencia.anadirPropiedadEntidad(eUsuario, RECIENTES, canciones);
+		System.out.println("Guardamos en el adaptador " + canciones + usuario.getRecientes());
+		System.out.println("Y la lista contiene");
+		for (Cancion c : usuario.getRecientes()) {
+			System.out.println(c.getTitulo());
+		}
 	}
 
 	public Usuario obtenerUsuario(int id) {
