@@ -311,6 +311,7 @@ public class VentanaExplorar {
 				if(numCancion != 0 && reproduciendo) {
 					cancActual = canciones.get(numCancion-1);	//Establecemos la cancion actual
 					numCancion--;	
+					table.setRowSelectionInterval(numCancion, numCancion);	
 					Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para pausar la cancion si se esta reproduciendo alguna
 					try {
 						Controlador.getUnicaInstancia().reproducirCancion(cancActual);	//Llamamos al controlador para reproducir la cancion
@@ -369,13 +370,13 @@ public class VentanaExplorar {
 					JTable table = (JTable) e.getSource();
 					int row = table.rowAtPoint(e.getPoint());
 					try {
-						if((reproduciendo || !reproduciendo)&& !cancActual.equals(canciones.get(row))) {
+						if((reproduciendo || !reproduciendo) && (cancActual == null || !cancActual.equals(canciones.get(row)))) {
 							if(reproduciendo) Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para pausar la cancion si se esta reproduciendo alguna
 							cancActual = canciones.get(row);
 							Controlador.getUnicaInstancia().reproducirCancion(cancActual);	//Llamamos al controlador para reproducir la cancion
 							numCancion=row;
 						
-						}else if(!reproduciendo && cancActual.equals(canciones.get(row))) {
+						}else if(!reproduciendo && cancActual!= null && cancActual.equals(canciones.get(row))) {
 							Controlador.getUnicaInstancia().reanudarCancion();	//Reanudamos la cancion
 						}
 			
@@ -400,6 +401,7 @@ public class VentanaExplorar {
 				if(numCancion != canciones.size()-1 && reproduciendo) {
 					cancActual = canciones.get(numCancion+1);	//Establecemos la cancion actual
 					numCancion++;	
+					table.setRowSelectionInterval(numCancion, numCancion);	
 					Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para pausar la cancion si se esta reproduciendo alguna
 					try {
 						Controlador.getUnicaInstancia().reproducirCancion(cancActual);	//Llamamos al controlador para reproducir la cancion
