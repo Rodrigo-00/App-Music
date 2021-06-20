@@ -54,7 +54,9 @@ public class VentanaExplorar {
 	private JTextField txtInterprete;
 	private JTextField txtTitulo;
 	private List<Cancion> canciones;	//Lista donde se almacenan las canciones que se van a mostrar en la tabla de la ventana
+	private List<Cancion> reproduccion;	//Lista donde se almacenan las canciones que se se estan reproduciendo
 	private Cancion cancActual;	//Cancion que actualmente esta en ejecución o pausada
+	private int numCancion; //Alamacenamos el indice de la lista de reproduccion en el que se encuentra la cancion seleccionada
 	private DefaultTableModel model;
 	private JComboBox comboBox;
 	private Boolean reproduciendo;	//Nos sirve para comprobar si se esta reproduciendo o no una cancion
@@ -95,6 +97,7 @@ public class VentanaExplorar {
 		frmVentanaExplorar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		reproduciendo = false;
 		cancActual = null;
+		reproduccion = new LinkedList<Cancion>();
 		
 		JPanel contentPane = (JPanel) frmVentanaExplorar.getContentPane();
 		frmVentanaExplorar.getContentPane().setLayout(new BorderLayout(0, 0));
@@ -292,10 +295,21 @@ public class VentanaExplorar {
 		btnAtrasar.setForeground(Color.WHITE);
 		btnAtrasar.setMaximumSize(new Dimension(92, 25));
 		btnAtrasar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent e) {
+				if(numCancion != 0 && reproduciendo) {
+					cancActual = reproduccion.get(numCancion-1);	//Establecemos la cancion actual
+					numCancion--;	
+					Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para pausar la cancion si se esta reproduciendo alguna
+					try {
+						Controlador.getUnicaInstancia().reproducirCancion(cancActual);	//Llamamos al controlador para reproducir la cancion
+					} catch (MalformedURLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}	
+				}
 			}
 		});
-		btnAtrasar.setBorderPainted(false);
+		
 		btnAtrasar.setPreferredSize(new Dimension(50, 50));
 		btnAtrasar.setMinimumSize(new Dimension(92, 25));
 		btnAtrasar.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/next_music_player_play_media-512alreves.png")));
@@ -316,7 +330,6 @@ public class VentanaExplorar {
 					btnReproducirPausar.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/play.png")));
 					
 				}else if(row != -1 && canciones.size() > 0) {	//Si hay seleccionada alguna fila de la tabla y la tabla contiene canciones 	
-					try {
 						System.out.println("Se ejecuta "+ canciones.get(row).getTitulo());
 						btnReproducirPausar.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/pause.png")));
 						
@@ -324,13 +337,17 @@ public class VentanaExplorar {
 							Controlador.getUnicaInstancia().reanudarCancion();  //Reanudamos la cancion
 						}else {
 							cancActual = canciones.get(row);
-							Controlador.getUnicaInstancia().reproducirCancion(cancActual);	//Llamamos al controlador para reproducir la cancion
+							try {
+								Controlador.getUnicaInstancia().reproducirCancion(cancActual);	//Llamamos al controlador para reproducir la cancion
+							} catch (MalformedURLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}	
+							reproduccion.clear();
+							reproduccion.addAll(canciones);
+							numCancion=row;
 						}
 						reproduciendo = true;
-					} catch (MalformedURLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}	
 				}
 				
 			}
@@ -342,16 +359,16 @@ public class VentanaExplorar {
 					JTable table = (JTable) e.getSource();
 					int row = table.rowAtPoint(e.getPoint());
 					try {
-						if(reproduciendo && !cancActual.equals(canciones.get(row))) {
-							Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para pausar la cancion si se esta reproduciendo alguna
+						if((reproduciendo || !reproduciendo)&& !cancActual.equals(canciones.get(row))) {
+							if(reproduciendo) Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para pausar la cancion si se esta reproduciendo alguna
 							cancActual = canciones.get(row);
 							Controlador.getUnicaInstancia().reproducirCancion(cancActual);	//Llamamos al controlador para reproducir la cancion
+							reproduccion.clear();
+							reproduccion.addAll(canciones);
+							numCancion=row;
 						
 						}else if(!reproduciendo && cancActual.equals(canciones.get(row))) {
 							Controlador.getUnicaInstancia().reanudarCancion();	//Reanudamos la cancion
-						}else if(!reproduciendo && !cancActual.equals(canciones.get(row))) {
-							cancActual = canciones.get(row);
-							Controlador.getUnicaInstancia().reproducirCancion(cancActual);	//Llamamos al controlador para reproducir la cancion
 						}
 			
 						btnReproducirPausar.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/pause.png")));	//Cambiamos el icono del boton central
@@ -370,6 +387,21 @@ public class VentanaExplorar {
 		btnAdelantar.setPreferredSize(new Dimension(50, 50));
 		btnAdelantar.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/next_music_player_play_media-512.png")));
 		panel_7.add(btnAdelantar);
+		btnAdelantar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(numCancion != reproduccion.size()-1 && reproduciendo) {
+					cancActual = reproduccion.get(numCancion+1);	//Establecemos la cancion actual
+					numCancion++;	
+					Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para pausar la cancion si se esta reproduciendo alguna
+					try {
+						Controlador.getUnicaInstancia().reproducirCancion(cancActual);	//Llamamos al controlador para reproducir la cancion
+					} catch (MalformedURLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}	
+				}
+			}
+		});
 		
 		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
 
@@ -442,6 +474,7 @@ public class VentanaExplorar {
 			canciones.add(cancion);
 			if(cancion != null) model.addRow(new Object[] { cancion.getTitulo(), cancion.getInterprete() });
 		}
+		
 		
 	}
 }
