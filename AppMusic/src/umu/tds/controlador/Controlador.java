@@ -17,7 +17,6 @@ import java.net.URL;
 
 import javafx.scene.media.Media; 
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaPlayer.Status; 
 
 public final class Controlador implements PropertyChangeListener{
 
@@ -211,9 +210,15 @@ public final class Controlador implements PropertyChangeListener{
 	}
 	
 	public void pausarCancion() {
-		mediaPlayer.stop();
+		mediaPlayer.pause();
 	}
 	
+	public void reanudarCancion() {
+		mediaPlayer.play();
+	}
 	
+	public void pararCancion() {
+		mediaPlayer.stop();
+	}
 	
 }

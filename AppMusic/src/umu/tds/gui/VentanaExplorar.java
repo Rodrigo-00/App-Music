@@ -94,6 +94,7 @@ public class VentanaExplorar {
 		frmVentanaExplorar.setBounds(100, 100, 583, 368);
 		frmVentanaExplorar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		reproduciendo = false;
+		cancActual = null;
 		
 		JPanel contentPane = (JPanel) frmVentanaExplorar.getContentPane();
 		frmVentanaExplorar.getContentPane().setLayout(new BorderLayout(0, 0));
@@ -309,7 +310,7 @@ public class VentanaExplorar {
 		btnReproducirPausar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int row = table.getSelectedRow();
-				if(reproduciendo) {
+				if(reproduciendo) {	//Se pulsa el boton de pause
 					reproduciendo = false;
 					Controlador.getUnicaInstancia().pausarCancion();	//Llamamos al controlador para pausar la cancion
 					btnReproducirPausar.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/play.png")));
@@ -318,7 +319,13 @@ public class VentanaExplorar {
 					try {
 						System.out.println("Se ejecuta "+ canciones.get(row).getTitulo());
 						btnReproducirPausar.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/pause.png")));
-						Controlador.getUnicaInstancia().reproducirCancion(canciones.get(row));	//Llamamos al controlador para reproducir la cancion
+						
+						if(cancActual!= null && cancActual.equals(canciones.get(row))){
+							Controlador.getUnicaInstancia().reanudarCancion();  //Reanudamos la cancion
+						}else {
+							cancActual = canciones.get(row);
+							Controlador.getUnicaInstancia().reproducirCancion(cancActual);	//Llamamos al controlador para reproducir la cancion
+						}
 						reproduciendo = true;
 					} catch (MalformedURLException e1) {
 						// TODO Auto-generated catch block
@@ -335,8 +342,18 @@ public class VentanaExplorar {
 					JTable table = (JTable) e.getSource();
 					int row = table.rowAtPoint(e.getPoint());
 					try {
-						if(reproduciendo) Controlador.getUnicaInstancia().pausarCancion();   //Llamamos al controlador para pausar la cancion si se esta reproduciendo alguna
-						Controlador.getUnicaInstancia().reproducirCancion(canciones.get(row));	//Llamamos al controlador para reproducir la cancion
+						if(reproduciendo && !cancActual.equals(canciones.get(row))) {
+							Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para pausar la cancion si se esta reproduciendo alguna
+							cancActual = canciones.get(row);
+							Controlador.getUnicaInstancia().reproducirCancion(cancActual);	//Llamamos al controlador para reproducir la cancion
+						
+						}else if(!reproduciendo && cancActual.equals(canciones.get(row))) {
+							Controlador.getUnicaInstancia().reanudarCancion();	//Reanudamos la cancion
+						}else if(!reproduciendo && !cancActual.equals(canciones.get(row))) {
+							cancActual = canciones.get(row);
+							Controlador.getUnicaInstancia().reproducirCancion(cancActual);	//Llamamos al controlador para reproducir la cancion
+						}
+			
 						btnReproducirPausar.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/pause.png")));	//Cambiamos el icono del boton central
 						reproduciendo = true;
 					} catch (MalformedURLException e1) {
