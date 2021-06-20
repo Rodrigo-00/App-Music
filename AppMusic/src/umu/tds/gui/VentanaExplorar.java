@@ -312,7 +312,7 @@ public class VentanaExplorar {
 				if(reproduciendo) {
 					reproduciendo = false;
 					Controlador.getUnicaInstancia().pausarCancion();	//Llamamos al controlador para pausar la cancion
-					btnReproducirPausar.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/pause.png")));
+					btnReproducirPausar.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/play.png")));
 					
 				}else if(row != -1 && canciones.size() > 0) {	//Si hay seleccionada alguna fila de la tabla y la tabla contiene canciones 	
 					try {
@@ -335,6 +335,7 @@ public class VentanaExplorar {
 					JTable table = (JTable) e.getSource();
 					int row = table.rowAtPoint(e.getPoint());
 					try {
+						if(reproduciendo) Controlador.getUnicaInstancia().pausarCancion();   //Llamamos al controlador para pausar la cancion si se esta reproduciendo alguna
 						Controlador.getUnicaInstancia().reproducirCancion(canciones.get(row));	//Llamamos al controlador para reproducir la cancion
 						btnReproducirPausar.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/pause.png")));	//Cambiamos el icono del boton central
 						reproduciendo = true;
@@ -350,7 +351,7 @@ public class VentanaExplorar {
 		JButton btnAdelantar = new JButton("");
 		btnAdelantar.setForeground(Color.WHITE);
 		btnAdelantar.setPreferredSize(new Dimension(50, 50));
-		//btnAdelantar.setIcon(new ImageIcon(VentanaExplorar.class.getResource("umu/tds/imagenes/next_music_player_play_media-512.png")));
+		btnAdelantar.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/next_music_player_play_media-512.png")));
 		panel_7.add(btnAdelantar);
 		
 		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
