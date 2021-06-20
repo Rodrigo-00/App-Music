@@ -54,9 +54,8 @@ public class VentanaExplorar {
 	private JTextField txtInterprete;
 	private JTextField txtTitulo;
 	private List<Cancion> canciones;	//Lista donde se almacenan las canciones que se van a mostrar en la tabla de la ventana
-	private List<Cancion> reproduccion;	//Lista donde se almacenan las canciones que se se estan reproduciendo
 	private Cancion cancActual;	//Cancion que actualmente esta en ejecución o pausada
-	private int numCancion; //Alamacenamos el indice de la lista de reproduccion en el que se encuentra la cancion seleccionada
+	private int numCancion; //Alamacenamos el indice de la lista en el que se encuentra la cancion seleccionada
 	private DefaultTableModel model;
 	private JComboBox comboBox;
 	private Boolean reproduciendo;	//Nos sirve para comprobar si se esta reproduciendo o no una cancion
@@ -97,7 +96,6 @@ public class VentanaExplorar {
 		frmVentanaExplorar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		reproduciendo = false;
 		cancActual = null;
-		reproduccion = new LinkedList<Cancion>();
 		
 		JPanel contentPane = (JPanel) frmVentanaExplorar.getContentPane();
 		frmVentanaExplorar.getContentPane().setLayout(new BorderLayout(0, 0));
@@ -115,6 +113,7 @@ public class VentanaExplorar {
 		JButton btnAtras = new JButton("Atr\u00E1s");
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(reproduciendo) Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para pausar la cancion si se esta reproduciendo alguna
 				VentanaPrincipal reg = new VentanaPrincipal();
 				reg.getFrame().setVisible(true);
 				frmVentanaExplorar.setVisible(false);
@@ -134,6 +133,11 @@ public class VentanaExplorar {
 		gbc_btnHaztePremium.gridx = 5;
 		gbc_btnHaztePremium.gridy = 1;
 		panel.add(btnHaztePremium, gbc_btnHaztePremium);
+		btnHaztePremium.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(reproduciendo) Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para pausar la cancion si se esta reproduciendo alguna
+			}
+		});
 		
 		JButton btnSalir = new JButton("Salir");
 		GridBagConstraints gbc_btnSalir_1 = new GridBagConstraints();
@@ -144,6 +148,7 @@ public class VentanaExplorar {
 		panel.add(btnSalir, gbc_btnSalir_1);
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(reproduciendo) Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para pausar la cancion si se esta reproduciendo alguna
 				VentanaLogin reg = new VentanaLogin();
 				reg.getFrame().setVisible(true);
 				frmVentanaExplorar.setVisible(false);
@@ -168,6 +173,7 @@ public class VentanaExplorar {
 		panel_1.add(btnNewButton_2);
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(reproduciendo) Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para pausar la cancion si se esta reproduciendo alguna
 				VentanaCrearPlaylist reg = new VentanaCrearPlaylist();
 				reg.getFrame().setVisible(true);
 				frmVentanaExplorar.setVisible(false);
@@ -179,6 +185,11 @@ public class VentanaExplorar {
 		btnRecientes.setBackground(Color.LIGHT_GRAY);
 		btnRecientes.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/reloj-de-pared.png")));
 		panel_1.add(btnRecientes);
+		btnRecientes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(reproduciendo) Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para pausar la cancion si se esta reproduciendo alguna
+			}
+		});
 		
 		JButton btnMisL = new JButton("Mis listas");
 		btnMisL.setBorderPainted(false);
@@ -187,6 +198,7 @@ public class VentanaExplorar {
 		panel_1.add(btnMisL);
 		btnMisL.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(reproduciendo) Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para pausar la cancion si se esta reproduciendo alguna
 				VentanaMisListas reg = new VentanaMisListas();
 				reg.getFrame().setVisible(true);
 				frmVentanaExplorar.setVisible(false);
@@ -297,7 +309,7 @@ public class VentanaExplorar {
 		btnAtrasar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(numCancion != 0 && reproduciendo) {
-					cancActual = reproduccion.get(numCancion-1);	//Establecemos la cancion actual
+					cancActual = canciones.get(numCancion-1);	//Establecemos la cancion actual
 					numCancion--;	
 					Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para pausar la cancion si se esta reproduciendo alguna
 					try {
@@ -343,8 +355,6 @@ public class VentanaExplorar {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}	
-							reproduccion.clear();
-							reproduccion.addAll(canciones);
 							numCancion=row;
 						}
 						reproduciendo = true;
@@ -363,8 +373,6 @@ public class VentanaExplorar {
 							if(reproduciendo) Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para pausar la cancion si se esta reproduciendo alguna
 							cancActual = canciones.get(row);
 							Controlador.getUnicaInstancia().reproducirCancion(cancActual);	//Llamamos al controlador para reproducir la cancion
-							reproduccion.clear();
-							reproduccion.addAll(canciones);
 							numCancion=row;
 						
 						}else if(!reproduciendo && cancActual.equals(canciones.get(row))) {
@@ -389,8 +397,8 @@ public class VentanaExplorar {
 		panel_7.add(btnAdelantar);
 		btnAdelantar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(numCancion != reproduccion.size()-1 && reproduciendo) {
-					cancActual = reproduccion.get(numCancion+1);	//Establecemos la cancion actual
+				if(numCancion != canciones.size()-1 && reproduciendo) {
+					cancActual = canciones.get(numCancion+1);	//Establecemos la cancion actual
 					numCancion++;	
 					Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para pausar la cancion si se esta reproduciendo alguna
 					try {
@@ -415,9 +423,7 @@ public class VentanaExplorar {
 		Cancion cancion;
 		
 		int filas = model.getRowCount();
-		System.out.println("Eliminamo "+filas);
 		for(int i = 1; i <= filas; i++) {
-			System.out.println(i);
 			model.removeRow(0);    //Eliminamos todas las lineas de la tabla
 		}
 		
@@ -455,18 +461,17 @@ public class VentanaExplorar {
 			for(Cancion c : canciones ) {
 				model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
 			}
-		} if(((interprete.equals("Interprete") || interprete.equals("")) && (!titulo.equals("") && !titulo.equals("Titulo")) && !comboBox.getSelectedItem().equals("Estilo"))) {
+		}else if(((interprete.equals("Interprete") || interprete.equals("")) && (!titulo.equals("") && !titulo.equals("Titulo")) && !comboBox.getSelectedItem().equals("Estilo"))) {
 			//Buscar por estilo y titulo
 			cancion = Controlador.getUnicaInstancia().getCancionTituloyEsti(titulo, estilo);
 			canciones.add(cancion);
 			if(cancion != null) model.addRow(new Object[] { cancion.getTitulo(), cancion.getInterprete() });
 			
-		} if(((!interprete.equals("Interprete") && !interprete.equals("")) && (!titulo.equals("") && !titulo.equals("Titulo")) && !comboBox.getSelectedItem().equals("Estilo"))){	
+		}else if(((!interprete.equals("Interprete") && !interprete.equals("")) && (!titulo.equals("") && !titulo.equals("Titulo")) && !comboBox.getSelectedItem().equals("Estilo"))){	
 			//Buscar por titulo, autor y estilo
 			cancion = Controlador.getUnicaInstancia().getCancionTitInterEsti(titulo, interprete, estilo);
 			canciones.add(cancion);
 			if(cancion != null) model.addRow(new Object[] { cancion.getTitulo(), cancion.getInterprete() });
-			
 			
 		}else {
 			//buscar por autor y titulo
