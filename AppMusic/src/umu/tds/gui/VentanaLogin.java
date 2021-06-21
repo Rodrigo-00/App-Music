@@ -11,7 +11,6 @@ import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
 
 import umu.tds.controlador.Controlador;
-import umu.tds.dominio.CatalogoUsuarios;
 
 import java.awt.Font;
 import javax.swing.JPanel;
@@ -27,7 +26,6 @@ import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import javax.swing.Action;
 import java.awt.event.ActionListener;
-import javax.swing.JDesktopPane;
 
 public class VentanaLogin {
 
@@ -135,7 +133,7 @@ public class VentanaLogin {
 					JOptionPane.showMessageDialog(btnLogin, "Identificador " + usuario +" incorrecto", "Login incorrecto", JOptionPane.ERROR_MESSAGE, null);
 				}
 				else {
-					VentanaPrincipal reg = new VentanaPrincipal();
+					VentanaRecientes reg = new VentanaRecientes();
 					reg.getFrame().setVisible(true);
 					frmAppmusic.setVisible(false);
 				}

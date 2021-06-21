@@ -162,6 +162,13 @@ public class VentanaMisListas{
 		btnRecientes.setBackground(Color.LIGHT_GRAY);
 		btnRecientes.setIcon(new ImageIcon(VentanaMisListas.class.getResource("/umu/tds/imagenes/reloj-de-pared.png")));
 		panel_1.add(btnRecientes);
+		btnRecientes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaRecientes reg = new VentanaRecientes();
+				reg.getFrame().setVisible(true);
+				frmVentanaMisListas.setVisible(false);
+			}
+		});
 		
 		JButton btnMisL = new JButton("Mis listas");
 		btnMisL.setBorderPainted(false);

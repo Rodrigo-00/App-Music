@@ -221,4 +221,8 @@ public final class Controlador implements PropertyChangeListener{
 		mediaPlayer.stop();
 	}
 	
+	public List<Cancion> getRecientes(){
+		return usuarioActual.getRecientes();
+	}
+	
 }
