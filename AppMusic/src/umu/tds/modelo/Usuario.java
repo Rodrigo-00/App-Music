@@ -30,11 +30,10 @@ public class Usuario {
 	
 	public void addReciente(Cancion c) {
 		
-		recientes.add(c);
-		/*if(!recientes.contains(c)) {
-			if(recientes.size()==10) recientes.remove(9);	//Borramos la ultima cancion 
-			recientes.add(0, c);	//Añadimos al inicio la cancion
-		}*/
+		if(!recientes.contains(c) && recientes.size() == 10) recientes.remove(9);	//Borramos la ultima cancion 
+		else if(recientes.contains(c))	recientes.remove(c);	//Borramos la cancion de la posicion donde este
+	
+		recientes.add(0, c);	//Añadimos al inicio la cancion
 	}
 	
 	public Boolean getPremium() {
