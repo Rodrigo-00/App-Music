@@ -93,7 +93,7 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 		
 		System.out.println(canciones);
 		
-		if(canciones!= null) {
+		if(canciones!= null && !canciones.equals("")) {
 			System.out.println("ENTRA");
 			StringTokenizer strTok = new StringTokenizer(canciones, " ");
 			AdaptadorCancionTDS adaptadorC = AdaptadorCancionTDS.getUnicaInstancia();
@@ -104,9 +104,8 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 		
 		if(listaCanciones.size()==0) System.out.println("LISTA de canciones VACIA");
 		
-		for (Cancion c : listaCanciones) {
-			System.out.println("Añadimos a la lista a devolver "+ c.getTitulo());
-		}
+		for (Cancion c : listaCanciones)	System.out.println("Añadimos a la lista a devolver "+ c.getTitulo());
+	
 		
 		return listaCanciones;
 	}
@@ -119,8 +118,7 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 			System.out.println("La lista queda "+ aux);
 		}
 		
-		return aux;
-		//return aux.trim();
+		return aux.trim();
 	}
 
 	public void registrarUsuario(Usuario usuario) {
@@ -153,6 +151,31 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 	 */
 	public void updatePerfil(Usuario usuario) {
 		Entidad eUsuario = servPersistencia.recuperarEntidad(usuario.getId());
+		
+		for (Propiedad prop : eUsuario.getPropiedades()) {
+			switch (prop.getNombre()) {
+			case PASSWORD:
+				prop.setValor(String.valueOf(usuario.getPassword()));
+				break;
+			case EMAIL:
+				prop.setValor(String.valueOf(usuario.getEmail()));
+				break;
+			case NOMBRE:
+				prop.setValor(String.valueOf(usuario.getNombre()));
+				break;
+			case APELLIDOS:
+				prop.setValor(String.valueOf(usuario.getApellidos()));
+				break;
+			case RECIENTES:
+				prop.setValor(String.valueOf(obtenerIdCanciones(usuario.getRecientes())));
+				break;
+			default:
+				break;
+			}
+			servPersistencia.modificarPropiedad(prop);
+		}
+		
+		/*
 		servPersistencia.eliminarPropiedadEntidad(eUsuario, PASSWORD);
 		servPersistencia.anadirPropiedadEntidad(eUsuario, PASSWORD, usuario.getPassword());
 		servPersistencia.eliminarPropiedadEntidad(eUsuario, EMAIL);
@@ -169,7 +192,7 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 		System.out.println("Y la lista contiene");
 		for (Cancion c : usuario.getRecientes()) {
 			System.out.println(c.getTitulo());
-		}
+		}*/
 	}
 
 	public Usuario obtenerUsuario(int id) {

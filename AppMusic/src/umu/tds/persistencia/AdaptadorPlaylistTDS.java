@@ -111,7 +111,23 @@ public final class AdaptadorPlaylistTDS implements IAdaptadorPlaylistDAO{
 	
 	@Override
 	public void updatePlaylist(Playlist lista) {
-		Entidad ePlaylist;
+		
+		
+		Entidad ePlaylist = servPersistencia.recuperarEntidad(lista.getId());
+		
+		for (Propiedad prop : ePlaylist.getPropiedades()) {
+			switch (prop.getNombre()) {
+			case CANCIONES:
+				prop.setValor(String.valueOf(obtenerIdCanciones(lista.getCanciones())));
+				break;
+			default:
+				break;
+			}
+			servPersistencia.modificarPropiedad(prop);
+		}
+		
+		
+		/*Entidad ePlaylist;
 
 		ePlaylist = servPersistencia.recuperarEntidad(lista.getId());
 		
@@ -120,7 +136,7 @@ public final class AdaptadorPlaylistTDS implements IAdaptadorPlaylistDAO{
 		
 		String canciones = obtenerIdCanciones(lista.getCanciones());
 		servPersistencia.eliminarPropiedadEntidad(ePlaylist, CANCIONES);
-		servPersistencia.anadirPropiedadEntidad(ePlaylist, CANCIONES, canciones);
+		servPersistencia.anadirPropiedadEntidad(ePlaylist, CANCIONES, canciones);*/
 
 	}
 	
@@ -137,7 +153,7 @@ public final class AdaptadorPlaylistTDS implements IAdaptadorPlaylistDAO{
 		
 		List<Cancion> listaCanciones = new LinkedList<Cancion>();
 		
-		if(canciones != null) {
+		if(canciones != null && !canciones.equals("")) {
 			StringTokenizer strTok = new StringTokenizer(canciones, " ");
 			AdaptadorCancionTDS adaptadorC = AdaptadorCancionTDS.getUnicaInstancia();
 			while (strTok.hasMoreTokens()) {
