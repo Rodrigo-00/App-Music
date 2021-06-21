@@ -81,8 +81,9 @@ public class VentanaMisListas{
 		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
-		JButton btnAtrs = new JButton("Atr\u00E1s");
+		JButton btnAtrs = new JButton("Menu Principal");
 		GridBagConstraints gbc_btnAtrs = new GridBagConstraints();
+		gbc_btnAtrs.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnAtrs.insets = new Insets(0, 0, 5, 5);
 		gbc_btnAtrs.gridx = 2;
 		gbc_btnAtrs.gridy = 1;
