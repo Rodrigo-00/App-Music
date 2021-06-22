@@ -116,7 +116,7 @@ public class VentanaCrearPlaylist {
 					JOptionPane.showMessageDialog(btnCrear, "Ya existe una lista con ese nombre", "Lista existente", JOptionPane.ERROR_MESSAGE, null);
 				}else {
 					JOptionPane.showMessageDialog(btnCrear,"Playlist creada correctamente", "Mensaje", JOptionPane.PLAIN_MESSAGE);
-					VentanaPrincipal reg = new VentanaPrincipal();
+					VentanaPlaylistNueva reg = new VentanaPlaylistNueva();
 					reg.getFrame().setVisible(true);
 					frmCrearPlaylist.setVisible(false);
 				}
