@@ -111,7 +111,23 @@ public final class AdaptadorPlaylistTDS implements IAdaptadorPlaylistDAO{
 	
 	@Override
 	public void updatePlaylist(Playlist lista) {
-		Entidad ePlaylist;
+		
+		
+		Entidad ePlaylist = servPersistencia.recuperarEntidad(lista.getId());
+		
+		for (Propiedad prop : ePlaylist.getPropiedades()) {
+			switch (prop.getNombre()) {
+			case CANCIONES:
+				prop.setValor(String.valueOf(obtenerIdCanciones(lista.getCanciones())));
+				break;
+			default:
+				break;
+			}
+			servPersistencia.modificarPropiedad(prop);
+		}
+		
+		
+		/*Entidad ePlaylist;
 
 		ePlaylist = servPersistencia.recuperarEntidad(lista.getId());
 		
@@ -120,7 +136,7 @@ public final class AdaptadorPlaylistTDS implements IAdaptadorPlaylistDAO{
 		
 		String canciones = obtenerIdCanciones(lista.getCanciones());
 		servPersistencia.eliminarPropiedadEntidad(ePlaylist, CANCIONES);
-		servPersistencia.anadirPropiedadEntidad(ePlaylist, CANCIONES, canciones);
+		servPersistencia.anadirPropiedadEntidad(ePlaylist, CANCIONES, canciones);*/
 
 	}
 	
@@ -134,12 +150,15 @@ public final class AdaptadorPlaylistTDS implements IAdaptadorPlaylistDAO{
 	
 	
 	private List<Cancion> obtenerCancionesDesdeId(String canciones) {
-
+		
 		List<Cancion> listaCanciones = new LinkedList<Cancion>();
-		StringTokenizer strTok = new StringTokenizer(canciones, " ");
-		AdaptadorCancionTDS adaptadorC = AdaptadorCancionTDS.getUnicaInstancia();
-		while (strTok.hasMoreTokens()) {
-			listaCanciones.add(adaptadorC.obtenerCancion(Integer.valueOf((String) strTok.nextElement())));
+		
+		if(canciones != null && !canciones.equals("")) {
+			StringTokenizer strTok = new StringTokenizer(canciones, " ");
+			AdaptadorCancionTDS adaptadorC = AdaptadorCancionTDS.getUnicaInstancia();
+			while (strTok.hasMoreTokens()) {
+				listaCanciones.add(adaptadorC.obtenerCancion(Integer.valueOf((String) strTok.nextElement())));
+			}
 		}
 		return listaCanciones;
 	}
@@ -155,7 +174,7 @@ public final class AdaptadorPlaylistTDS implements IAdaptadorPlaylistDAO{
 	}
 	
 	@Override
-	public List<Playlist> getAll(int idUsuario) {
+	public List<Playlist> getAll(int idUsuario) {	//Devuelve las playlist de un usuario
 		List<Entidad> entidades = servPersistencia.recuperarEntidades(PLAYLIST);
 		System.out.println("LLama");
 		List<Playlist> listas = new LinkedList<Playlist>();

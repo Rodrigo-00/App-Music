@@ -1,56 +1,41 @@
 package umu.tds.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Font;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
+import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-
-import javax.swing.JButton;
-import javax.swing.BoxLayout;
-import java.awt.GridLayout;
-import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
-import javax.swing.JTextField;
-import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.net.MalformedURLException;
+import java.util.List;
+
+import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
-import java.awt.Color;
-import javax.swing.JList;
-import javax.swing.AbstractListModel;
-import javax.swing.ListSelectionModel;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.UIManager;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import umu.tds.controlador.Controlador;
 import umu.tds.modelo.Cancion;
 
-import javax.swing.DefaultComboBoxModel;
-import java.awt.SystemColor;
-import javax.swing.UIManager;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.net.MalformedURLException;
-import java.util.LinkedList;
-import java.util.List;
-import java.awt.event.ActionEvent;
-import javax.swing.JSplitPane;
-import java.awt.Component;
-import javax.swing.DropMode;
-import java.awt.Cursor;
-import javax.swing.JSlider;
-import javax.swing.JScrollPane;
+public class VentanaRecientes {
 
-public class VentanaExplorar {
-
-	JFrame frmVentanaExplorar;
+	JFrame frmVentanaRecientes;
 	private JTextField txtInterprete;
 	private JTextField txtTitulo;
 	private List<Cancion> canciones;	//Lista donde se almacenan las canciones que se van a mostrar en la tabla de la ventana
@@ -61,12 +46,15 @@ public class VentanaExplorar {
 	private Boolean reproduciendo;	//Nos sirve para comprobar si se esta reproduciendo o no una cancion
 	
 	
-	public VentanaExplorar() {
+	/**
+	 * @wbp.parser.entryPoint
+	 */
+	public VentanaRecientes() {
 		initialize();
 	}
 	
 	public JFrame getFrame() {
-		return frmVentanaExplorar;
+		return frmVentanaRecientes;
 	}
 	/**
 	 * Launch the application.
@@ -75,8 +63,8 @@ public class VentanaExplorar {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaExplorar frame = new VentanaExplorar();
-					frame.frmVentanaExplorar.setVisible(true);
+					VentanaRecientes frame = new VentanaRecientes();
+					frame.frmVentanaRecientes.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -85,24 +73,24 @@ public class VentanaExplorar {
 	}
 
 	public void mostrarVentana() {
-		frmVentanaExplorar.setLocationRelativeTo(null);
-		frmVentanaExplorar.setVisible(true);
+		frmVentanaRecientes.setLocationRelativeTo(null);
+		frmVentanaRecientes.setVisible(true);
 	}
 	
 	public void initialize() {
-		frmVentanaExplorar = new JFrame();
-		frmVentanaExplorar.setTitle("AppMusic");
-		frmVentanaExplorar.setBounds(100, 100, 583, 368);
-		frmVentanaExplorar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmVentanaRecientes = new JFrame();
+		frmVentanaRecientes.setTitle("AppMusic");
+		frmVentanaRecientes.setBounds(100, 100, 583, 368);
+		frmVentanaRecientes.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		reproduciendo = false;
 		cancActual = null;
 		
-		JPanel contentPane = (JPanel) frmVentanaExplorar.getContentPane();
-		frmVentanaExplorar.getContentPane().setLayout(new BorderLayout(0, 0));
+		JPanel contentPane = (JPanel) frmVentanaRecientes.getContentPane();
+		frmVentanaRecientes.getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.LIGHT_GRAY);
-		frmVentanaExplorar.getContentPane().add(panel, BorderLayout.NORTH);
+		frmVentanaRecientes.getContentPane().add(panel, BorderLayout.NORTH);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{10, 0, 10, 10, 0, 0, 0, 10, 68, 10, -3, 0};
 		gbl_panel.rowHeights = new int[]{10, 0, 20, 0};
@@ -116,7 +104,7 @@ public class VentanaExplorar {
 				if(reproduciendo) Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para pausar la cancion si se esta reproduciendo alguna
 				VentanaPrincipal reg = new VentanaPrincipal();
 				reg.getFrame().setVisible(true);
-				frmVentanaExplorar.setVisible(false);
+				frmVentanaRecientes.setVisible(false);
 			}
 		});
 		GridBagConstraints gbc_btnSalir = new GridBagConstraints();
@@ -151,13 +139,13 @@ public class VentanaExplorar {
 				if(reproduciendo) Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para pausar la cancion si se esta reproduciendo alguna
 				VentanaLogin reg = new VentanaLogin();
 				reg.getFrame().setVisible(true);
-				frmVentanaExplorar.setVisible(false);
+				frmVentanaRecientes.setVisible(false);
 			}
 		});
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Color.LIGHT_GRAY);
-		frmVentanaExplorar.getContentPane().add(panel_1, BorderLayout.WEST);
+		frmVentanaRecientes.getContentPane().add(panel_1, BorderLayout.WEST);
 		panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.Y_AXIS));
 		
 		JButton btnNewButton_1 = new JButton("Explorar");
@@ -165,6 +153,14 @@ public class VentanaExplorar {
 		btnNewButton_1.setBackground(Color.LIGHT_GRAY);
 		btnNewButton_1.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/lupa.png")));
 		panel_1.add(btnNewButton_1);
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(reproduciendo) Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para pausar la cancion si se esta reproduciendo alguna
+				VentanaExplorar reg = new VentanaExplorar();
+				reg.getFrame().setVisible(true);
+				frmVentanaRecientes.setVisible(false);
+			}
+		});
 		
 		JButton btnNewButton_2 = new JButton("Nueva lista");
 		btnNewButton_2.setBorderPainted(false);
@@ -176,7 +172,7 @@ public class VentanaExplorar {
 				if(reproduciendo) Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para pausar la cancion si se esta reproduciendo alguna
 				VentanaCrearPlaylist reg = new VentanaCrearPlaylist();
 				reg.getFrame().setVisible(true);
-				frmVentanaExplorar.setVisible(false);
+				frmVentanaRecientes.setVisible(false);
 			}
 		});
 		
@@ -185,14 +181,6 @@ public class VentanaExplorar {
 		btnRecientes.setBackground(Color.LIGHT_GRAY);
 		btnRecientes.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/reloj-de-pared.png")));
 		panel_1.add(btnRecientes);
-		btnRecientes.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(reproduciendo) Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para pausar la cancion si se esta reproduciendo alguna
-				VentanaRecientes reg = new VentanaRecientes();
-				reg.getFrame().setVisible(true);
-				frmVentanaExplorar.setVisible(false);
-			}
-		});
 		
 		JButton btnMisL = new JButton("Mis listas");
 		btnMisL.setBorderPainted(false);
@@ -204,47 +192,17 @@ public class VentanaExplorar {
 				if(reproduciendo) Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para pausar la cancion si se esta reproduciendo alguna
 				VentanaMisListas reg = new VentanaMisListas();
 				reg.getFrame().setVisible(true);
-				frmVentanaExplorar.setVisible(false);
+				frmVentanaRecientes.setVisible(false);
 			}
 		});
 		
 		JPanel panel_2 = new JPanel();
-		frmVentanaExplorar.getContentPane().add(panel_2, BorderLayout.CENTER);
+		frmVentanaRecientes.getContentPane().add(panel_2, BorderLayout.CENTER);
 		panel_2.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel_3 = new JPanel();
 		panel_2.add(panel_3, BorderLayout.NORTH);
 		panel_3.setLayout(new BorderLayout(0, 0));
-		
-		JPanel panel_4 = new JPanel();
-		panel_3.add(panel_4, BorderLayout.NORTH);
-		
-		txtInterprete = new JTextField();
-		txtInterprete.setText("Interprete");
-		panel_4.add(txtInterprete);
-		txtInterprete.setColumns(10);
-		
-		txtTitulo = new JTextField();
-		txtTitulo.setText("Titulo");
-		panel_4.add(txtTitulo);
-		txtTitulo.setColumns(10);
-		
-		comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(Controlador.getUnicaInstancia().getEstilos().toArray()));	//Obtenemos todos los estilos
-		panel_4.add(comboBox);
-		
-		JPanel panel_5 = new JPanel();
-		panel_3.add(panel_5, BorderLayout.SOUTH);
-		
-		JButton btnNewButton_3 = new JButton("Cancelar");
-		panel_5.add(btnNewButton_3); 
-		btnNewButton_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				txtInterprete.setText("Interprete");
-				txtTitulo.setText("Titulo");
-				comboBox.setSelectedItem("Estilo");
-			}
-		});
 
 
 		
@@ -273,32 +231,12 @@ public class VentanaExplorar {
 		table.setEditingColumn(-2);
 
 		
-		//Añadimos inicialmente todas las canciones a la tabla
-		canciones = Controlador.getUnicaInstancia().getAllCanciones();
+		//Añadimos las canciones escuchadas recientemente por el usuario
+		canciones = Controlador.getUnicaInstancia().getRecientes();
 		for(Cancion c : canciones ) {
 			model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
 		}
 		scrollPane.setViewportView(table);
-	
-		
-		
-		JButton btnNewButton = new JButton("Buscar");
-		panel_5.add(btnNewButton);
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				frmVentanaExplorar.setVisible(false);
-				
-				//Extraemos los datos seleccionados
-				String interprete = txtInterprete.getText();
-				String titulo = txtTitulo.getText();
-				String estilo = (String) comboBox.getSelectedItem();
-				
-				mostrarCanciones(interprete, titulo, estilo);	//Mostramos las canciones en la tabla
-				
-				scrollPane.setViewportView(table);
-				frmVentanaExplorar.setVisible(true);
-			}
-		});
 		
 		
 	
@@ -418,73 +356,5 @@ public class VentanaExplorar {
 		
 		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
 
-	}
-	
-	
-	
-	
-	private void mostrarCanciones(String interprete, String titulo, String estilo) {
-		
-		Cancion cancion;
-		
-		int filas = model.getRowCount();
-		for(int i = 1; i <= filas; i++) {
-			model.removeRow(0);    //Eliminamos todas las lineas de la tabla
-		}
-		
-		canciones.clear();//Vaciamos la lista de canciones
-		
-		if(((interprete.equals("Interprete") || interprete.equals("")) && (titulo.equals("") || titulo.equals("Titulo")) && comboBox.getSelectedItem().equals("Estilo"))) {
-			//Buscar todas las canciones
-			canciones = Controlador.getUnicaInstancia().getAllCanciones();
-			for(Cancion c : canciones ) {
-				model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
-			}
-		}else if(((interprete.equals("Interprete") || interprete.equals("")) && (!titulo.equals("") && !titulo.equals("Titulo")) && comboBox.getSelectedItem().equals("Estilo"))) {
-			//Buscar por titulo
-			cancion = Controlador.getUnicaInstancia().getCancionTitulo(titulo);
-			canciones.add(cancion);
-			if(cancion != null) model.addRow(new Object[] { cancion.getTitulo(), cancion.getInterprete() });
-			
-		}else if(((!interprete.equals("Interprete") && !interprete.equals("")) && (titulo.equals("") || titulo.equals("Titulo")) && comboBox.getSelectedItem().equals("Estilo"))) {
-			//Buscar por interprete
-			canciones = Controlador.getUnicaInstancia().getCancionesInterprete(interprete);
-			for(Cancion c : canciones ) {
-				model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
-			}
-			
-		}else if(((interprete.equals("Interprete") || interprete.equals("")) && (titulo.equals("") || titulo.equals("Titulo")) && !comboBox.getSelectedItem().equals("Estilo"))) {
-			//Buscar por estilo
-			canciones = Controlador.getUnicaInstancia().getCancionesEstilo(estilo);
-			for(Cancion c : canciones ) {
-				model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
-			}
-			
-		}else if(((!interprete.equals("Interprete") && !interprete.equals("")) && (titulo.equals("") || titulo.equals("Titulo")) && !comboBox.getSelectedItem().equals("Estilo"))) {
-			//Buscar por estilo y autor
-			canciones = Controlador.getUnicaInstancia().getCancionesEstiloInter(estilo, interprete);
-			for(Cancion c : canciones ) {
-				model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
-			}
-		}else if(((interprete.equals("Interprete") || interprete.equals("")) && (!titulo.equals("") && !titulo.equals("Titulo")) && !comboBox.getSelectedItem().equals("Estilo"))) {
-			//Buscar por estilo y titulo
-			cancion = Controlador.getUnicaInstancia().getCancionTituloyEsti(titulo, estilo);
-			canciones.add(cancion);
-			if(cancion != null) model.addRow(new Object[] { cancion.getTitulo(), cancion.getInterprete() });
-			
-		}else if(((!interprete.equals("Interprete") && !interprete.equals("")) && (!titulo.equals("") && !titulo.equals("Titulo")) && !comboBox.getSelectedItem().equals("Estilo"))){	
-			//Buscar por titulo, autor y estilo
-			cancion = Controlador.getUnicaInstancia().getCancionTitInterEsti(titulo, interprete, estilo);
-			canciones.add(cancion);
-			if(cancion != null) model.addRow(new Object[] { cancion.getTitulo(), cancion.getInterprete() });
-			
-		}else {
-			//buscar por autor y titulo
-			cancion = Controlador.getUnicaInstancia().getCancionTituloeInter(titulo, interprete);
-			canciones.add(cancion);
-			if(cancion != null) model.addRow(new Object[] { cancion.getTitulo(), cancion.getInterprete() });
-		}
-		
-		
 	}
 }

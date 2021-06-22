@@ -79,7 +79,7 @@ public class VentanaPrincipal implements PropertyChangeListener{
 	public void initialize() {
 		frmVentanaPrincipal = new JFrame();
 		frmVentanaPrincipal.setTitle("AppMusic");
-		frmVentanaPrincipal.setBounds(100, 100, 483, 368);
+		frmVentanaPrincipal.setBounds(100, 100, 583, 368);
 		frmVentanaPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel contentPane = (JPanel) frmVentanaPrincipal.getContentPane();
@@ -173,6 +173,13 @@ public class VentanaPrincipal implements PropertyChangeListener{
 		btnRecientes.setBackground(Color.LIGHT_GRAY);
 		btnRecientes.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/umu/tds/imagenes/reloj-de-pared.png")));
 		panel_1.add(btnRecientes);
+		btnRecientes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaRecientes reg = new VentanaRecientes();
+				reg.getFrame().setVisible(true);
+				frmVentanaPrincipal.setVisible(false);
+			}
+		});
 		
 		JButton btnMisL = new JButton("Mis listas");
 		btnMisL.setBorderPainted(false);

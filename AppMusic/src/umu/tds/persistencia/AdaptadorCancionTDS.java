@@ -11,7 +11,6 @@ import beans.Propiedad;
 import tds.driver.FactoriaServicioPersistencia;
 import tds.driver.ServicioPersistencia;
 import umu.tds.modelo.Cancion;
-import umu.tds.modelo.Usuario;
 
 public class AdaptadorCancionTDS implements IAdaptadorCancionDAO{
 

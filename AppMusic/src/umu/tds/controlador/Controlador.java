@@ -7,9 +7,16 @@ import umu.tds.modelo.*;
 import umu.tds.persistencia.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import javafx.scene.media.Media; 
+import javafx.scene.media.MediaPlayer;
 
 public final class Controlador implements PropertyChangeListener{
 
@@ -22,11 +29,13 @@ public final class Controlador implements PropertyChangeListener{
 
 	private CatalogoCanciones catalogoCanciones;
 	private CatalogoUsuarios catalogoUsuarios;
+	private MediaPlayer mediaPlayer;
 	
 	private Controlador() {
 		usuarioActual = null;
 		inicializarAdaptadores();
 		inicializarCatalogos();
+		activarReproductor();
 	}
 
 	public static Controlador getUnicaInstancia() {
@@ -57,6 +66,16 @@ public final class Controlador implements PropertyChangeListener{
 		catalogoUsuarios = CatalogoUsuarios.getUnicaInstancia();
 	}
 	
+	private void activarReproductor() {
+		try {
+			com.sun.javafx.application.PlatformImpl.startup(() -> {
+			});
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			System.out.println("Exception: " + ex.getMessage());
+		}
+	}
+	
 
 	public Usuario getUsuarioActual() {
 		return usuarioActual;
@@ -67,9 +86,11 @@ public final class Controlador implements PropertyChangeListener{
 	}
 
 	public boolean loginUsuario(String nombre, String password) {
+		
 		Usuario usuario = catalogoUsuarios.getUsuario(nombre);
 		if (usuario != null && usuario.getPassword().equals(password)) {
 			this.usuarioActual = usuario;
+			System.out.println("Usuario con id "+ usuario.getId());
 			return true;
 		}
 		return false;
@@ -80,7 +101,6 @@ public final class Controlador implements PropertyChangeListener{
         if (esUsuarioRegistrado(login)) return false;
         	
 		Usuario usuario = new Usuario(nombre, apellidos, email, login, password, fechaNacimiento);
-
 		adaptadorUsuario.registrarUsuario(usuario);
 
 		catalogoUsuarios.addUsuario(usuario); 
@@ -140,4 +160,69 @@ public final class Controlador implements PropertyChangeListener{
 			catalogoCanciones.addCancion(song);
 		}
 	}
+	
+	public List<Cancion> getAllCanciones(){
+		return catalogoCanciones.getAll();
+	}
+	
+	public List<Cancion> getCancionesInterprete(String interprete){
+		return  catalogoCanciones.getCancionesInterprete(interprete);
+	}
+	
+	public Cancion getCancionTitulo(String titulo){
+		return catalogoCanciones.getCancionTitulo(titulo);
+	}
+	
+	public Cancion getCancionTituloeInter(String titulo, String interprete){
+		return catalogoCanciones.getCancion(titulo, interprete);
+	}
+	
+	public List<Cancion> getCancionesEstilo(String estilo){
+		return  catalogoCanciones.getCancionesEstilo(estilo);
+	}
+	
+	public List<Cancion> getCancionesEstiloInter(String estilo, String interprete){
+		return  catalogoCanciones.getCancionesEstiloInter(estilo, interprete);
+	}
+	
+	public Cancion getCancionTituloyEsti(String titulo, String estilo) {
+		return  catalogoCanciones.getCancionTituloyEsti(titulo, estilo);
+	}
+	
+	public Cancion getCancionTitInterEsti(String titulo, String interprete, String estilo) {
+		return  catalogoCanciones.getCancionTitInterEsti(titulo, interprete, estilo);
+	}
+	
+	public List<String> getEstilos() {
+		return  catalogoCanciones.getEstilos();
+	}
+	
+	public void reproducirCancion(Cancion c) throws MalformedURLException {
+		URL url = new URL(c.getRutaFichero());
+		Media hit = new Media(url.toString()); 
+		mediaPlayer = new MediaPlayer(hit); 
+		mediaPlayer.play();
+		usuarioActual.addReciente(c);	//Añadimos la cancion a la lista de canciones recientes del usuario
+		adaptadorUsuario.updatePerfil(usuarioActual);	//Actualizamos en la base de datos el usuario actual
+		
+		for(Cancion ca: usuarioActual.getRecientes())
+			System.out.println("CONTIENE "+ca.getTitulo());
+	}
+	
+	public void pausarCancion() {
+		mediaPlayer.pause();
+	}
+	
+	public void reanudarCancion() {
+		mediaPlayer.play();
+	}
+	
+	public void pararCancion() {
+		mediaPlayer.stop();
+	}
+	
+	public List<Cancion> getRecientes(){
+		return usuarioActual.getRecientes();
+	}
+	
 }
