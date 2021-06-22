@@ -18,14 +18,20 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JTextField;
 import javax.swing.JTable;
+import javax.swing.JScrollPane;
+import javax.swing.JComboBox;
+import java.awt.FlowLayout;
+import java.awt.Component;
+import java.awt.GridLayout;
+import javax.swing.border.TitledBorder;
 
 public class VentanaPlaylistNueva {
 
 	private JFrame frame;
 	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
+	private JTextField txtInterprete;
+	private JTextField txtTitulo;
+	private JTextField txtEstilo;
 	private JTable table;
 	private JTable table_1;
 
@@ -61,7 +67,7 @@ public class VentanaPlaylistNueva {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 927, 458);
+		frame.setBounds(100, 100, 1121, 698);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel panel_west = new JPanel();
@@ -122,32 +128,35 @@ public class VentanaPlaylistNueva {
 		gbc_ButCrear.gridy = 1;
 		panel__north.add(ButCrear, gbc_ButCrear);
 		
-		textField_1 = new JTextField();
-		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
-		gbc_textField_1.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_1.gridx = 1;
-		gbc_textField_1.gridy = 2;
-		panel__north.add(textField_1, gbc_textField_1);
-		textField_1.setColumns(10);
+		txtInterprete = new JTextField();
+		txtInterprete.setText("Interprete");
+		GridBagConstraints gbc_txtInterprete = new GridBagConstraints();
+		gbc_txtInterprete.insets = new Insets(0, 0, 5, 5);
+		gbc_txtInterprete.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtInterprete.gridx = 1;
+		gbc_txtInterprete.gridy = 2;
+		panel__north.add(txtInterprete, gbc_txtInterprete);
+		txtInterprete.setColumns(10);
 		
-		textField_2 = new JTextField();
-		GridBagConstraints gbc_textField_2 = new GridBagConstraints();
-		gbc_textField_2.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_2.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_2.gridx = 3;
-		gbc_textField_2.gridy = 2;
-		panel__north.add(textField_2, gbc_textField_2);
-		textField_2.setColumns(10);
+		txtTitulo = new JTextField();
+		txtTitulo.setText("Titulo");
+		GridBagConstraints gbc_txtTitulo = new GridBagConstraints();
+		gbc_txtTitulo.insets = new Insets(0, 0, 5, 5);
+		gbc_txtTitulo.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtTitulo.gridx = 3;
+		gbc_txtTitulo.gridy = 2;
+		panel__north.add(txtTitulo, gbc_txtTitulo);
+		txtTitulo.setColumns(10);
 		
-		textField_3 = new JTextField();
-		GridBagConstraints gbc_textField_3 = new GridBagConstraints();
-		gbc_textField_3.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_3.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_3.gridx = 5;
-		gbc_textField_3.gridy = 2;
-		panel__north.add(textField_3, gbc_textField_3);
-		textField_3.setColumns(10);
+		txtEstilo = new JTextField();
+		txtEstilo.setText("Estilo");
+		GridBagConstraints gbc_txtEstilo = new GridBagConstraints();
+		gbc_txtEstilo.insets = new Insets(0, 0, 5, 5);
+		gbc_txtEstilo.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtEstilo.gridx = 5;
+		gbc_txtEstilo.gridy = 2;
+		panel__north.add(txtEstilo, gbc_txtEstilo);
+		txtEstilo.setColumns(10);
 		
 		JButton btnBuscar = new JButton("Buscar");
 		GridBagConstraints gbc_btnBuscar = new GridBagConstraints();
@@ -156,27 +165,29 @@ public class VentanaPlaylistNueva {
 		gbc_btnBuscar.gridy = 2;
 		panel__north.add(btnBuscar, gbc_btnBuscar);
 		
-		JPanel panel__east = new JPanel();
-		panel_center.add(panel__east, BorderLayout.EAST);
-		
-		table = new JTable();
-		panel__east.add(table);
-		
 		JPanel panel__center = new JPanel();
 		panel_center.add(panel__center, BorderLayout.CENTER);
-		panel__center.setLayout(new BoxLayout(panel__center, BoxLayout.Y_AXIS));
+		GridBagLayout gbl_panel__center = new GridBagLayout();
+		gbl_panel__center.columnWidths = new int[]{54, 0};
+		gbl_panel__center.rowHeights = new int[]{84, 78, 80, 0};
+		gbl_panel__center.columnWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_panel__center.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		panel__center.setLayout(gbl_panel__center);
 		
 		JButton btnNewButton_4 = new JButton(">>");
-		panel__center.add(btnNewButton_4);
+		GridBagConstraints gbc_btnNewButton_4 = new GridBagConstraints();
+		gbc_btnNewButton_4.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnNewButton_4.insets = new Insets(0, 0, 5, 0);
+		gbc_btnNewButton_4.gridx = 0;
+		gbc_btnNewButton_4.gridy = 1;
+		panel__center.add(btnNewButton_4, gbc_btnNewButton_4);
 		
 		JButton btnNewButton_5 = new JButton("<<");
-		panel__center.add(btnNewButton_5);
-		
-		JPanel panel__west = new JPanel();
-		panel_center.add(panel__west, BorderLayout.WEST);
-		
-		table_1 = new JTable();
-		panel__west.add(table_1);
+		GridBagConstraints gbc_btnNewButton_5 = new GridBagConstraints();
+		gbc_btnNewButton_5.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnNewButton_5.gridx = 0;
+		gbc_btnNewButton_5.gridy = 2;
+		panel__center.add(btnNewButton_5, gbc_btnNewButton_5);
 		
 		JPanel panel_south = new JPanel();
 		panel_center.add(panel_south, BorderLayout.SOUTH);
@@ -186,6 +197,22 @@ public class VentanaPlaylistNueva {
 		
 		JButton btnNewButton_3 = new JButton("Cancelar");
 		panel_south.add(btnNewButton_3);
+		
+		JPanel panel__west = new JPanel();
+		panel_center.add(panel__west, BorderLayout.WEST);
+		
+		table = new JTable();		
+		JScrollPane scrollCanciones = new JScrollPane(table); 
+		panel__west.add(scrollCanciones);
+		
+		JPanel panel__east = new JPanel();
+		panel_center.add(panel__east, BorderLayout.EAST);
+		
+		table_1 = new JTable();
+		table_1.setBorder(new TitledBorder(null, "Playlist", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		JScrollPane scrollCancionesPlaylist = new JScrollPane(table_1);
+		panel__east.add(scrollCancionesPlaylist);
+		
 		
 		JPanel panel_north = new JPanel();
 		panel_north.setBackground(Color.LIGHT_GRAY);
