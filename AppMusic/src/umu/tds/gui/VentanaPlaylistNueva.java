@@ -67,7 +67,7 @@ public class VentanaPlaylistNueva {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1121, 698);
+		frame.setBounds(100, 100, 1198, 698);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel panel_west = new JPanel();
@@ -168,24 +168,23 @@ public class VentanaPlaylistNueva {
 		JPanel panel__center = new JPanel();
 		panel_center.add(panel__center, BorderLayout.CENTER);
 		GridBagLayout gbl_panel__center = new GridBagLayout();
-		gbl_panel__center.columnWidths = new int[]{54, 0};
+		gbl_panel__center.columnWidths = new int[]{15, 0, 15, 0};
 		gbl_panel__center.rowHeights = new int[]{84, 78, 80, 0};
-		gbl_panel__center.columnWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_panel__center.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_panel__center.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel__center.setLayout(gbl_panel__center);
 		
 		JButton btnNewButton_4 = new JButton(">>");
 		GridBagConstraints gbc_btnNewButton_4 = new GridBagConstraints();
-		gbc_btnNewButton_4.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnNewButton_4.insets = new Insets(0, 0, 5, 0);
-		gbc_btnNewButton_4.gridx = 0;
+		gbc_btnNewButton_4.insets = new Insets(0, 0, 5, 5);
+		gbc_btnNewButton_4.gridx = 1;
 		gbc_btnNewButton_4.gridy = 1;
 		panel__center.add(btnNewButton_4, gbc_btnNewButton_4);
 		
 		JButton btnNewButton_5 = new JButton("<<");
 		GridBagConstraints gbc_btnNewButton_5 = new GridBagConstraints();
-		gbc_btnNewButton_5.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnNewButton_5.gridx = 0;
+		gbc_btnNewButton_5.insets = new Insets(0, 0, 0, 5);
+		gbc_btnNewButton_5.gridx = 1;
 		gbc_btnNewButton_5.gridy = 2;
 		panel__center.add(btnNewButton_5, gbc_btnNewButton_5);
 		
