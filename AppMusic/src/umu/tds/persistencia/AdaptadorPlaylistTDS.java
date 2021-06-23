@@ -21,7 +21,6 @@ public final class AdaptadorPlaylistTDS implements IAdaptadorPlaylistDAO{
 	private static final String PLAYLIST = "Playlist";
 	private static final String NOMBRE = "nombre";
 	private static final String CANCIONES = "canciones";
-	private static final String USUARIO = "idUsuario";
 	
 	
 	
@@ -37,7 +36,7 @@ public final class AdaptadorPlaylistTDS implements IAdaptadorPlaylistDAO{
 	}
 	
 	
-	private Entidad playlistToEntidad(Playlist lista, int idUsuario) {
+	private Entidad playlistToEntidad(Playlist lista) {
 		Entidad ePlaylist = new Entidad();
 		ePlaylist.setNombre(PLAYLIST);
 		
@@ -45,8 +44,7 @@ public final class AdaptadorPlaylistTDS implements IAdaptadorPlaylistDAO{
 		
 		ePlaylist.setPropiedades(new ArrayList<Propiedad>(Arrays.asList(
 								 new Propiedad(NOMBRE, lista.getNombre()),
-								 new Propiedad(CANCIONES, obtenerIdCanciones(lista.getCanciones())),
-								 new Propiedad(USUARIO, String.valueOf(idUsuario)))));
+								 new Propiedad(CANCIONES, obtenerIdCanciones(lista.getCanciones())))));
 		
 		return ePlaylist;
 	}
@@ -72,7 +70,7 @@ public final class AdaptadorPlaylistTDS implements IAdaptadorPlaylistDAO{
 	
 
 	@Override
-	public void registrarPlaylist(Playlist lista, int idUsuario) {
+	public void registrarPlaylist(Playlist lista) {
 		
 		System.out.println("Id de lista "+ lista.getId());
 		Entidad ePlaylist;
@@ -87,7 +85,7 @@ public final class AdaptadorPlaylistTDS implements IAdaptadorPlaylistDAO{
 		}
 		System.out.println("nombre de la lista a registrar "+ lista.getNombre());
 		System.out.println("Se crea la playlist");
-		ePlaylist = playlistToEntidad(lista, idUsuario);
+		ePlaylist = playlistToEntidad(lista);
 		ePlaylist = servPersistencia.registrarEntidad(ePlaylist);
 		System.out.println("Id de lista adjudicado "+ ePlaylist.getId());
 		lista.setId(ePlaylist.getId());
@@ -173,7 +171,8 @@ public final class AdaptadorPlaylistTDS implements IAdaptadorPlaylistDAO{
 		return listas;
 	}
 	
-	@Override
+	
+	/*@Override
 	public List<Playlist> getAll(int idUsuario) {	//Devuelve las playlist de un usuario
 		List<Entidad> entidades = servPersistencia.recuperarEntidades(PLAYLIST);
 		System.out.println("LLama");
@@ -188,5 +187,5 @@ public final class AdaptadorPlaylistTDS implements IAdaptadorPlaylistDAO{
 		
 		System.out.println("devolvemos la lista");
 		return listas;
-	}
+	}*/
 }
