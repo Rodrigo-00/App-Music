@@ -21,6 +21,7 @@ import javafx.scene.media.MediaPlayer;
 public final class Controlador implements PropertyChangeListener{
 
 	private Usuario usuarioActual;
+	private Descuento descuento;
 	private static Controlador unicaInstancia;
 	
 	private IAdaptadorCancionDAO adaptadorCancion;
@@ -206,6 +207,10 @@ public final class Controlador implements PropertyChangeListener{
 	
 	public List<Cancion> getRecientes(){
 		return usuarioActual.getRecientes();
+	}
+	
+	public void setDescuento(Descuento des){
+		descuento = des;
 	}
 	
 }
