@@ -124,6 +124,9 @@ public class VentanaRecientes {
 		btnHaztePremium.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(reproduciendo) Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para pausar la cancion si se esta reproduciendo alguna
+				VentanaPremium reg = new VentanaPremium();
+				reg.getFrame().setVisible(true);
+				frmVentanaRecientes.setVisible(false);
 			}
 		});
 		
