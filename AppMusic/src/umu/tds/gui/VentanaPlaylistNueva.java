@@ -17,6 +17,8 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.MalformedURLException;
+import java.util.List;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -28,8 +30,13 @@ import java.awt.FlowLayout;
 import java.awt.Component;
 import java.awt.GridLayout;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 
 import umu.tds.controlador.Controlador;
+import umu.tds.modelo.Cancion;
+
+import javax.swing.border.LineBorder;
+import javax.swing.ListSelectionModel;
 
 public class VentanaPlaylistNueva {
 
@@ -186,13 +193,35 @@ public class VentanaPlaylistNueva {
 		gbc_btnNewButton_4.gridx = 1;
 		gbc_btnNewButton_4.gridy = 1;
 		panel__center.add(btnNewButton_4, gbc_btnNewButton_4);
+		btnNewButton_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int row = table.getSelectedRow();
+				DefaultTableModel model = (DefaultTableModel) table.getModel();
+				DefaultTableModel model_1 = (DefaultTableModel) table_1.getModel();
+				Object Titulo = model.getValueAt(row, 0);
+				Object Interprete = model.getValueAt(row, 1);
+				model.removeRow(row);
+				model_1.addRow(new Object[] { Titulo, Interprete });
+			}
+		});
 		
 		JButton btnNewButton_5 = new JButton("<<");
 		GridBagConstraints gbc_btnNewButton_5 = new GridBagConstraints();
-		gbc_btnNewButton_5.insets = new Insets(0, 0, 0, 5);
+		gbc_btnNewButton_5.insets = new Insets(0, 0, 5, 5);
 		gbc_btnNewButton_5.gridx = 1;
 		gbc_btnNewButton_5.gridy = 2;
 		panel__center.add(btnNewButton_5, gbc_btnNewButton_5);
+		btnNewButton_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int row = table_1.getSelectedRow();
+				DefaultTableModel model = (DefaultTableModel) table.getModel();
+				DefaultTableModel model_1 = (DefaultTableModel) table_1.getModel();
+				Object Titulo = model_1.getValueAt(row, 0);
+				Object Interprete = model_1.getValueAt(row, 1);
+				model_1.removeRow(row);
+				model.addRow(new Object[] { Titulo, Interprete });
+			}
+		});
 		
 		JPanel panel_south = new JPanel();
 		panel_center.add(panel_south, BorderLayout.SOUTH);
@@ -206,15 +235,26 @@ public class VentanaPlaylistNueva {
 		JPanel panel__west = new JPanel();
 		panel_center.add(panel__west, BorderLayout.WEST);
 		
-		table = new JTable();		
+		
+		String[] columns = {"Titulo","Interprete"};
+		table = new JTable(new DefaultTableModel(columns, 0));	
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JScrollPane scrollCanciones = new JScrollPane(table); 
 		panel__west.add(scrollCanciones);
+		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		//A�adimos inicialmente todas las canciones a la tabla
+			List<Cancion> canciones = Controlador.getUnicaInstancia().getAllCanciones();
+			for(Cancion c : canciones ) {
+				model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
+			}
 		
 		JPanel panel__east = new JPanel();
 		panel_center.add(panel__east, BorderLayout.EAST);
 		
-		table_1 = new JTable();
-		table_1.setBorder(new TitledBorder(null, "Playlist", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		
+		table_1 = new JTable(new DefaultTableModel(columns, 0));
+		table_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table_1.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Playlist", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(51, 51, 51)));
 		JScrollPane scrollCancionesPlaylist = new JScrollPane(table_1);
 		panel__east.add(scrollCancionesPlaylist);
 		
