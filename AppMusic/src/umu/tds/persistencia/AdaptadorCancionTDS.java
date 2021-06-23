@@ -105,13 +105,34 @@ public class AdaptadorCancionTDS implements IAdaptadorCancionDAO{
 	
 	@Override
 	public void updateCancion(Cancion cancion) {
+		
+		Entidad eCancion = servPersistencia.recuperarEntidad(cancion.getId());
+		
+		for (Propiedad prop : eCancion.getPropiedades()) {
+			switch (prop.getNombre()) {
+			case RUTA_FICHERO:
+				prop.setValor(String.valueOf(cancion.getRutaFichero()));
+				break;
+			case ESTILO:
+				prop.setValor(String.valueOf(cancion.getEstilo()));
+				break;
+			case REPRODUCCIONES:
+				prop.setValor(String.valueOf(cancion.getReproducciones()));
+				break;
+			default:
+				break;
+			}
+			servPersistencia.modificarPropiedad(prop);
+		}
+		
+		/*
 		Entidad eCancion = servPersistencia.recuperarEntidad(cancion.getId());
 		servPersistencia.eliminarPropiedadEntidad(eCancion, RUTA_FICHERO);
 		servPersistencia.anadirPropiedadEntidad(eCancion, RUTA_FICHERO, cancion.getRutaFichero());
 		servPersistencia.eliminarPropiedadEntidad(eCancion, ESTILO);
 		servPersistencia.anadirPropiedadEntidad(eCancion, ESTILO, cancion.getEstilo());
 		servPersistencia.eliminarPropiedadEntidad(eCancion, REPRODUCCIONES);
-		servPersistencia.anadirPropiedadEntidad(eCancion, REPRODUCCIONES, String.valueOf(cancion.getReproducciones()));
+		servPersistencia.anadirPropiedadEntidad(eCancion, REPRODUCCIONES, String.valueOf(cancion.getReproducciones()));*/
 	}
 	
 	@Override
