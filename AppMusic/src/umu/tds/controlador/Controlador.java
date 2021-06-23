@@ -187,7 +187,7 @@ public final class Controlador implements PropertyChangeListener{
 		Media hit = new Media(url.toString()); 
 		mediaPlayer = new MediaPlayer(hit); 
 		mediaPlayer.play();
-		usuarioActual.addReciente(c);	//Añadimos la cancion a la lista de canciones recientes del usuario
+		usuarioActual.addReciente(c);	//Aï¿½adimos la cancion a la lista de canciones recientes del usuario
 		adaptadorUsuario.updatePerfil(usuarioActual);	//Actualizamos en la base de datos el usuario actual
 		
 		for(Cancion ca: usuarioActual.getRecientes())
@@ -223,6 +223,9 @@ public final class Controlador implements PropertyChangeListener{
 	}
 	public void convertirPremium(String tiempo) {
 		
+	}
+	public void aÃ±adeCancionPlaylist(String playlist, Cancion cancion) {
+		usuarioActual.addCancionToPlaylist(playlist, cancion);
 	}
 	
 }

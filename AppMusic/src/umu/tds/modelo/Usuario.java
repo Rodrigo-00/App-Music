@@ -35,7 +35,7 @@ public class Usuario {
 		if(!recientes.contains(c) && recientes.size() == 10) recientes.remove(9);	//Borramos la ultima cancion 
 		else if(recientes.contains(c))	recientes.remove(c);	//Borramos la cancion de la posicion donde este
 	
-		recientes.add(0, c);	//Añadimos al inicio la cancion
+		recientes.add(0, c);	//Aï¿½adimos al inicio la cancion
 	}
 	
 	public Playlist crearPlayList(String nombre) {
@@ -142,6 +142,19 @@ public class Usuario {
 	
 	public List<Playlist> getPlayLists() {
 		return playLists;
+	}
+	
+	public void addCancionToPlaylist(String play, Cancion cancion) {
+		Playlist playlist = this.getPlayList(play);
+		playlist.addCancion(cancion);
+	}
+	
+	public Playlist getPlayList(String play) {
+		for (Playlist playlist:playLists) {
+			if(play.equals(playlist.getNombre()))
+			return playlist;
+		}
+		return null;
 	}
 	
 	public boolean isPremium() {

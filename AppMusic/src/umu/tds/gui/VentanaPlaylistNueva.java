@@ -228,6 +228,19 @@ public class VentanaPlaylistNueva {
 		
 		JButton btnNewButton = new JButton("Aceptar");
 		panel_south.add(btnNewButton);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DefaultTableModel model_1 = (DefaultTableModel) table_1.getModel();
+				for(int row = 0;row < model_1.getRowCount();row++) {
+					String Titulo = model_1.getValueAt(row, 0).toString();
+					String Interprete = model_1.getValueAt(row, 1).toString();
+					Controlador controlador = Controlador.getUnicaInstancia();
+					Cancion cancion = controlador.getCancionTituloeInter(Titulo, Interprete);
+					controlador.añadeCancionPlaylist(textField.getText() , cancion);
+				}
+			}
+		});
+		
 		
 		JButton btnNewButton_3 = new JButton("Cancelar");
 		panel_south.add(btnNewButton_3);
