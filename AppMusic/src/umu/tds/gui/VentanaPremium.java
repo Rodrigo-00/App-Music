@@ -26,6 +26,7 @@ import umu.tds.controlador.Controlador;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import java.awt.Dimension;
+import java.awt.Font;
 
 public class VentanaPremium {
 
@@ -92,13 +93,14 @@ public class VentanaPremium {
 		panel.add(btnConfirmar);
 		
 		txtTexto = new JTextField();
+		txtTexto.setFont(new Font("Myanmar Text", Font.PLAIN, 14));
 		txtTexto.setHorizontalAlignment(SwingConstants.CENTER);
 		txtTexto.setSelectionColor(Color.BLACK);
 		txtTexto.setForeground(Color.BLACK);
 		txtTexto.setCaretColor(Color.WHITE);
 		txtTexto.setBackground(Color.YELLOW);
-		txtTexto.setText("\u00BFCuanto tiempo deseas ser PREMIUM?");
-		txtTexto.setBounds(173, 64, 270, 20);
+		txtTexto.setText("\u00BFCuanto tiempo deseas ser PREMIUM " + Controlador.getUnicaInstancia().getLoginUsuario()+ "?");
+		txtTexto.setBounds(114, 64, 383, 33);
 		panel.add(txtTexto);
 		txtTexto.setColumns(10);
 		
@@ -107,6 +109,12 @@ public class VentanaPremium {
 		Object[] años = {"Años", "1 año", "2 años", "3 años"};
 		comboBox.setModel(new DefaultComboBoxModel(años));
 		panel.add(comboBox);
+		
+		JLabel lblAppMusic = new JLabel("APP MUSIC");
+		lblAppMusic.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAppMusic.setFont(new Font("Viner Hand ITC", Font.BOLD, 22));
+		lblAppMusic.setBounds(173, 17, 270, 36);
+		panel.add(lblAppMusic);
 		
 		/*
 		panel.add(comboBox);*/

@@ -95,7 +95,7 @@ public class VentanaPrincipal implements PropertyChangeListener{
 		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
-		JLabel lblNewLabel = new JLabel("Hola "+ Controlador.getUnicaInstancia().getUsuarioActual().getLogin());
+		JLabel lblNewLabel = new JLabel("Hola "+ Controlador.getUnicaInstancia().getLoginUsuario());
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 20));
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();

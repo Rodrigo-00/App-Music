@@ -34,6 +34,7 @@ public final class Controlador implements PropertyChangeListener{
 	
 	private Controlador() {
 		usuarioActual = null;
+		descuento = null;
 		inicializarAdaptadores();
 		inicializarCatalogos();
 		activarReproductor();
@@ -211,6 +212,10 @@ public final class Controlador implements PropertyChangeListener{
 	
 	public void setDescuento(Descuento des){
 		descuento = des;
+	}
+	
+	public String getLoginUsuario(){
+		return usuarioActual.getLogin();
 	}
 	
 }
