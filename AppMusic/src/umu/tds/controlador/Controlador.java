@@ -118,36 +118,19 @@ public final class Controlador implements PropertyChangeListener{
 	}
 	
 	public List<String> nombresListas(){
-		
-		List<String> nombres = new LinkedList<String>();
-		List<Playlist> listas = adaptadorPlaylist.getAll(usuarioActual.getId());
-		
-		for(Playlist list : listas) nombres.add(list.getNombre());
-		
-		return nombres;
+		return usuarioActual.nombresListas();
 		
 	}
 	
 	public boolean crearPlaylist(String nombre) {
-		
-		
-		System.out.println("Nombre de la playlist a crear " + nombre);
-		
-		List<Playlist> listas = adaptadorPlaylist.getAll(usuarioActual.getId());	//Obtenemos todas las playlist del cliente
-		
-		for(Playlist list : listas) {
-			System.out.println(list.getNombre());
-			if(list.getNombre().equals(nombre)) {
-				System.out.println("Existe ya una con el nombre");
-				return false;
-			}
+		Playlist lista = usuarioActual.crearPlayList(nombre);
+		if(lista != null) {
+			adaptadorPlaylist.registrarPlaylist(lista, usuarioActual.getId());
+			adaptadorUsuario.updatePerfil(usuarioActual);
+			return true;
 		}
+		return false;
 		
-		System.out.println("El nombre sigue siendo "+ nombre);
-		Playlist lista = new Playlist(nombre);
-		System.out.println("El nombre sigue siendo "+ lista.getNombre());
-		adaptadorPlaylist.registrarPlaylist(lista, usuarioActual.getId());
-		return true;
 	}
 	
 	public void cargarCanciones(String fichero) {
