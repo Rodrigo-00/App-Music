@@ -21,6 +21,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -124,9 +125,13 @@ public class VentanaRecientes {
 		btnHaztePremium.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(reproduciendo) Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para pausar la cancion si se esta reproduciendo alguna
-				VentanaPremium reg = new VentanaPremium();
-				reg.getFrame().setVisible(true);
-				frmVentanaRecientes.setVisible(false);
+				if(Controlador.getUnicaInstancia().isUsuarioPremium()) {
+					JOptionPane.showMessageDialog(btnHaztePremium, "Ya eres usuaio Premium", "Error", JOptionPane.ERROR_MESSAGE, null);
+				}else{
+					VentanaPremium reg = new VentanaPremium();
+					reg.getFrame().setVisible(true);
+					frmVentanaRecientes.setVisible(false);
+				}
 			}
 		});
 		

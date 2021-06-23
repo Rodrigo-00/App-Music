@@ -104,6 +104,17 @@ public class VentanaMisListas{
 		gbc_btnHaztePremium.gridx = 5;
 		gbc_btnHaztePremium.gridy = 1;
 		panel.add(btnHaztePremium, gbc_btnHaztePremium);
+		btnHaztePremium.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Controlador.getUnicaInstancia().isUsuarioPremium()) {
+					JOptionPane.showMessageDialog(btnHaztePremium, "Ya eres usuaio Premium", "Error", JOptionPane.ERROR_MESSAGE, null);
+				}else{
+					VentanaPremium reg = new VentanaPremium();
+					reg.getFrame().setVisible(true);
+					frmVentanaMisListas.setVisible(false);
+				}
+			}
+		});
 		
 		JButton btnSalir = new JButton("Salir");
 		btnSalir.setBackground(SystemColor.control);

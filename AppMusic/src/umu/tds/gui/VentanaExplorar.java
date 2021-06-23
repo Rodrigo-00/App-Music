@@ -22,6 +22,7 @@ import java.awt.FlowLayout;
 import javax.swing.ImageIcon;
 import java.awt.Color;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.AbstractListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.JComboBox;
@@ -132,10 +133,17 @@ public class VentanaExplorar {
 		gbc_btnHaztePremium.insets = new Insets(0, 0, 5, 5);
 		gbc_btnHaztePremium.gridx = 5;
 		gbc_btnHaztePremium.gridy = 1;
-		panel.add(btnHaztePremium, gbc_btnHaztePremium);
+		panel.add(btnHaztePremium, gbc_btnHaztePremium);	
 		btnHaztePremium.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(reproduciendo) Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para pausar la cancion si se esta reproduciendo alguna
+				if(Controlador.getUnicaInstancia().isUsuarioPremium()) {
+					JOptionPane.showMessageDialog(btnHaztePremium, "Ya eres usuaio Premium", "Error", JOptionPane.ERROR_MESSAGE, null);
+				}else{
+					VentanaPremium reg = new VentanaPremium();
+					reg.getFrame().setVisible(true);
+					frmVentanaExplorar.setVisible(false);
+				}
 			}
 		});
 		

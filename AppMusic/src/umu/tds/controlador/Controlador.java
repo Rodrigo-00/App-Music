@@ -218,4 +218,11 @@ public final class Controlador implements PropertyChangeListener{
 		return usuarioActual.getLogin();
 	}
 	
+	public Boolean isUsuarioPremium(){
+		return usuarioActual.isPremium();
+	}
+	public void convertirPremium(String tiempo) {
+		
+	}
+	
 }

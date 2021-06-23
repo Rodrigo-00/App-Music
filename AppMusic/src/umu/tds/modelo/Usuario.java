@@ -143,5 +143,10 @@ public class Usuario {
 	public List<Playlist> getPlayLists() {
 		return playLists;
 	}
+	
+	public boolean isPremium() {
+		return premium;
+	}
+
 
 }

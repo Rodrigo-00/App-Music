@@ -74,6 +74,12 @@ public class VentanaPremium {
 		frmVentanaPremium.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 		
+		comboBox = new JComboBox();
+		comboBox.setBounds(256, 108, 99, 22);
+		Object[] años = {"Años", "1 año", "2 años", "3 años"};
+		comboBox.setModel(new DefaultComboBoxModel(años));
+		panel.add(comboBox);
+		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBounds(173, 205, 110, 23);
 		panel.add(btnCancelar);
@@ -91,6 +97,19 @@ public class VentanaPremium {
 		btnConfirmar.setMaximumSize(new Dimension(75, 23));
 		btnConfirmar.setBounds(333, 205, 110, 23);
 		panel.add(btnConfirmar);
+		btnConfirmar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String seleccionado = (String) comboBox.getSelectedItem();
+				if(seleccionado.equals("Años")) {
+					JOptionPane.showMessageDialog(btnConfirmar, "Selecciona un periodo válido", "Periodo erroneo", JOptionPane.ERROR_MESSAGE, null);
+				}else {
+					Controlador.getUnicaInstancia().convertirPremium(seleccionado);
+					VentanaPrincipal reg = new VentanaPrincipal();
+					reg.getFrame().setVisible(true);
+					frmVentanaPremium.setVisible(false);
+				}
+			}
+		});
 		
 		txtTexto = new JTextField();
 		txtTexto.setFont(new Font("Myanmar Text", Font.PLAIN, 14));
@@ -103,12 +122,6 @@ public class VentanaPremium {
 		txtTexto.setBounds(114, 64, 383, 33);
 		panel.add(txtTexto);
 		txtTexto.setColumns(10);
-		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(256, 108, 99, 22);
-		Object[] años = {"Años", "1 año", "2 años", "3 años"};
-		comboBox.setModel(new DefaultComboBoxModel(años));
-		panel.add(comboBox);
 		
 		JLabel lblAppMusic = new JLabel("APP MUSIC");
 		lblAppMusic.setHorizontalAlignment(SwingConstants.CENTER);

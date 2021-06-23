@@ -108,7 +108,6 @@ public class VentanaCrearPlaylist {
 		panel.add(btnCrear, gbc_btnCrear);
 		btnCrear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 				String nombre=textField.getText();
 				System.out.println("EL NOMBRE ES "+nombre);
 				boolean reply = Controlador.getUnicaInstancia().crearPlaylist(nombre);

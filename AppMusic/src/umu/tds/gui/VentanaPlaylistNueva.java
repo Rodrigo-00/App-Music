@@ -11,8 +11,12 @@ import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -24,6 +28,8 @@ import java.awt.FlowLayout;
 import java.awt.Component;
 import java.awt.GridLayout;
 import javax.swing.border.TitledBorder;
+
+import umu.tds.controlador.Controlador;
 
 public class VentanaPlaylistNueva {
 
@@ -243,6 +249,17 @@ public class VentanaPlaylistNueva {
 		gbc_btnHaztePremium_1.gridx = 5;
 		gbc_btnHaztePremium_1.gridy = 1;
 		panel_north.add(btnHaztePremium_1, gbc_btnHaztePremium_1);
+		btnHaztePremium_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Controlador.getUnicaInstancia().isUsuarioPremium()) {
+					JOptionPane.showMessageDialog(btnHaztePremium_1, "Ya eres usuaio Premium", "Error", JOptionPane.ERROR_MESSAGE, null);
+				}else{
+					VentanaPremium reg = new VentanaPremium();
+					reg.getFrame().setVisible(true);
+					frame.setVisible(false);
+				}
+			}
+		});
 		
 		JButton btnSalir_1 = new JButton("Salir");
 		btnSalir_1.setBorderPainted(false);
