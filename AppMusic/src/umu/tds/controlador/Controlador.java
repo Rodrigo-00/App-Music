@@ -125,7 +125,7 @@ public final class Controlador implements PropertyChangeListener{
 	public boolean crearPlaylist(String nombre) {
 		Playlist lista = usuarioActual.crearPlayList(nombre);
 		if(lista != null) {
-			adaptadorPlaylist.registrarPlaylist(lista, usuarioActual.getId());
+			adaptadorPlaylist.registrarPlaylist(lista);
 			adaptadorUsuario.updatePerfil(usuarioActual);
 			return true;
 		}
