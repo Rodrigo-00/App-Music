@@ -209,7 +209,6 @@ public class VentanaMisListas{
 		
 		JPanel panel_2 = new JPanel();
 		frmVentanaMisListas.getContentPane().add(panel_2, BorderLayout.CENTER);
-		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.Y_AXIS));
 		
 		List<String> listas = Controlador.getUnicaInstancia().nombresListas();
 		JList<String> list = new JList(listas.toArray());
@@ -231,21 +230,32 @@ public class VentanaMisListas{
 		
 		
 		String[] columns = {"Titulo","Interprete"};
-		table_1 = new JTable(new DefaultTableModel(columns, 0));
-		table_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table_1.setBorder(null);
-		JScrollPane scrollCancionesPlaylist = new JScrollPane(table_1);
-		panel_2.add(scrollCancionesPlaylist);
-		DefaultTableModel model = (DefaultTableModel) table_1.getModel();
+		panel_2.setLayout(new BorderLayout(0, 0));
 		//A�adimos inicialmente todas las canciones a la tabla
+		DefaultTableModel model = (DefaultTableModel) table_1.getModel();
 			List<Cancion> canciones = Controlador.getUnicaInstancia().getCancionesPlaylist(list.getSelectedValue());
 			for(Cancion c : canciones ) {
 				model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
 			}
 		
-		JButton btnReproducir = new JButton("Reproducir");
-		panel_2.add(btnReproducir);
-		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
+		JPanel panel_4 = new JPanel();
+		panel_2.add(panel_4, BorderLayout.CENTER);
+		table_1 = new JTable(new DefaultTableModel(columns, 0));
+		table_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table_1.setBorder(null);
+		JScrollPane scrollCancionesPlaylist = new JScrollPane(table_1);
+		panel_4.add(scrollCancionesPlaylist);
+		
+		JPanel panel_5 = new JPanel();
+		panel_2.add(panel_5, BorderLayout.SOUTH);
+	
+		JButton btnAnterior = new JButton("");
+		btnAnterior.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/next_music_player_play_media-512alreves.png")));
+		panel_5.add(btnAnterior);
+		
+		JButton btnReproducir = new JButton("");
+		btnReproducir.setIcon(new ImageIcon(VentanaMisListas.class.getResource("/umu/tds/imagenes/pause.png")));
+		panel_5.add(btnReproducir);
 		btnReproducir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String seleccionada = (String)list.getSelectedValue();
@@ -278,7 +288,10 @@ public class VentanaMisListas{
 				
 			}
 		});
-
 	
+		
+		JButton btnPosterior = new JButton("");
+		btnPosterior.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/next_music_player_play_media-512.png")));
+		panel_5.add(btnPosterior);
 	}
 }
