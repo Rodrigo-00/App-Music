@@ -26,13 +26,16 @@ import java.awt.Insets;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 
 public class VentanaCrearPlaylist {
 
@@ -40,7 +43,6 @@ public class VentanaCrearPlaylist {
 	private JTextField textField;
 	private JTextField txtInterprete;
 	private JTextField txtTitulo;
-	private JTextField txtEstilo;
 	private JTable table;
 	private JTable table_1;
 	private JButton btnBuscar;
@@ -48,6 +50,8 @@ public class VentanaCrearPlaylist {
 	private JPanel panel_south;
 	private JPanel panel__west;
 	private JPanel panel__east;
+	private JComboBox comboBox;
+	private List<Cancion> canciones;	//Lista donde se almacenan las canciones que se van a mostrar en la tabla izq de la ventana
 
 	public JFrame getFrame() {
 		return frame;
@@ -153,7 +157,7 @@ public class VentanaCrearPlaylist {
 				textField.setEditable(false);
 				txtInterprete.setVisible(true);
 				txtTitulo.setVisible(true);
-				txtEstilo.setVisible(true);
+				comboBox.setVisible(true);
 				btnBuscar.setVisible(true);
 				panel__center.setVisible(true);
 				panel_south.setVisible(true);
@@ -185,16 +189,15 @@ public class VentanaCrearPlaylist {
 	txtTitulo.setColumns(10);
 	txtTitulo.setVisible(false);
 	
-	txtEstilo = new JTextField();
-	txtEstilo.setText("Estilo");
-	GridBagConstraints gbc_txtEstilo = new GridBagConstraints();
-	gbc_txtEstilo.insets = new Insets(0, 0, 5, 5);
-	gbc_txtEstilo.fill = GridBagConstraints.HORIZONTAL;
-	gbc_txtEstilo.gridx = 5;
-	gbc_txtEstilo.gridy = 2;
-	panel__north.add(txtEstilo, gbc_txtEstilo);
-	txtEstilo.setColumns(10);
-	txtEstilo.setVisible(false);
+	comboBox = new JComboBox();
+	comboBox.setModel(new DefaultComboBoxModel(Controlador.getUnicaInstancia().getEstilos().toArray()));
+	GridBagConstraints gbc_comboBox = new GridBagConstraints();
+	gbc_comboBox.insets = new Insets(0, 0, 5, 5);
+	gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
+	gbc_comboBox.gridx = 5;
+	gbc_comboBox.gridy = 2;
+	panel__north.add(comboBox, gbc_comboBox);
+	comboBox.setVisible(false);
 	
 	btnBuscar = new JButton("Buscar");
 	GridBagConstraints gbc_btnBuscar = new GridBagConstraints();
@@ -203,6 +206,20 @@ public class VentanaCrearPlaylist {
 	gbc_btnBuscar.gridy = 2;
 	panel__north.add(btnBuscar, gbc_btnBuscar);
 	btnBuscar.setVisible(false);
+	btnBuscar.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			frame.setVisible(false);
+			
+			//Extraemos los datos seleccionados
+			String interprete = txtInterprete.getText();
+			String titulo = txtTitulo.getText();
+			String estilo = (String) comboBox.getSelectedItem();
+			
+			mostrarCanciones(interprete, titulo, estilo);	//Mostramos las canciones en la tabla
+
+			frame.setVisible(true);
+		}
+	});
 	
 	panel__center = new JPanel();
 	panel_center.add(panel__center, BorderLayout.CENTER);
@@ -295,7 +312,7 @@ public class VentanaCrearPlaylist {
 	panel__west.add(scrollCanciones);
 	DefaultTableModel model = (DefaultTableModel) table.getModel();
 	//A�adimos inicialmente todas las canciones a la tabla
-		List<Cancion> canciones = Controlador.getUnicaInstancia().getAllCanciones();
+		canciones = Controlador.getUnicaInstancia().getAllCanciones();
 		for(Cancion c : canciones ) {
 			model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
 		}
@@ -364,5 +381,108 @@ public class VentanaCrearPlaylist {
 	gbc_btnSalir_1.gridy = 1;
 	panel_north.add(btnSalir_1, gbc_btnSalir_1);
 }
+	
+	
+private void mostrarCanciones(String interprete, String titulo, String estilo) {
+	
+		Cancion cancion;
+		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		DefaultTableModel model_1 = (DefaultTableModel) table_1.getModel();
+		int filas = model.getRowCount();
+		for(int i = 0; i < filas; i++) {
+			model.removeRow(0);    //Eliminamos todas las lineas de la tabla
+		}
+		int filas_1 = model_1.getRowCount();
+		List<Cancion> songs = new LinkedList<Cancion>();
+		for (int i = 0; i < filas_1; i++) {
+			String Titulo = (String)model_1.getValueAt(i, 0);
+			String Interprete = (String)model_1.getValueAt(i, 1);
+			Cancion song = Controlador.getUnicaInstancia().getCancionTituloeInter(Titulo, Interprete);
+			songs.add(song);
+		}
+		
+		canciones.clear();//Vaciamos la lista de canciones
+		List<Cancion> cancionesPrev = new LinkedList<Cancion>();
+		
+		if(((interprete.equals("Interprete") || interprete.equals("")) && (titulo.equals("") || titulo.equals("Titulo")) && comboBox.getSelectedItem().equals("Estilo"))) {
+			//Buscar todas las canciones
+			canciones = Controlador.getUnicaInstancia().getAllCanciones();
+			cancionesPrev.addAll(canciones);
+			for(Cancion c : cancionesPrev ) {
+				if(!songs.contains(c)) {
+					model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
+				} else {
+					canciones.remove(c);
+				}
+			}
+		}else if(((interprete.equals("Interprete") || interprete.equals("")) && (!titulo.equals("") && !titulo.equals("Titulo")) && comboBox.getSelectedItem().equals("Estilo"))) {
+			//Buscar por titulo
+			cancion = Controlador.getUnicaInstancia().getCancionTitulo(titulo);
+			if((cancion != null)&&(!songs.contains(cancion))) {
+				canciones.add(cancion);
+				model.addRow(new Object[] { cancion.getTitulo(), cancion.getInterprete() });
+			}
+			
+		}else if(((!interprete.equals("Interprete") && !interprete.equals("")) && (titulo.equals("") || titulo.equals("Titulo")) && comboBox.getSelectedItem().equals("Estilo"))) {
+			//Buscar por interprete
+			canciones = Controlador.getUnicaInstancia().getCancionesInterprete(interprete);
+			cancionesPrev.addAll(canciones);
+			for(Cancion c : cancionesPrev ) {
+				if(!songs.contains(c)) {
+					model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
+				} else {
+					canciones.remove(c);
+				}
+			}
+			
+		}else if(((interprete.equals("Interprete") || interprete.equals("")) && (titulo.equals("") || titulo.equals("Titulo")) && !comboBox.getSelectedItem().equals("Estilo"))) {
+			//Buscar por estilo
+			canciones = Controlador.getUnicaInstancia().getCancionesEstilo(estilo);
+			cancionesPrev.addAll(canciones);
+			for(Cancion c : cancionesPrev ) {
+				if(!songs.contains(c)) {
+					model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
+				} else {
+					canciones.remove(c);
+				}
+			}
+			
+		}else if(((!interprete.equals("Interprete") && !interprete.equals("")) && (titulo.equals("") || titulo.equals("Titulo")) && !comboBox.getSelectedItem().equals("Estilo"))) {
+			//Buscar por estilo y autor
+			canciones = Controlador.getUnicaInstancia().getCancionesEstiloInter(estilo, interprete);
+			cancionesPrev.addAll(canciones);
+			for(Cancion c : cancionesPrev ) {
+				if(!songs.contains(c)) {
+					model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
+				} else {
+					canciones.remove(c);
+				}
+			}
+		}else if(((interprete.equals("Interprete") || interprete.equals("")) && (!titulo.equals("") && !titulo.equals("Titulo")) && !comboBox.getSelectedItem().equals("Estilo"))) {
+			//Buscar por estilo y titulo
+			cancion = Controlador.getUnicaInstancia().getCancionTituloyEsti(titulo, estilo);
+			if((cancion != null)&&(!songs.contains(cancion))) {
+				canciones.add(cancion);
+				model.addRow(new Object[] { cancion.getTitulo(), cancion.getInterprete() });
+			}
+			
+		}else if(((!interprete.equals("Interprete") && !interprete.equals("")) && (!titulo.equals("") && !titulo.equals("Titulo")) && !comboBox.getSelectedItem().equals("Estilo"))){	
+			//Buscar por titulo, autor y estilo
+			cancion = Controlador.getUnicaInstancia().getCancionTitInterEsti(titulo, interprete, estilo);
+			if((cancion != null)&&(!songs.contains(cancion))) {
+				canciones.add(cancion);
+				model.addRow(new Object[] { cancion.getTitulo(), cancion.getInterprete() });
+			}
+			
+		}else {
+			//buscar por autor y titulo
+			cancion = Controlador.getUnicaInstancia().getCancionTituloeInter(titulo, interprete);
+			if((cancion != null)&&(!songs.contains(cancion))) {
+				canciones.add(cancion);
+				model.addRow(new Object[] { cancion.getTitulo(), cancion.getInterprete() });
+			}
+		}
+		
+	}
 
 }
