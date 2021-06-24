@@ -80,7 +80,7 @@ public class VentanaMisListas{
 	public void initialize() {
 		frmVentanaMisListas = new JFrame();
 		frmVentanaMisListas.setTitle("AppMusic");
-		frmVentanaMisListas.setBounds(100, 100, 583, 368);
+		frmVentanaMisListas.setBounds(100, 100, 641, 390);
 		frmVentanaMisListas.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel contentPane = (JPanel) frmVentanaMisListas.getContentPane();
@@ -209,6 +209,7 @@ public class VentanaMisListas{
 		
 		JPanel panel_2 = new JPanel();
 		frmVentanaMisListas.getContentPane().add(panel_2, BorderLayout.CENTER);
+		panel_2.setLayout(new BorderLayout(0, 0));
 		
 		List<String> listas = Controlador.getUnicaInstancia().nombresListas();
 		JList<String> list = new JList(listas.toArray());
@@ -228,21 +229,19 @@ public class VentanaMisListas{
 			}
 		});
 		
-		
-		String[] columns = {"Titulo","Interprete"};
-		panel_2.setLayout(new BorderLayout(0, 0));
-		//A�adimos inicialmente todas las canciones a la tabla
-		DefaultTableModel model = (DefaultTableModel) table_1.getModel();
-			List<Cancion> canciones = Controlador.getUnicaInstancia().getCancionesPlaylist(list.getSelectedValue());
-			for(Cancion c : canciones ) {
-				model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
-			}
-		
 		JPanel panel_4 = new JPanel();
 		panel_2.add(panel_4, BorderLayout.CENTER);
+		
+		
+		String[] columns = {"Titulo","Interprete"};
 		table_1 = new JTable(new DefaultTableModel(columns, 0));
 		table_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table_1.setBorder(null);
+		DefaultTableModel model = (DefaultTableModel) table_1.getModel();
+		List<Cancion> canciones = Controlador.getUnicaInstancia().getCancionesPlaylist(list.getSelectedValue());
+		for(Cancion c : canciones ) {
+			model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
+		}
 		JScrollPane scrollCancionesPlaylist = new JScrollPane(table_1);
 		panel_4.add(scrollCancionesPlaylist);
 		
