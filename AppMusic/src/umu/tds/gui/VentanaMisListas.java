@@ -27,6 +27,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.ImageIcon;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -243,6 +244,7 @@ public class VentanaMisListas{
 			model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
 		}
 		JScrollPane scrollCancionesPlaylist = new JScrollPane(table_1);
+		scrollCancionesPlaylist.setMinimumSize(new Dimension(800, 800));
 		panel_4.add(scrollCancionesPlaylist);
 		
 		JPanel panel_5 = new JPanel();
