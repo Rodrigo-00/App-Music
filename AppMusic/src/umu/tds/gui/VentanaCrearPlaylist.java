@@ -313,7 +313,6 @@ public class VentanaCrearPlaylist {
 	panel_south.add(btnNewButton);
 	btnNewButton.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			DefaultTableModel model_1 = (DefaultTableModel) table_1.getModel();
 			Controlador controlador = Controlador.getUnicaInstancia();
 			for (Cancion cancion: acciones.keySet()) {
 				String accion = acciones.get(cancion);
