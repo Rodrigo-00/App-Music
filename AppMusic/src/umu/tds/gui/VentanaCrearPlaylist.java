@@ -282,10 +282,8 @@ public class VentanaCrearPlaylist {
 				Controlador controlador = Controlador.getUnicaInstancia();
 				Cancion cancion = controlador.getCancionTituloeInter(Titulo, Interprete);
 				controlador.añadeCancionPlaylist(textField.getText() , cancion);
-				VentanaPrincipal reg = new VentanaPrincipal();
-				reg.getFrame().setVisible(true);
-				frame.setVisible(false);
 			}
+			VentanaPrincipal reg = new VentanaPrincipal();
 			reg.getFrame().setVisible(true);
 			frame.setVisible(false);
 		}
