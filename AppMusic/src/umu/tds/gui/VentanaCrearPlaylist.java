@@ -332,7 +332,7 @@ public class VentanaCrearPlaylist {
 	
 	JButton btnNewButton_3 = new JButton("Cancelar");
 	panel_south.add(btnNewButton_3);
-	btnNewButton.addActionListener(new ActionListener() {
+	btnNewButton_3.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			VentanaPrincipal reg = new VentanaPrincipal();
 			reg.getFrame().setVisible(true);
