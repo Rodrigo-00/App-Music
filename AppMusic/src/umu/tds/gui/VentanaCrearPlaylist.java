@@ -26,6 +26,7 @@ import java.awt.Insets;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -52,6 +53,7 @@ public class VentanaCrearPlaylist {
 	private JPanel panel__east;
 	private JComboBox comboBox;
 	private List<Cancion> canciones;	//Lista donde se almacenan las canciones que se van a mostrar en la tabla izq de la ventana
+	private HashMap<Cancion,String> acciones = new HashMap<Cancion,String>();//Almacenará todas las acciones que serán aceptadas o canceladas
 
 	public JFrame getFrame() {
 		return frame;
@@ -268,9 +270,14 @@ public class VentanaCrearPlaylist {
 			int row = table.getSelectedRow();
 			DefaultTableModel model = (DefaultTableModel) table.getModel();
 			DefaultTableModel model_1 = (DefaultTableModel) table_1.getModel();
-			Object Titulo = model.getValueAt(row, 0);
-			Object Interprete = model.getValueAt(row, 1);
+			String Titulo = model.getValueAt(row, 0).toString();
+			String Interprete = model.getValueAt(row, 1).toString();
 			model.removeRow(row);
+			if (!acciones.containsKey(Controlador.getUnicaInstancia().getCancionTituloeInter(Titulo, Interprete))) {
+				acciones.put(Controlador.getUnicaInstancia().getCancionTituloeInter(Titulo, Interprete), "añadeCancion");
+			} else {
+				acciones.remove(Controlador.getUnicaInstancia().getCancionTituloeInter(Titulo, Interprete), "eliminaCancion");
+			}
 			model_1.addRow(new Object[] { Titulo, Interprete });
 		}
 	});
@@ -286,9 +293,14 @@ public class VentanaCrearPlaylist {
 			int row = table_1.getSelectedRow();
 			DefaultTableModel model = (DefaultTableModel) table.getModel();
 			DefaultTableModel model_1 = (DefaultTableModel) table_1.getModel();
-			Object Titulo = model_1.getValueAt(row, 0);
-			Object Interprete = model_1.getValueAt(row, 1);
+			String Titulo = model_1.getValueAt(row, 0).toString();
+			String Interprete = model_1.getValueAt(row, 1).toString();
 			model_1.removeRow(row);
+			if (!acciones.containsKey(Controlador.getUnicaInstancia().getCancionTituloeInter(Titulo, Interprete))) {
+				acciones.put(Controlador.getUnicaInstancia().getCancionTituloeInter(Titulo, Interprete),"eliminaCancion");
+			} else {
+				acciones.remove(Controlador.getUnicaInstancia().getCancionTituloeInter(Titulo, Interprete), "añadeCancion");
+			}
 			model.addRow(new Object[] { Titulo, Interprete });
 		}
 	});
@@ -302,12 +314,15 @@ public class VentanaCrearPlaylist {
 	btnNewButton.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			DefaultTableModel model_1 = (DefaultTableModel) table_1.getModel();
-			for(int row = 0;row < model_1.getRowCount();row++) {
-				String Titulo = model_1.getValueAt(row, 0).toString();
-				String Interprete = model_1.getValueAt(row, 1).toString();
-				Controlador controlador = Controlador.getUnicaInstancia();
-				Cancion cancion = controlador.getCancionTituloeInter(Titulo, Interprete);
-				controlador.añadeCancionPlaylist(textField.getText() , cancion);
+			Controlador controlador = Controlador.getUnicaInstancia();
+			for (Cancion cancion: acciones.keySet()) {
+				String accion = acciones.get(cancion);
+				System.out.println(accion);
+				if(accion!=null && accion.equals("añadeCancion")) {
+					controlador.añadeCancionPlaylist(textField.getText() , cancion);
+				}else if(accion!=null && accion.equals("eliminaCancion")){
+					controlador.eliminaCancionPlaylist(textField.getText() , cancion);
+				}
 			}
 			VentanaPrincipal reg = new VentanaPrincipal();
 			reg.getFrame().setVisible(true);
