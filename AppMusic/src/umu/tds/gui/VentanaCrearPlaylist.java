@@ -52,6 +52,7 @@ public class VentanaCrearPlaylist {
 	private JPanel panel__west;
 	private JPanel panel__east;
 	private JComboBox comboBox;
+	private boolean nuevaPlaylist;
 	private List<Cancion> canciones;	//Lista donde se almacenan las canciones que se van a mostrar en la tabla izq de la ventana
 	private HashMap<Cancion,String> acciones = new HashMap<Cancion,String>();//Almacenará todas las acciones que serán aceptadas o canceladas
 
@@ -153,6 +154,7 @@ public class VentanaCrearPlaylist {
 			System.out.println("EL NOMBRE ES "+nombre);
 			boolean reply = Controlador.getUnicaInstancia().crearPlaylist(nombre);
 			if(reply == false) {
+				nuevaPlaylist = false;
 				JOptionPane.showMessageDialog(ButCrear, "Ya existe una lista con ese nombre", "Lista existente", JOptionPane.WARNING_MESSAGE, null);
 				textField.setEditable(false);
 				txtInterprete.setVisible(true);
@@ -177,6 +179,7 @@ public class VentanaCrearPlaylist {
 				
 			}else {
 				JOptionPane.showMessageDialog(ButCrear,"Playlist creada correctamente", "Mensaje", JOptionPane.PLAIN_MESSAGE);
+				nuevaPlaylist = true;
 				textField.setEditable(false);
 				txtInterprete.setVisible(true);
 				txtTitulo.setVisible(true);
@@ -334,6 +337,9 @@ public class VentanaCrearPlaylist {
 	panel_south.add(btnNewButton_3);
 	btnNewButton_3.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
+			if(nuevaPlaylist) {
+				Controlador.getUnicaInstancia().eliminaPlaylist(textField.getText());
+			}
 			VentanaPrincipal reg = new VentanaPrincipal();
 			reg.getFrame().setVisible(true);
 			frame.setVisible(false);

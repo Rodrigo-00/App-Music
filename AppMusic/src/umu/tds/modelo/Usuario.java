@@ -160,6 +160,10 @@ public class Usuario {
 		}
 		return null;
 	}
+	public void eliminaPlaylist(String playl) {
+		Playlist playlist = this.getPlayList(playl);
+		playLists.remove(playlist);
+	}
 	
 	public boolean isPremium() {
 		return premium;

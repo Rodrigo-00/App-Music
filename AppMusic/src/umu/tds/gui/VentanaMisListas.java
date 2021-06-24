@@ -12,6 +12,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import umu.tds.controlador.Controlador;
@@ -218,12 +220,14 @@ public class VentanaMisListas{
 		
 		list.setBounds(0, 0, 142, 109);
 		panel_3.add(list);
-		list.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
+		list.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent event) {
 				DefaultTableModel model = (DefaultTableModel) table_1.getModel();
-				for (int i=0; i<model.getRowCount();i++)
+				for (int i=0; i<model.getRowCount();i++) {
 					model.removeRow(i);
+				}
 				List<Cancion> canciones = Controlador.getUnicaInstancia().getCancionesPlaylist(list.getSelectedValue());
+				System.out.println(canciones.size());
 				for(Cancion c : canciones ) {
 					model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
 				}
