@@ -160,6 +160,15 @@ public class Usuario {
 	public boolean isPremium() {
 		return premium;
 	}
+	
+	public List<Cancion> getCancionesPlaylist(String playlist){
+		for (Playlist play: playLists) {
+			if(play.getNombre().equals(playlist)){
+				return play.getCanciones();
+			}
+		}
+		return null;
+	}
 
 
 }

@@ -6,10 +6,16 @@ import java.awt.Font;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 
 import umu.tds.controlador.Controlador;
+import umu.tds.modelo.Cancion;
 import umu.tds.modelo.Playlist;
 
 import java.awt.EventQueue;
@@ -24,15 +30,24 @@ import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.net.MalformedURLException;
 import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
+import javax.swing.ListSelectionModel;
 import javax.swing.JList;
+import java.awt.FlowLayout;
 
 public class VentanaMisListas{
 
 	private JFrame frmVentanaMisListas;
+	private JTable table_1;
+	private Boolean reproduciendo = false;	//Nos sirve para comprobar si se esta reproduciendo o no una cancion
+	private Cancion cancActual;	//Cancion que actualmente esta en ejecuciï¿½n o pausada
+	private int numCancion; //Alamacenamos el indice de la lista en el que se encuentra la cancion seleccionada
 	
 	public VentanaMisListas() {
 		initialize();
@@ -192,13 +207,9 @@ public class VentanaMisListas{
 		panel_1.add(panel_3);
 		panel_3.setLayout(null);
 		
-		/*JList list_1 = new JList();
-		list_1.setBounds(0, 0, 113, 109);
-		panel_3.add(list_1);*/
-		
 		JPanel panel_2 = new JPanel();
 		frmVentanaMisListas.getContentPane().add(panel_2, BorderLayout.CENTER);
-		panel_2.setLayout(null);
+		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.Y_AXIS));
 		
 		List<String> listas = Controlador.getUnicaInstancia().nombresListas();
 		JList<String> list = new JList(listas.toArray());
@@ -206,16 +217,65 @@ public class VentanaMisListas{
 		
 		list.setBounds(0, 0, 142, 109);
 		panel_3.add(list);
+		list.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				DefaultTableModel model = (DefaultTableModel) table_1.getModel();
+				for (int i=0; i<model.getRowCount();i++)
+					model.removeRow(i);
+				List<Cancion> canciones = Controlador.getUnicaInstancia().getCancionesPlaylist(list.getSelectedValue());
+				for(Cancion c : canciones ) {
+					model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
+				}
+			}
+		});
+		
+		
+		String[] columns = {"Titulo","Interprete"};
+		table_1 = new JTable(new DefaultTableModel(columns, 0));
+		table_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table_1.setBorder(null);
+		JScrollPane scrollCancionesPlaylist = new JScrollPane(table_1);
+		panel_2.add(scrollCancionesPlaylist);
+		DefaultTableModel model = (DefaultTableModel) table_1.getModel();
+		//Aï¿½adimos inicialmente todas las canciones a la tabla
+			List<Cancion> canciones = Controlador.getUnicaInstancia().getCancionesPlaylist(list.getSelectedValue());
+			for(Cancion c : canciones ) {
+				model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
+			}
 		
 		JButton btnReproducir = new JButton("Reproducir");
-		btnReproducir.setBounds(115, 177, 105, 23);
 		panel_2.add(btnReproducir);
 		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
 		btnReproducir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String seleccionada = (String)list.getSelectedValue();
 				System.out.println("Playlist a reproducir "+ seleccionada);
-				//Faltaría llamar al controlador para reproducir la playlist seleccionada
+				
+				int row = table_1.getSelectedRow();
+				if(reproduciendo) {	//Se pulsa el boton de pause
+					reproduciendo = false;
+					Controlador.getUnicaInstancia().pausarCancion();	//Llamamos al controlador para pausar la cancion
+					btnReproducir.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/play.png")));
+					
+				}else if(row != -1 && canciones.size() > 0) {	//Si hay seleccionada alguna fila de la tabla y la tabla contiene canciones 	
+						System.out.println("Se ejecuta "+ canciones.get(row).getTitulo());
+						btnReproducir.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/pause.png")));
+						
+						if(cancActual!= null && cancActual.equals(canciones.get(row))){
+							Controlador.getUnicaInstancia().reanudarCancion();  //Reanudamos la cancion
+						}else {
+							cancActual = canciones.get(row);
+							try {
+								Controlador.getUnicaInstancia().reproducirCancion(cancActual);	//Llamamos al controlador para reproducir la cancion
+							} catch (MalformedURLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}	
+							numCancion=row;
+						}
+						reproduciendo = true;
+				}
+				
 			}
 		});
 

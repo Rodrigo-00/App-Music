@@ -228,4 +228,8 @@ public final class Controlador implements PropertyChangeListener{
 		usuarioActual.addCancionToPlaylist(playlist, cancion);
 	}
 	
+	public List<Cancion> getCancionesPlaylist(String playlist){
+		return usuarioActual.getCancionesPlaylist(playlist);
+	}
+	
 }
