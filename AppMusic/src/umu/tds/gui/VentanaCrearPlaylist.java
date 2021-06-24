@@ -286,6 +286,8 @@ public class VentanaCrearPlaylist {
 				reg.getFrame().setVisible(true);
 				frame.setVisible(false);
 			}
+			reg.getFrame().setVisible(true);
+			frame.setVisible(false);
 		}
 	});
 	
