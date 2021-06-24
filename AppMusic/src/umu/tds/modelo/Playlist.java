@@ -37,7 +37,8 @@ public class Playlist {
 	}
 	
 	public void addCancion(Cancion cancion) {
-		canciones.add(cancion);
+		if(!canciones.contains(cancion))
+			canciones.add(cancion);
 	}
 	
 	public void removeCancion(Cancion cancion) {

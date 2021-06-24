@@ -151,7 +151,28 @@ public class VentanaCrearPlaylist {
 			System.out.println("EL NOMBRE ES "+nombre);
 			boolean reply = Controlador.getUnicaInstancia().crearPlaylist(nombre);
 			if(reply == false) {
-				JOptionPane.showMessageDialog(ButCrear, "Ya existe una lista con ese nombre", "Lista existente", JOptionPane.ERROR_MESSAGE, null);
+				JOptionPane.showMessageDialog(ButCrear, "Ya existe una lista con ese nombre", "Lista existente", JOptionPane.WARNING_MESSAGE, null);
+				textField.setEditable(false);
+				txtInterprete.setVisible(true);
+				txtTitulo.setVisible(true);
+				comboBox.setVisible(true);
+				btnBuscar.setVisible(true);
+				panel__center.setVisible(true);
+				panel_south.setVisible(true);
+				panel__west.setVisible(true);
+				panel__east.setVisible(true);
+				DefaultTableModel model_1 = (DefaultTableModel) table_1.getModel();
+				List<Cancion> canciones_1 = Controlador.getUnicaInstancia().getCancionesPlaylist(textField.getText());
+				for(Cancion c : canciones_1 ) {
+					model_1.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
+				}
+				DefaultTableModel model = (DefaultTableModel) table.getModel();
+				canciones = Controlador.getUnicaInstancia().getAllCanciones();
+				for(Cancion c : canciones ) {
+					if (!canciones_1.contains(c))
+						model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
+				}
+				
 			}else {
 				JOptionPane.showMessageDialog(ButCrear,"Playlist creada correctamente", "Mensaje", JOptionPane.PLAIN_MESSAGE);
 				textField.setEditable(false);
@@ -163,6 +184,11 @@ public class VentanaCrearPlaylist {
 				panel_south.setVisible(true);
 				panel__west.setVisible(true);
 				panel__east.setVisible(true);
+				DefaultTableModel model = (DefaultTableModel) table.getModel();
+				canciones = Controlador.getUnicaInstancia().getAllCanciones();
+				for(Cancion c : canciones ) {
+					model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
+				}
 			}
 		}
 	});
@@ -310,12 +336,6 @@ public class VentanaCrearPlaylist {
 	table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	JScrollPane scrollCanciones = new JScrollPane(table); 
 	panel__west.add(scrollCanciones);
-	DefaultTableModel model = (DefaultTableModel) table.getModel();
-	//A�adimos inicialmente todas las canciones a la tabla
-		canciones = Controlador.getUnicaInstancia().getAllCanciones();
-		for(Cancion c : canciones ) {
-			model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
-		}
 	
 	panel__east = new JPanel();
 	panel_center.add(panel__east, BorderLayout.EAST);

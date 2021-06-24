@@ -236,6 +236,7 @@ public class VentanaMisListas{
 		
 		String[] columns = {"Titulo","Interprete"};
 		table_1 = new JTable(new DefaultTableModel(columns, 0));
+		table_1.setPreferredScrollableViewportSize(new Dimension(450, 200));
 		table_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table_1.setBorder(null);
 		DefaultTableModel model = (DefaultTableModel) table_1.getModel();
@@ -244,7 +245,6 @@ public class VentanaMisListas{
 			model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
 		}
 		JScrollPane scrollCancionesPlaylist = new JScrollPane(table_1);
-		scrollCancionesPlaylist.setMinimumSize(new Dimension(800, 800));
 		panel_4.add(scrollCancionesPlaylist);
 		
 		JPanel panel_5 = new JPanel();
@@ -271,7 +271,7 @@ public class VentanaMisListas{
 		});
 		
 		JButton btnReproducir = new JButton("");
-		btnReproducir.setIcon(new ImageIcon(VentanaMisListas.class.getResource("/umu/tds/imagenes/pause.png")));
+		btnReproducir.setIcon(new ImageIcon(VentanaMisListas.class.getResource("/umu/tds/imagenes/play.png")));
 		panel_5.add(btnReproducir);
 		btnReproducir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
