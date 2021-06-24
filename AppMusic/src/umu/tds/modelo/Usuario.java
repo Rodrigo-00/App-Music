@@ -148,6 +148,10 @@ public class Usuario {
 		Playlist playlist = this.getPlayList(play);
 		playlist.addCancion(cancion);
 	}
+	public void removeCancionPlaylist(String play, Cancion cancion) {
+		Playlist playlist = this.getPlayList(play);
+		playlist.removeCancion(cancion);
+	}
 	
 	public Playlist getPlayList(String play) {
 		for (Playlist playlist:playLists) {

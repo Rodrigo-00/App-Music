@@ -227,6 +227,9 @@ public final class Controlador implements PropertyChangeListener{
 	public void añadeCancionPlaylist(String playlist, Cancion cancion) {
 		usuarioActual.addCancionToPlaylist(playlist, cancion);
 	}
+	public void eliminaCancionPlaylist(String playlist, Cancion cancion) {
+		usuarioActual.removeCancionPlaylist(playlist, cancion);
+	}
 	
 	public List<Cancion> getCancionesPlaylist(String playlist){
 		return usuarioActual.getCancionesPlaylist(playlist);
