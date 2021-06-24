@@ -251,6 +251,22 @@ public class VentanaMisListas{
 		JButton btnAnterior = new JButton("");
 		btnAnterior.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/next_music_player_play_media-512alreves.png")));
 		panel_5.add(btnAnterior);
+		btnAnterior.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(numCancion != 0 && reproduciendo) {
+					cancActual = canciones.get(numCancion-1);	//Establecemos la cancion actual
+					numCancion--;	
+					table_1.setRowSelectionInterval(numCancion, numCancion);	
+					Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para pausar la cancion si se esta reproduciendo alguna
+					try {
+						Controlador.getUnicaInstancia().reproducirCancion(cancActual);	//Llamamos al controlador para reproducir la cancion
+					} catch (MalformedURLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}	
+				}
+			}
+		});
 		
 		JButton btnReproducir = new JButton("");
 		btnReproducir.setIcon(new ImageIcon(VentanaMisListas.class.getResource("/umu/tds/imagenes/pause.png")));
@@ -292,5 +308,21 @@ public class VentanaMisListas{
 		JButton btnPosterior = new JButton("");
 		btnPosterior.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/next_music_player_play_media-512.png")));
 		panel_5.add(btnPosterior);
+		btnPosterior.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(numCancion != canciones.size()-1 && reproduciendo) {
+					cancActual = canciones.get(numCancion+1);	//Establecemos la cancion actual
+					numCancion++;	
+					table_1.setRowSelectionInterval(numCancion, numCancion);	
+					Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para pausar la cancion si se esta reproduciendo alguna
+					try {
+						Controlador.getUnicaInstancia().reproducirCancion(cancActual);	//Llamamos al controlador para reproducir la cancion
+					} catch (MalformedURLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}	
+				}
+			}
+		});
 	}
 }
