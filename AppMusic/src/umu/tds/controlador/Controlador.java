@@ -224,7 +224,7 @@ public final class Controlador implements PropertyChangeListener{
 	public void convertirPremium(String tiempo) {
 		
 	}
-	public void añadeCancionPlaylist(String playlist, Cancion cancion) {
+	public void anadeCancionPlaylist(String playlist, Cancion cancion) {
 		usuarioActual.addCancionToPlaylist(playlist, cancion);
 	}
 	public void eliminaCancionPlaylist(String playlist, Cancion cancion) {

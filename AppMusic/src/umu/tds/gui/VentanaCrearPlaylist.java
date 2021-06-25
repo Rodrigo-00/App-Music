@@ -321,7 +321,7 @@ public class VentanaCrearPlaylist {
 				String accion = acciones.get(cancion);
 				System.out.println(accion);
 				if(accion!=null && accion.equals("añadeCancion")) {
-					controlador.añadeCancionPlaylist(textField.getText() , cancion);
+					controlador.anadeCancionPlaylist(textField.getText() , cancion);
 				}else if(accion!=null && accion.equals("eliminaCancion")){
 					controlador.eliminaCancionPlaylist(textField.getText() , cancion);
 				}
