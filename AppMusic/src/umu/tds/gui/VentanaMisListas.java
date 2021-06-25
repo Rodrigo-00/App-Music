@@ -54,7 +54,6 @@ public class VentanaMisListas{
 	private Cancion cancActual;	//Cancion que actualmente esta en ejecuciï¿½n o pausada
 	private int numCancion; //Alamacenamos el indice de la lista en el que se encuentra la cancion seleccionada
 	private DefaultTableModel model;
-	private String listaseleccionada; //Guardamos la lista que está seleccionada
 	
 	public VentanaMisListas() {
 		initialize();
@@ -237,22 +236,15 @@ public class VentanaMisListas{
 				return false;
 			}
 		};
-		/*
 		
 		table_1.setPreferredScrollableViewportSize(new Dimension(450, 200));
 		table_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table_1.setBorder(null);	
 		JScrollPane scrollCancionesPlaylist = new JScrollPane(table_1);
-		panel_4.add(scrollCancionesPlaylist);*/
+		panel_4.add(scrollCancionesPlaylist);
 		table_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table_1.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		table_1.setEnabled(true);
 		table_1.setBounds(5, 5, 5, 5);
-		table_1.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		table_1.setAutoCreateColumnsFromModel(false);
-		table_1.setEditingRow(-2);
-		table_1.setEditingColumn(-2);
-		scrollPane.setViewportView(table_1);
 		
 		
 		List<String> listas = Controlador.getUnicaInstancia().nombresListas();
@@ -263,40 +255,35 @@ public class VentanaMisListas{
 		panel_3.add(list);
 		list.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent event) {
-			
-				if(listaseleccionada == null || !listaseleccionada.equals(list.getSelectedValue())) {
-					listaseleccionada = list.getSelectedValue();
-					
-					int filas = model.getRowCount();
-					System.out.println("hay " + filas);
-					for(int i = 1; i <= filas; i++) {
-						System.out.println("BORRAMOS");
-						model.removeRow(0);    //Eliminamos todas las lineas de la tabla
-					}
-					
-					//AQUI EN LA SEGUNDA CONSULTA DICE QUE NO HAY CANCIONES
-					canciones.clear();
-					canciones = Controlador.getUnicaInstancia().getCancionesPlaylist(listaseleccionada);
-					
-					System.out.println(canciones.size());
-					
-					for(Cancion c : canciones ) {
-						System.out.println("Añadimos la cancion tras borrar"+ c.getTitulo());
-						model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
-					}
-					
-					scrollPane.setViewportView(table_1);
+				String listaseleccionada = list.getSelectedValue();
+				System.out.println("Entra");
+				int filas = model.getRowCount();
+				for(int i = 1; i <= filas; i++) {
+					model.removeRow(0);    //Eliminamos todas las lineas de la tabla
 				}
+				
+				//AQUI EN LA SEGUNDA CONSULTA DICE QUE NO HAY CANCIONES
+				canciones.clear();
+				
+				System.out.println("Size: "+canciones.size());
+				canciones.addAll(Controlador.getUnicaInstancia().getCancionesPlaylist(listaseleccionada));
+				
+				for(Cancion c : canciones ) {
+					System.out.println("Aï¿½adimos la cancion tras borrar"+ c.getTitulo());
+					model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
+				}
+				
+				scrollPane.setViewportView(table_1);
 			}
 		});
 		
 		
-		//Añadimos a la tabla las primeras canciones de la tabla
-		canciones = Controlador.getUnicaInstancia().getCancionesPlaylist(list.getSelectedValue());		
+		//Aï¿½adimos a la tabla las primeras canciones de la tabla
+		canciones .addAll(Controlador.getUnicaInstancia().getCancionesPlaylist(list.getSelectedValue()));		
 		if(canciones != null && !canciones.isEmpty()) {
 			
 			for(Cancion c : canciones ) {
-				System.out.println("Añadimos la cancion "+ c.getTitulo());
+				System.out.println("Aï¿½adimos la cancion "+ c.getTitulo());
 				model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
 			}
 			

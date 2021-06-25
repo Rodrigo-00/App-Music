@@ -278,7 +278,7 @@ public class VentanaCrearPlaylist {
 				String Interprete = model.getValueAt(row, 1).toString();
 				model.removeRow(row);
 				if (!acciones.containsKey(Controlador.getUnicaInstancia().getCancionTituloeInter(Titulo, Interprete))) {
-					acciones.put(Controlador.getUnicaInstancia().getCancionTituloeInter(Titulo, Interprete), "añadeCancion");
+					acciones.put(Controlador.getUnicaInstancia().getCancionTituloeInter(Titulo, Interprete), "anadeCancion");
 				} else {
 					acciones.remove(Controlador.getUnicaInstancia().getCancionTituloeInter(Titulo, Interprete), "eliminaCancion");
 				}
@@ -305,7 +305,7 @@ public class VentanaCrearPlaylist {
 				if (!acciones.containsKey(Controlador.getUnicaInstancia().getCancionTituloeInter(Titulo, Interprete))) {
 					acciones.put(Controlador.getUnicaInstancia().getCancionTituloeInter(Titulo, Interprete),"eliminaCancion");
 				} else {
-					acciones.remove(Controlador.getUnicaInstancia().getCancionTituloeInter(Titulo, Interprete), "añadeCancion");
+					acciones.remove(Controlador.getUnicaInstancia().getCancionTituloeInter(Titulo, Interprete), "anadeCancion");
 				}
 				model.addRow(new Object[] { Titulo, Interprete });
 			}
@@ -323,13 +323,15 @@ public class VentanaCrearPlaylist {
 			Controlador controlador = Controlador.getUnicaInstancia();
 			for (Cancion cancion: acciones.keySet()) {
 				String accion = acciones.get(cancion);
-				System.out.println(accion);
-				if(accion!=null && accion.equals("añadeCancion")) {
+				if(accion!=null && accion.equals("anadeCancion")) {
 					controlador.anadeCancionPlaylist(textField.getText() , cancion);
 				}else if(accion!=null && accion.equals("eliminaCancion")){
 					controlador.eliminaCancionPlaylist(textField.getText() , cancion);
 				}
 			}
+			canciones = Controlador.getUnicaInstancia().getCancionesPlaylist(textField.getText());
+			
+			System.out.println("Size: "+canciones.size());
 			VentanaPrincipal reg = new VentanaPrincipal();
 			reg.getFrame().setVisible(true);
 			frame.setVisible(false);
@@ -368,8 +370,8 @@ public class VentanaCrearPlaylist {
 	
 	table_1 = new JTable(new DefaultTableModel(columns, 0));
 	table_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-	table_1.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Playlist", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(51, 51, 51)));
 	JScrollPane scrollCancionesPlaylist = new JScrollPane(table_1);
+	scrollCancionesPlaylist.setBorder(new TitledBorder(null, "Playlist", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 	panel__east.add(scrollCancionesPlaylist);
 	
 	
