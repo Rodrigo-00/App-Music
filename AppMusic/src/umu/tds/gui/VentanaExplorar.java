@@ -294,7 +294,6 @@ public class VentanaExplorar {
 		panel_5.add(btnNewButton);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frmVentanaExplorar.setVisible(false);
 				
 				//Extraemos los datos seleccionados
 				String interprete = txtInterprete.getText();
@@ -304,7 +303,6 @@ public class VentanaExplorar {
 				mostrarCanciones(interprete, titulo, estilo);	//Mostramos las canciones en la tabla
 				
 				scrollPane.setViewportView(table);
-				frmVentanaExplorar.setVisible(true);
 			}
 		});
 		

@@ -71,6 +71,43 @@ public class Usuario {
 		
 	}
 	
+	public Playlist addCancionToPlaylist(String play, Cancion cancion) {
+		Playlist playlist = this.getPlayList(play);
+		playlist.addCancion(cancion);
+		return playlist;
+	}
+	public Playlist removeCancionPlaylist(String play, Cancion cancion) {
+		Playlist playlist = this.getPlayList(play);
+		playlist.removeCancion(cancion);
+		return playlist;
+	}
+	
+	public Playlist getPlayList(String play) {
+		for (Playlist playlist:playLists) {
+			if(play.equals(playlist.getNombre()))
+			return playlist;
+		}
+		return null;
+	}
+	public Playlist eliminaPlaylist(String playl) {
+		Playlist playlist = this.getPlayList(playl);
+		playLists.remove(playlist);
+		return playlist;
+	}
+	
+	public boolean isPremium() {
+		return premium;
+	}
+	
+	public List<Cancion> getCancionesPlaylist(String playlist){
+		for (Playlist play: playLists) {
+			if(play.getNombre().equals(playlist)){
+				System.out.println("Esta la playlist");
+				return play.getCanciones();
+			}
+		}
+		return null;
+	}
 	
 	public Boolean getPremium() {
 		return premium;
@@ -142,43 +179,6 @@ public class Usuario {
 	
 	public List<Playlist> getPlayLists() {
 		return playLists;
-	}
-	
-	public Playlist addCancionToPlaylist(String play, Cancion cancion) {
-		Playlist playlist = this.getPlayList(play);
-		playlist.addCancion(cancion);
-		return playlist;
-	}
-	public Playlist removeCancionPlaylist(String play, Cancion cancion) {
-		Playlist playlist = this.getPlayList(play);
-		playlist.removeCancion(cancion);
-		return playlist;
-	}
-	
-	public Playlist getPlayList(String play) {
-		for (Playlist playlist:playLists) {
-			if(play.equals(playlist.getNombre()))
-			return playlist;
-		}
-		return null;
-	}
-	public Playlist eliminaPlaylist(String playl) {
-		Playlist playlist = this.getPlayList(playl);
-		playLists.remove(playlist);
-		return playlist;
-	}
-	
-	public boolean isPremium() {
-		return premium;
-	}
-	
-	public List<Cancion> getCancionesPlaylist(String playlist){
-		for (Playlist play: playLists) {
-			if(play.getNombre().equals(playlist)){
-				return play.getCanciones();
-			}
-		}
-		return null;
 	}
 
 

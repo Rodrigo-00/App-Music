@@ -37,8 +37,7 @@ public class Playlist {
 	}
 	
 	public void addCancion(Cancion cancion) {
-		if(!canciones.contains(cancion))
-			canciones.add(cancion);
+		if(!canciones.contains(cancion))	canciones.add(cancion);
 	}
 	
 	public void removeCancion(Cancion cancion) {
@@ -46,6 +45,9 @@ public class Playlist {
 	}
 
 	public List<Cancion> getCanciones() {
+		for (Cancion c : canciones) {
+			System.out.println("Esta la cancion " + c.getTitulo());
+		}
 		return canciones;
 	}
 }
