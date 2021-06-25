@@ -144,13 +144,15 @@ public class Usuario {
 		return playLists;
 	}
 	
-	public void addCancionToPlaylist(String play, Cancion cancion) {
+	public Playlist addCancionToPlaylist(String play, Cancion cancion) {
 		Playlist playlist = this.getPlayList(play);
 		playlist.addCancion(cancion);
+		return playlist;
 	}
-	public void removeCancionPlaylist(String play, Cancion cancion) {
+	public Playlist removeCancionPlaylist(String play, Cancion cancion) {
 		Playlist playlist = this.getPlayList(play);
 		playlist.removeCancion(cancion);
+		return playlist;
 	}
 	
 	public Playlist getPlayList(String play) {
@@ -160,9 +162,10 @@ public class Usuario {
 		}
 		return null;
 	}
-	public void eliminaPlaylist(String playl) {
+	public Playlist eliminaPlaylist(String playl) {
 		Playlist playlist = this.getPlayList(playl);
 		playLists.remove(playlist);
+		return playlist;
 	}
 	
 	public boolean isPremium() {

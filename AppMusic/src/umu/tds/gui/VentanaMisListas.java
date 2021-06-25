@@ -245,8 +245,10 @@ public class VentanaMisListas{
 		table_1.setBorder(null);
 		DefaultTableModel model = (DefaultTableModel) table_1.getModel();
 		List<Cancion> canciones = Controlador.getUnicaInstancia().getCancionesPlaylist(list.getSelectedValue());
-		for(Cancion c : canciones ) {
-			model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
+		if(!canciones.isEmpty()) {
+			for(Cancion c : canciones ) {
+				model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
+			}
 		}
 		JScrollPane scrollCancionesPlaylist = new JScrollPane(table_1);
 		panel_4.add(scrollCancionesPlaylist);

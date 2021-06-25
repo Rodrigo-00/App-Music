@@ -225,13 +225,18 @@ public final class Controlador implements PropertyChangeListener{
 		
 	}
 	public void anadeCancionPlaylist(String playlist, Cancion cancion) {
-		usuarioActual.addCancionToPlaylist(playlist, cancion);
+		Playlist lista = usuarioActual.addCancionToPlaylist(playlist, cancion);
+		adaptadorPlaylist.updatePlaylist(lista);
 	}
 	public void eliminaCancionPlaylist(String playlist, Cancion cancion) {
-		usuarioActual.removeCancionPlaylist(playlist, cancion);
+		Playlist lista = usuarioActual.removeCancionPlaylist(playlist, cancion);
+		adaptadorPlaylist.updatePlaylist(lista);
 	}
 	public void eliminaPlaylist(String playlist) {
-		usuarioActual.eliminaPlaylist(playlist);
+		Playlist lista = usuarioActual.eliminaPlaylist(playlist);
+		adaptadorPlaylist.delete(lista);
+		adaptadorUsuario.updatePerfil(usuarioActual);
+		
 	}
 	
 	public List<Cancion> getCancionesPlaylist(String playlist){

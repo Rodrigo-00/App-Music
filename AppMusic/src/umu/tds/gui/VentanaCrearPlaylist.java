@@ -271,17 +271,19 @@ public class VentanaCrearPlaylist {
 	btnNewButton_4.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			int row = table.getSelectedRow();
-			DefaultTableModel model = (DefaultTableModel) table.getModel();
-			DefaultTableModel model_1 = (DefaultTableModel) table_1.getModel();
-			String Titulo = model.getValueAt(row, 0).toString();
-			String Interprete = model.getValueAt(row, 1).toString();
-			model.removeRow(row);
-			if (!acciones.containsKey(Controlador.getUnicaInstancia().getCancionTituloeInter(Titulo, Interprete))) {
-				acciones.put(Controlador.getUnicaInstancia().getCancionTituloeInter(Titulo, Interprete), "añadeCancion");
-			} else {
-				acciones.remove(Controlador.getUnicaInstancia().getCancionTituloeInter(Titulo, Interprete), "eliminaCancion");
+			if(row != -1) {
+				DefaultTableModel model = (DefaultTableModel) table.getModel();
+				DefaultTableModel model_1 = (DefaultTableModel) table_1.getModel();
+				String Titulo = model.getValueAt(row, 0).toString();
+				String Interprete = model.getValueAt(row, 1).toString();
+				model.removeRow(row);
+				if (!acciones.containsKey(Controlador.getUnicaInstancia().getCancionTituloeInter(Titulo, Interprete))) {
+					acciones.put(Controlador.getUnicaInstancia().getCancionTituloeInter(Titulo, Interprete), "añadeCancion");
+				} else {
+					acciones.remove(Controlador.getUnicaInstancia().getCancionTituloeInter(Titulo, Interprete), "eliminaCancion");
+				}
+				model_1.addRow(new Object[] { Titulo, Interprete });
 			}
-			model_1.addRow(new Object[] { Titulo, Interprete });
 		}
 	});
 	
@@ -294,17 +296,19 @@ public class VentanaCrearPlaylist {
 	btnNewButton_5.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			int row = table_1.getSelectedRow();
-			DefaultTableModel model = (DefaultTableModel) table.getModel();
-			DefaultTableModel model_1 = (DefaultTableModel) table_1.getModel();
-			String Titulo = model_1.getValueAt(row, 0).toString();
-			String Interprete = model_1.getValueAt(row, 1).toString();
-			model_1.removeRow(row);
-			if (!acciones.containsKey(Controlador.getUnicaInstancia().getCancionTituloeInter(Titulo, Interprete))) {
-				acciones.put(Controlador.getUnicaInstancia().getCancionTituloeInter(Titulo, Interprete),"eliminaCancion");
-			} else {
-				acciones.remove(Controlador.getUnicaInstancia().getCancionTituloeInter(Titulo, Interprete), "añadeCancion");
+			if(row != -1) {
+				DefaultTableModel model = (DefaultTableModel) table.getModel();
+				DefaultTableModel model_1 = (DefaultTableModel) table_1.getModel();
+				String Titulo = model_1.getValueAt(row, 0).toString();
+				String Interprete = model_1.getValueAt(row, 1).toString();
+				model_1.removeRow(row);
+				if (!acciones.containsKey(Controlador.getUnicaInstancia().getCancionTituloeInter(Titulo, Interprete))) {
+					acciones.put(Controlador.getUnicaInstancia().getCancionTituloeInter(Titulo, Interprete),"eliminaCancion");
+				} else {
+					acciones.remove(Controlador.getUnicaInstancia().getCancionTituloeInter(Titulo, Interprete), "añadeCancion");
+				}
+				model.addRow(new Object[] { Titulo, Interprete });
 			}
-			model.addRow(new Object[] { Titulo, Interprete });
 		}
 	});
 	
