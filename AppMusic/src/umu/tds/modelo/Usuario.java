@@ -116,21 +116,26 @@ public class Usuario {
 		return null;
 	}
 	
-    public int getEdad() {
+
+    private int getEdad() {	//Devuelve la edad del usuario
     	LocalDate localDate = fechaNacimiento.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     	Period period = Period.between(localDate, LocalDate.now());
     	System.out.println(period.getYears());
-    	
     	return period.getYears();
     }
-	
-	public void realizarPago() {
-		//if(descuento != null)
-		
+    
+	public void otorgarDescuento() {
+		if(getEdad() >= 65) descuento = new descuentoMayores();
+		else descuento = new descuentoTemporal();
 	}
 	
-	public void setDescuento(Descuento descuento) {
-		this.descuento = descuento;
+	public double realizarPago(int tiempo) {
+		premium = true;
+		return descuento.aplicarDescuento(tiempo);
+	}
+	
+	public double consultarDescuento() {
+		return descuento.getDescuento();
 	}
 	
 	public Descuento getDescuento() {

@@ -33,6 +33,7 @@ public class VentanaPremium {
 	private JFrame frmVentanaPremium;
 	private JTextField txtTexto;
 	private JComboBox comboBox;
+	private JTextField txtSiDecidePagar;
 
 	public JFrame getFrame() {
 		return frmVentanaPremium;
@@ -75,13 +76,13 @@ public class VentanaPremium {
 		panel.setLayout(null);
 		
 		comboBox = new JComboBox();
-		comboBox.setBounds(256, 108, 99, 22);
+		comboBox.setBounds(259, 139, 99, 22);
 		Object[] años = {"Años", "1 año", "2 años", "3 años"};
 		comboBox.setModel(new DefaultComboBoxModel(años));
 		panel.add(comboBox);
 		
 		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(173, 205, 110, 23);
+		btnCancelar.setBounds(173, 255, 110, 23);
 		panel.add(btnCancelar);
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -95,7 +96,7 @@ public class VentanaPremium {
 		btnConfirmar.setPreferredSize(new Dimension(75, 23));
 		btnConfirmar.setMinimumSize(new Dimension(75, 23));
 		btnConfirmar.setMaximumSize(new Dimension(75, 23));
-		btnConfirmar.setBounds(333, 205, 110, 23);
+		btnConfirmar.setBounds(333, 255, 110, 23);
 		panel.add(btnConfirmar);
 		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -103,7 +104,7 @@ public class VentanaPremium {
 				if(seleccionado.equals("Años")) {
 					JOptionPane.showMessageDialog(btnConfirmar, "Selecciona un periodo válido", "Periodo erroneo", JOptionPane.ERROR_MESSAGE, null);
 				}else {
-					Controlador.getUnicaInstancia().convertirPremium(seleccionado);
+					Controlador.getUnicaInstancia().convertirPremium(Integer.parseInt(seleccionado));
 					VentanaPrincipal reg = new VentanaPrincipal();
 					reg.getFrame().setVisible(true);
 					frmVentanaPremium.setVisible(false);
@@ -129,8 +130,20 @@ public class VentanaPremium {
 		lblAppMusic.setBounds(173, 17, 270, 36);
 		panel.add(lblAppMusic);
 		
-		/*
-		panel.add(comboBox);*/
+		JLabel lblNewLabel_1 = new JLabel("Precio anual: "+ Controlador.PRECIO + "€");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblNewLabel_1.setBounds(402, 143, 99, 14);
+		panel.add(lblNewLabel_1);
+		
+		double descuento = Controlador.getUnicaInstancia().consultarDescuento();
+		if(descuento > 0) {
+			int des = (int) (descuento *100);
+			JLabel lblNewLabel = new JLabel("¡Si decide pagar ahora dispondrá de un " + des + "% de DESCUENTO!");
+			lblNewLabel.setFont(new Font("Nirmala UI", Font.PLAIN, 14));
+			lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+			lblNewLabel.setBounds(61, 108, 491, 20);
+			panel.add(lblNewLabel);
+		}
 		
 	}
 }

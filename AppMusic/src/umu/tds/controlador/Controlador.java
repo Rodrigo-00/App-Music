@@ -21,6 +21,9 @@ import javafx.scene.media.MediaPlayer;
 
 public final class Controlador implements PropertyChangeListener{
 
+	public static final int PRECIO = 20; //precio anual de la aplicación
+	public static final int MINUTOS = 1; //tiempo que esta disponible el descuento temporal
+	
 	private Usuario usuarioActual;
 	private static Controlador unicaInstancia;
 	
@@ -91,7 +94,7 @@ public final class Controlador implements PropertyChangeListener{
 		Usuario usuario = catalogoUsuarios.getUsuario(nombre);
 		if (usuario != null && usuario.getPassword().equals(password)) {
 			this.usuarioActual = usuario;
-			otorgarDescuento();	//Añadimos el descuento al usuario
+			usuarioActual.otorgarDescuento();	//Añadimos el descuento al usuario
 			return true;
 		}
 		return false;
@@ -103,9 +106,6 @@ public final class Controlador implements PropertyChangeListener{
         	
 		Usuario usuario = new Usuario(nombre, apellidos, email, login, password, fechaNacimiento);
 		adaptadorUsuario.registrarUsuario(usuario);
-		System.out.println(usuario.getEdad());
-		
-		otorgarDescuento();	//Añadimos el descuento al usuario
 		
 		catalogoUsuarios.addUsuario(usuario); 
 		return true;
@@ -124,10 +124,6 @@ public final class Controlador implements PropertyChangeListener{
 	public List<String> nombresListas(){
 		return usuarioActual.nombresListas();
 		
-	}
-	
-	private void otorgarDescuento() {
-		//if(usuarioActual.getEdad() >= 65)
 	}
 	
 	
@@ -225,9 +221,18 @@ public final class Controlador implements PropertyChangeListener{
 	public Boolean isUsuarioPremium(){
 		return usuarioActual.isPremium();
 	}
-	public void convertirPremium(String tiempo) {
-		
+	
+	//El usuario se convierte en premiumm durante un tiempo
+	public void convertirPremium(int tiempo) {
+		usuarioActual.realizarPago(tiempo);
 	}
+	
+	//Consultar precio a pagar para convertirse en premium
+	public double consultarDescuento() {
+		return usuarioActual.consultarDescuento();
+	}
+	
+	
 	public void anadeCancionPlaylist(String playlist, Cancion cancion) {
 		Playlist lista = usuarioActual.addCancionToPlaylist(playlist, cancion);
 		adaptadorPlaylist.updatePlaylist(lista);

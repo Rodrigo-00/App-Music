@@ -1,12 +1,15 @@
 package umu.tds.modelo;
 
+import umu.tds.controlador.Controlador;
+
 public class descuentoMayores implements Descuento{
 
 	private static double DESCUENTO = 0.5;
 	
 	@Override
-	public double aplicarDescuento(double cantidad) {
-		return DESCUENTO*cantidad;
+	public double aplicarDescuento(int tiempo) {
+		double total = Controlador.PRECIO *tiempo;
+		return DESCUENTO*total;
 	}
 
 	@Override
