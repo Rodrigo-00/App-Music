@@ -22,7 +22,7 @@ public class descuentoTemporal implements Descuento{
 	public double aplicarDescuento(int tiempo) {
 
 		double total = tiempo * Controlador.PRECIO;		//Precio total
-		if(fechaLiminte.after(Calendar.getInstance().getTime())) return total*DESCUENTO;	//Aplicamos el descuento si no ha expirado el tiempo
+		if(fechaLiminte.after(Calendar.getInstance().getTime())) return total-total*DESCUENTO;	//Aplicamos el descuento si no ha expirado el tiempo
 		else return total;
 	}
 

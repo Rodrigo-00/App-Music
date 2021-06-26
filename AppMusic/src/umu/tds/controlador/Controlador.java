@@ -223,8 +223,8 @@ public final class Controlador implements PropertyChangeListener{
 	}
 	
 	//El usuario se convierte en premiumm durante un tiempo
-	public void convertirPremium(int tiempo) {
-		usuarioActual.realizarPago(tiempo);
+	public double convertirPremium(int tiempo) {
+		return usuarioActual.realizarPago(tiempo);
 	}
 	
 	//Consultar precio a pagar para convertirse en premium

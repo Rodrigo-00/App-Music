@@ -77,7 +77,7 @@ public class VentanaPremium {
 		
 		comboBox = new JComboBox();
 		comboBox.setBounds(259, 139, 99, 22);
-		Object[] años = {"Años", "1 año", "2 años", "3 años"};
+		Object[] años = {"Años", "1", "2", "3"};
 		comboBox.setModel(new DefaultComboBoxModel(años));
 		panel.add(comboBox);
 		
@@ -104,8 +104,7 @@ public class VentanaPremium {
 				if(seleccionado.equals("Años")) {
 					JOptionPane.showMessageDialog(btnConfirmar, "Selecciona un periodo válido", "Periodo erroneo", JOptionPane.ERROR_MESSAGE, null);
 				}else {
-					Controlador.getUnicaInstancia().convertirPremium(Integer.parseInt(seleccionado));
-					VentanaPrincipal reg = new VentanaPrincipal();
+					VentanaConfirmacionPremium reg = new VentanaConfirmacionPremium(Integer.parseInt(seleccionado));
 					reg.getFrame().setVisible(true);
 					frmVentanaPremium.setVisible(false);
 				}
@@ -115,6 +114,7 @@ public class VentanaPremium {
 		txtTexto = new JTextField();
 		txtTexto.setFont(new Font("Myanmar Text", Font.PLAIN, 14));
 		txtTexto.setHorizontalAlignment(SwingConstants.CENTER);
+		txtTexto.setEditable(false);
 		txtTexto.setSelectionColor(Color.BLACK);
 		txtTexto.setForeground(Color.BLACK);
 		txtTexto.setCaretColor(Color.WHITE);
