@@ -97,11 +97,18 @@ public class VentanaCrearPlaylist {
 	frame.getContentPane().add(panel_west, BorderLayout.WEST);
 	panel_west.setLayout(new BoxLayout(panel_west, BoxLayout.Y_AXIS));
 	
-	JButton btnNewButton_1 = new JButton("Explorar");
-	btnNewButton_1.setIcon(new ImageIcon(VentanaCrearPlaylist.class.getResource("/umu/tds/imagenes/lupa.png")));
-	btnNewButton_1.setBorderPainted(false);
-	btnNewButton_1.setBackground(Color.LIGHT_GRAY);
-	panel_west.add(btnNewButton_1);
+	JButton btnExplorar = new JButton("Explorar");
+	btnExplorar.setIcon(new ImageIcon(VentanaCrearPlaylist.class.getResource("/umu/tds/imagenes/lupa.png")));
+	btnExplorar.setBorderPainted(false);
+	btnExplorar.setBackground(Color.LIGHT_GRAY);
+	panel_west.add(btnExplorar);
+	btnExplorar.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			VentanaExplorar reg = new VentanaExplorar();
+			reg.getFrame().setVisible(true);
+			frame.setVisible(false);
+		}
+	});
 	
 	JButton btnNewButton_2 = new JButton("Nueva lista");
 	btnNewButton_2.setIcon(new ImageIcon(VentanaCrearPlaylist.class.getResource("/umu/tds/imagenes/mas-positivo-suma-simbolo-matematico.png")));
@@ -114,12 +121,26 @@ public class VentanaCrearPlaylist {
 	btnRecientes.setBorderPainted(false);
 	btnRecientes.setBackground(Color.LIGHT_GRAY);
 	panel_west.add(btnRecientes);
+	btnRecientes.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			VentanaRecientes reg = new VentanaRecientes();
+			reg.getFrame().setVisible(true);
+			frame.setVisible(false);
+		}
+	});
 	
 	JButton btnMisL = new JButton("Mis listas");
 	btnMisL.setIcon(new ImageIcon(VentanaCrearPlaylist.class.getResource("/umu/tds/imagenes/lista-de-reproduccion.png")));
 	btnMisL.setBorderPainted(false);
 	btnMisL.setBackground(Color.LIGHT_GRAY);
 	panel_west.add(btnMisL);
+	btnMisL.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			VentanaMisListas reg = new VentanaMisListas();
+			reg.getFrame().setVisible(true);
+			frame.setVisible(false);
+		}
+	});
 	
 	JPanel panel_center = new JPanel();
 	frame.getContentPane().add(panel_center, BorderLayout.CENTER);
