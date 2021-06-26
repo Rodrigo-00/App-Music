@@ -1,5 +1,6 @@
 package umu.tds.modelo;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,12 +13,13 @@ public class Usuario {
 	private String email;
 	private String login;
 	private String password;
-	private String fechaNacimiento;
+	private Date fechaNacimiento;
 	private Boolean premium;
 	private List<Cancion> recientes;
 	private List<Playlist> playLists;
+	private Descuento descuento;
 
-	public Usuario(String nombre, String apellidos, String email, String login, String password, String fechaNacimiento) {
+	public Usuario(String nombre, String apellidos, String email, String login, String password, Date fechaNacimiento) {
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.email = email;
@@ -109,6 +111,20 @@ public class Usuario {
 		return null;
 	}
 	
+	public void realizarPago() {
+		//if(descuento != null)
+		
+	}
+	
+	public void setDescuento(Descuento descuento) {
+		this.descuento = descuento;
+	}
+	
+	public Descuento getDescuento() {
+		return descuento;
+	}
+	
+	
 	public Boolean getPremium() {
 		return premium;
 	}
@@ -165,12 +181,8 @@ public class Usuario {
 		this.password = password;
 	}
 
-	public String getFechaNacimiento() {
+	public Date getFechaNacimiento() {
 		return fechaNacimiento;
-	}
-
-	public void setFechaNacimiento(String fechaNacimiento) {
-		this.fechaNacimiento = fechaNacimiento;
 	}
 	
 	public List<Cancion> getRecientes() {

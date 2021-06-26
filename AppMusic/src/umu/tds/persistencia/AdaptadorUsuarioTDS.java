@@ -1,8 +1,11 @@
 package umu.tds.persistencia;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -63,9 +66,20 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 		recientes = obtenerCancionesDesdeId(servPersistencia.recuperarPropiedadEntidad(eUsuario, RECIENTES));
 		listaPlaylist = obtenerPlaylistsDesdeId(servPersistencia.recuperarPropiedadEntidad(eUsuario, LISTAS));
 	
-		System.out.println("HEMOS LLAMADO A OBTENERCANCIONESDESDEID");
+		System.out.println(fechaNacimiento);
 		
-		Usuario usuario = new Usuario(nombre, apellidos, email, login, password, fechaNacimiento);
+		
+		
+		//Parseamos la fecha al formato indicado
+		Date fecha = null;
+		try {
+			fecha = new SimpleDateFormat("dd/MM/yyyy").parse(fechaNacimiento);	//Tranformamos la fecha a tipo date 
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+		Usuario usuario = new Usuario(nombre, apellidos, email, login, password, fecha);
 		usuario.setId(eUsuario.getId());
 
 		//Añadimos las canciones a la lista de canciones recientes del usuario
@@ -86,14 +100,16 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 	private Entidad usuarioToEntidad(Usuario usuario) {
 		Entidad eUsuario = new Entidad();
 		eUsuario.setNombre(USUARIO);
-
+		
+		String fechaNacim = new SimpleDateFormat("dd/MM/yyyy").format(usuario.getFechaNacimiento());
+		
 		eUsuario.setPropiedades(new ArrayList<Propiedad>(Arrays.asList(
 				new Propiedad(NOMBRE, usuario.getNombre()),
 				new Propiedad(APELLIDOS, usuario.getApellidos()), 
 				new Propiedad(EMAIL, usuario.getEmail()),
 				new Propiedad(LOGIN, usuario.getLogin()), 
 				new Propiedad(PASSWORD, usuario.getPassword()),
-				new Propiedad(FECHA_NACIMIENTO, usuario.getFechaNacimiento()),
+				new Propiedad(FECHA_NACIMIENTO, fechaNacim),
 				new Propiedad(RECIENTES, obtenerIdCanciones(usuario.getRecientes())),
 				new Propiedad(LISTAS, obtenerIdPlaylist(usuario.getPlayLists())))));
 		return eUsuario;
@@ -118,10 +134,7 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 	
 	private List<Cancion> obtenerCancionesDesdeId(String canciones) {
 
-		System.out.println("ENTRA EN OBTENERCANCIONES");
 		List<Cancion> listaCanciones = new LinkedList<Cancion>();
-		
-		System.out.println(canciones);
 		
 		if(canciones!= null && !canciones.equals("")) {
 			System.out.println("ENTRA");
@@ -130,13 +143,8 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 			while (strTok.hasMoreTokens()) {
 				listaCanciones.add(adaptadorC.obtenerCancion(Integer.valueOf((String) strTok.nextElement())));
 			}
-		}else System.out.println("No hay canciones en el adaptador");
-		
-		if(listaCanciones.size()==0) System.out.println("LISTA de canciones VACIA");
-		
-		for (Cancion c : listaCanciones)	System.out.println("Añadimos a la lista a devolver "+ c.getTitulo());
+		}	
 	
-		
 		return listaCanciones;
 	}
 	

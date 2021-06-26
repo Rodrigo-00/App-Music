@@ -7,6 +7,7 @@ import umu.tds.modelo.*;
 import umu.tds.persistencia.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,7 +22,6 @@ import javafx.scene.media.MediaPlayer;
 public final class Controlador implements PropertyChangeListener{
 
 	private Usuario usuarioActual;
-	private Descuento descuento;
 	private static Controlador unicaInstancia;
 	
 	private IAdaptadorCancionDAO adaptadorCancion;
@@ -34,7 +34,6 @@ public final class Controlador implements PropertyChangeListener{
 	
 	private Controlador() {
 		usuarioActual = null;
-		descuento = null;
 		inicializarAdaptadores();
 		inicializarCatalogos();
 		activarReproductor();
@@ -92,19 +91,19 @@ public final class Controlador implements PropertyChangeListener{
 		Usuario usuario = catalogoUsuarios.getUsuario(nombre);
 		if (usuario != null && usuario.getPassword().equals(password)) {
 			this.usuarioActual = usuario;
-			System.out.println("Usuario con id "+ usuario.getId());
+			//Añadir descuento
 			return true;
 		}
 		return false;
 	}
 	
-	public boolean registrarUsuario(String nombre, String apellidos, String email, String login, String password, String fechaNacimiento) {
+	public boolean registrarUsuario(String nombre, String apellidos, String email, String login, String password, Date fechaNacimiento) {
 
         if (esUsuarioRegistrado(login)) return false;
         	
 		Usuario usuario = new Usuario(nombre, apellidos, email, login, password, fechaNacimiento);
 		adaptadorUsuario.registrarUsuario(usuario);
-
+		//Añadir descuento
 		catalogoUsuarios.addUsuario(usuario); 
 		return true;
 	}
@@ -208,10 +207,6 @@ public final class Controlador implements PropertyChangeListener{
 	
 	public List<Cancion> getRecientes(){
 		return usuarioActual.getRecientes();
-	}
-	
-	public void setDescuento(Descuento des){
-		descuento = des;
 	}
 	
 	public String getLoginUsuario(){

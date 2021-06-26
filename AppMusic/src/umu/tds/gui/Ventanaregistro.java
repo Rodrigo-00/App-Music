@@ -14,6 +14,9 @@ import javax.swing.JTextField;
 import java.awt.Insets;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 import java.awt.Font;
@@ -217,10 +220,25 @@ public class Ventanaregistro extends JFrame {
 				}
 				String nombre = new String(textNombre.getText());
 				String apellidos = new String(textApellidos.getText());
-				String fechaNacim = new String(dateNacim.getDateFormatString());
+				
+				//Convertimos la fecha al formato deseado
+				String fechaNacim = new SimpleDateFormat("dd/MM/yyyy").format(dateNacim.getDate());
+				Date date = null;
+				try {
+					date = new SimpleDateFormat("dd/MM/yyyy").parse(fechaNacim);		
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				System.out.println();
+				System.out.println(fechaNacim);
+				System.out.println(date);
+				System.out.println();
+				
 				String email = new String(textEmail.getText());
 				//Faltan mas cosas
-				if(!Controlador.getUnicaInstancia().registrarUsuario(nombre, apellidos, email, usuario, clave1, fechaNacim)) {
+				if(!Controlador.getUnicaInstancia().registrarUsuario(nombre, apellidos, email, usuario, clave1, date)) {
 					JOptionPane.showMessageDialog(btnRegistrar, "Nombre de usuario ya registrado", "Registro incorrecto", JOptionPane.ERROR_MESSAGE, null);
 					return;
 				}

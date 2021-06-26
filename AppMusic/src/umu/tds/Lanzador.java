@@ -12,8 +12,6 @@ public class Lanzador {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Descuento descuento = new descuentoMayores();
-					Controlador.getUnicaInstancia().setDescuento(descuento);
 					VentanaLogin ventana = new VentanaLogin();
 					ventana.mostrarVentana();
 				} catch (Exception e) {
