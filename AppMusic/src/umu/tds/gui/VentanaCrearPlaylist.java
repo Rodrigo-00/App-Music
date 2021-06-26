@@ -408,7 +408,7 @@ public class VentanaCrearPlaylist {
 	btnHaztePremium_1.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			if(Controlador.getUnicaInstancia().isUsuarioPremium()) {
-				JOptionPane.showMessageDialog(btnHaztePremium_1, "Ya eres usuaio Premium", "Error", JOptionPane.ERROR_MESSAGE, null);
+				JOptionPane.showMessageDialog(btnHaztePremium_1, "Ya eres usuaio Premium", "Error", JOptionPane.WARNING_MESSAGE, null);
 			}else{
 				VentanaPremium reg = new VentanaPremium();
 				reg.getFrame().setVisible(true);

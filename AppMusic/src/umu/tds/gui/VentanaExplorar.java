@@ -138,7 +138,7 @@ public class VentanaExplorar {
 			public void actionPerformed(ActionEvent e) {
 				if(reproduciendo) Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para pausar la cancion si se esta reproduciendo alguna
 				if(Controlador.getUnicaInstancia().isUsuarioPremium()) {
-					JOptionPane.showMessageDialog(btnHaztePremium, "Ya eres usuaio Premium", "Error", JOptionPane.ERROR_MESSAGE, null);
+					JOptionPane.showMessageDialog(btnHaztePremium, "Ya eres usuaio Premium", "Error", JOptionPane.WARNING_MESSAGE, null);
 				}else{
 					VentanaPremium reg = new VentanaPremium();
 					reg.getFrame().setVisible(true);
