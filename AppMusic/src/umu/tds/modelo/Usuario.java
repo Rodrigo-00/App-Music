@@ -1,8 +1,13 @@
 package umu.tds.modelo;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 public class Usuario {
 	
@@ -110,6 +115,14 @@ public class Usuario {
 		}
 		return null;
 	}
+	
+    public int getEdad() {
+    	LocalDate localDate = fechaNacimiento.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    	Period period = Period.between(localDate, LocalDate.now());
+    	System.out.println(period.getYears());
+    	
+    	return period.getYears();
+    }
 	
 	public void realizarPago() {
 		//if(descuento != null)

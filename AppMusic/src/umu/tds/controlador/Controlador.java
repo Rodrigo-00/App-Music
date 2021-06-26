@@ -91,7 +91,7 @@ public final class Controlador implements PropertyChangeListener{
 		Usuario usuario = catalogoUsuarios.getUsuario(nombre);
 		if (usuario != null && usuario.getPassword().equals(password)) {
 			this.usuarioActual = usuario;
-			//Añadir descuento
+			otorgarDescuento();	//Añadimos el descuento al usuario
 			return true;
 		}
 		return false;
@@ -103,7 +103,10 @@ public final class Controlador implements PropertyChangeListener{
         	
 		Usuario usuario = new Usuario(nombre, apellidos, email, login, password, fechaNacimiento);
 		adaptadorUsuario.registrarUsuario(usuario);
-		//Añadir descuento
+		System.out.println(usuario.getEdad());
+		
+		otorgarDescuento();	//Añadimos el descuento al usuario
+		
 		catalogoUsuarios.addUsuario(usuario); 
 		return true;
 	}
@@ -122,6 +125,12 @@ public final class Controlador implements PropertyChangeListener{
 		return usuarioActual.nombresListas();
 		
 	}
+	
+	private void otorgarDescuento() {
+		//if(usuarioActual.getEdad() >= 65)
+	}
+	
+	
 	
 	public boolean crearPlaylist(String nombre) {
 		Playlist lista = usuarioActual.crearPlayList(nombre);
