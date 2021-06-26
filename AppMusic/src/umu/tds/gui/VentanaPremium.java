@@ -77,8 +77,8 @@ public class VentanaPremium {
 		
 		comboBox = new JComboBox();
 		comboBox.setBounds(259, 139, 99, 22);
-		Object[] años = {"Años", "1", "2", "3"};
-		comboBox.setModel(new DefaultComboBoxModel(años));
+		Object[] anos = {"Aï¿½os", "1", "2", "3"};
+		comboBox.setModel(new DefaultComboBoxModel(anos));
 		panel.add(comboBox);
 		
 		JButton btnCancelar = new JButton("Cancelar");
@@ -101,8 +101,8 @@ public class VentanaPremium {
 		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String seleccionado = (String) comboBox.getSelectedItem();
-				if(seleccionado.equals("Años")) {
-					JOptionPane.showMessageDialog(btnConfirmar, "Selecciona un periodo válido", "Periodo erroneo", JOptionPane.ERROR_MESSAGE, null);
+				if(seleccionado.equals("Aï¿½os")) {
+					JOptionPane.showMessageDialog(btnConfirmar, "Selecciona un periodo vï¿½lido", "Periodo erroneo", JOptionPane.ERROR_MESSAGE, null);
 				}else {
 					VentanaConfirmacionPremium reg = new VentanaConfirmacionPremium(Integer.parseInt(seleccionado));
 					reg.getFrame().setVisible(true);
@@ -131,7 +131,7 @@ public class VentanaPremium {
 		lblAppMusic.setBounds(173, 17, 270, 36);
 		panel.add(lblAppMusic);
 		
-		JLabel lblNewLabel_1 = new JLabel("Precio anual: "+ Controlador.PRECIO + "€");
+		JLabel lblNewLabel_1 = new JLabel("Precio anual: "+ Controlador.PRECIO + "ï¿½");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblNewLabel_1.setBounds(402, 143, 99, 14);
 		panel.add(lblNewLabel_1);
@@ -139,7 +139,7 @@ public class VentanaPremium {
 		double descuento = Controlador.getUnicaInstancia().consultarDescuento();
 		if(descuento > 0) {
 			int des = (int) (descuento *100);
-			JLabel lblNewLabel = new JLabel("¡Si decide pagar ahora dispondrá de un " + des + "% de DESCUENTO!");
+			JLabel lblNewLabel = new JLabel("ï¿½Si decide pagar ahora dispondrï¿½ de un " + des + "% de DESCUENTO!");
 			lblNewLabel.setFont(new Font("Nirmala UI", Font.PLAIN, 14));
 			lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 			lblNewLabel.setBounds(61, 108, 491, 20);
