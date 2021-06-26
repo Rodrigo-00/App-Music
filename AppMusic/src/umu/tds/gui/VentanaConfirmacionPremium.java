@@ -61,6 +61,7 @@ public class VentanaConfirmacionPremium {
 		txtgracias.setHorizontalAlignment(SwingConstants.CENTER);
 		txtgracias.setFont(new Font("Sitka Heading", Font.PLAIN, 20));
 		txtgracias.setEditable(false);
+		txtgracias.setFocusable(false);
 		txtgracias.setBackground(Color.CYAN);
 		txtgracias.setText("\u00A1GRACIAS!");
 		txtgracias.setBounds(106, 58, 204, 48);

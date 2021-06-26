@@ -115,6 +115,7 @@ public class VentanaPremium {
 		txtTexto.setFont(new Font("Myanmar Text", Font.PLAIN, 14));
 		txtTexto.setHorizontalAlignment(SwingConstants.CENTER);
 		txtTexto.setEditable(false);
+		txtTexto.setFocusable(false);
 		txtTexto.setSelectionColor(Color.BLACK);
 		txtTexto.setForeground(Color.BLACK);
 		txtTexto.setCaretColor(Color.WHITE);

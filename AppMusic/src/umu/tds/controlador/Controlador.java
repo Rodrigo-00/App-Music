@@ -94,7 +94,7 @@ public final class Controlador implements PropertyChangeListener{
 		Usuario usuario = catalogoUsuarios.getUsuario(nombre);
 		if (usuario != null && usuario.getPassword().equals(password)) {
 			this.usuarioActual = usuario;
-			usuarioActual.otorgarDescuento();	//Añadimos el descuento al usuario
+			if(!usuarioActual.isPremium()) usuarioActual.otorgarDescuento();	//Añadimos el descuento al usuario si este no es ya usuario premium
 			return true;
 		}
 		return false;
