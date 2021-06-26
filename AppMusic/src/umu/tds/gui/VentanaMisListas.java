@@ -54,6 +54,7 @@ public class VentanaMisListas{
 	private Cancion cancActual;	//Cancion que actualmente esta en ejecuci�n o pausada
 	private int numCancion; //Alamacenamos el indice de la lista en el que se encuentra la cancion seleccionada
 	private DefaultTableModel model;
+	private List<String> listas;
 	
 	public VentanaMisListas() {
 		initialize();
@@ -210,10 +211,6 @@ public class VentanaMisListas{
 		btnMisL.setIcon(new ImageIcon(VentanaMisListas.class.getResource("/umu/tds/imagenes/lista-de-reproduccion.png")));
 		panel_1.add(btnMisL);
 		
-		JPanel panel_3 = new JPanel();
-		panel_1.add(panel_3);
-		panel_3.setLayout(null);
-		
 		JPanel panel_2 = new JPanel();
 		frmVentanaMisListas.getContentPane().add(panel_2, BorderLayout.CENTER);
 		panel_2.setLayout(new BorderLayout(0, 0));
@@ -247,12 +244,26 @@ public class VentanaMisListas{
 		table_1.setBounds(5, 5, 5, 5);
 		
 		
-		List<String> listas = Controlador.getUnicaInstancia().nombresListas();
+		listas = Controlador.getUnicaInstancia().nombresListas();
+		if(canciones != null && !canciones.isEmpty()) {
+			
+			for(Cancion c : canciones ) {
+				System.out.println("A�adimos la cancion "+ c.getTitulo());
+				model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
+			}
+			
+			scrollPane.setViewportView(table_1);
+			
+		}
+		
+		listas = Controlador.getUnicaInstancia().nombresListas();
 		JList<String> list = new JList(listas.toArray());
 		list.setSelectedIndex(0);
 		
 		list.setBounds(0, 0, 142, 109);
-		panel_3.add(list);
+		//scrollPane_1.setColumnHeaderView(list);
+		JScrollPane scrollPane_1 = new JScrollPane(list);
+		panel_1.add(scrollPane_1);		
 		list.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent event) {
 				String listaseleccionada = list.getSelectedValue();
@@ -278,18 +289,7 @@ public class VentanaMisListas{
 		});
 		
 		
-		//A�adimos a la tabla las primeras canciones de la tabla
-		canciones .addAll(Controlador.getUnicaInstancia().getCancionesPlaylist(list.getSelectedValue()));		
-		if(canciones != null && !canciones.isEmpty()) {
-			
-			for(Cancion c : canciones ) {
-				System.out.println("A�adimos la cancion "+ c.getTitulo());
-				model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
-			}
-			
-			scrollPane.setViewportView(table_1);
-			
-		}
+		
 		
 		JPanel panel_5 = new JPanel();
 		panel_2.add(panel_5, BorderLayout.SOUTH);
