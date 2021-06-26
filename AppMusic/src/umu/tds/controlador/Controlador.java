@@ -21,7 +21,7 @@ import javafx.scene.media.MediaPlayer;
 
 public final class Controlador implements PropertyChangeListener{
 
-	public static final int PRECIO = 20; //precio anual de la aplicación
+	public static final int PRECIO = 20; //precio anual de la aplicaciï¿½n
 	public static final int MINUTOS = 1; //tiempo que esta disponible el descuento temporal
 	
 	private Usuario usuarioActual;
@@ -94,7 +94,7 @@ public final class Controlador implements PropertyChangeListener{
 		Usuario usuario = catalogoUsuarios.getUsuario(nombre);
 		if (usuario != null && usuario.getPassword().equals(password)) {
 			this.usuarioActual = usuario;
-			if(!usuarioActual.isPremium()) usuarioActual.otorgarDescuento();	//Añadimos el descuento al usuario si este no es ya usuario premium
+			if(!usuarioActual.isPremium()) usuarioActual.otorgarDescuento();	//Aï¿½adimos el descuento al usuario si este no es ya usuario premium
 			return true;
 		}
 		return false;
@@ -181,6 +181,9 @@ public final class Controlador implements PropertyChangeListener{
 	public Cancion getCancionTitInterEsti(String titulo, String interprete, String estilo) {
 		return  catalogoCanciones.getCancionTitInterEsti(titulo, interprete, estilo);
 	}
+	public Cancion getCancionPorId(int id) {
+		return  catalogoCanciones.getCancionId(id);
+	}
 	
 	public List<String> getEstilos() {
 		return  catalogoCanciones.getEstilos();
@@ -237,8 +240,8 @@ public final class Controlador implements PropertyChangeListener{
 		Playlist lista = usuarioActual.addCancionToPlaylist(playlist, cancion);
 		adaptadorPlaylist.updatePlaylist(lista);
 	}
-	public void eliminaCancionPlaylist(String playlist, Cancion cancion) {
-		Playlist lista = usuarioActual.removeCancionPlaylist(playlist, cancion);
+	public void eliminaCancionPlaylist(String playlist, int id) {
+		Playlist lista = usuarioActual.removeCancionPlaylist(playlist, id);
 		adaptadorPlaylist.updatePlaylist(lista);
 	}
 	public void eliminaPlaylist(String playlist) {

@@ -42,7 +42,7 @@ public class CatalogoCanciones {
 	public void addCancion(Cancion cancion) {
 		
 		boolean contiene = canciones.stream()
-				.anyMatch(c -> c.getTitulo().equals(cancion.getTitulo()) && c.getInterprete().equals(cancion.getInterprete()) && c.getEstilo().equals(cancion.getEstilo())); //Suponemos que si el titulo, el interprete y el estilo es el mismo la canción es la misma
+				.anyMatch(c -> c.getTitulo().equals(cancion.getTitulo()) && c.getInterprete().equals(cancion.getInterprete()) && c.getEstilo().equals(cancion.getEstilo())); //Suponemos que si el titulo, el interprete y el estilo es el mismo la canciï¿½n es la misma
 		
 		if(!contiene) canciones.add(cancion);
 	}
@@ -106,6 +106,12 @@ public class CatalogoCanciones {
 	public Cancion getCancionTitInterEsti(String titulo, String interprete, String estilo) {
 		for(Cancion c:canciones) {
 			if(c.getTitulo().equals(titulo) && c.getInterprete().equals(interprete) && c.getEstilo().equals(estilo)) return c;
+		}
+		return null;
+	}
+	public Cancion getCancionId(int id) {
+		for(Cancion c:canciones) {
+			if(c.getId() == id) return c;
 		}
 		return null;
 	}

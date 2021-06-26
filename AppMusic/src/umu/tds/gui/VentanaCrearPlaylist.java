@@ -53,8 +53,8 @@ public class VentanaCrearPlaylist {
 	private JPanel panel__east;
 	private JComboBox comboBox;
 	private boolean nuevaPlaylist;
-	private List<Cancion> canciones;	//Lista donde se almacenan las canciones que se van a mostrar en la tabla izq de la ventana
-	private HashMap<Cancion,String> acciones = new HashMap<Cancion,String>();//Almacenará todas las acciones que serán aceptadas o canceladas
+	private List<Cancion> canciones = new LinkedList<Cancion>();	//Lista donde se almacenan las canciones que se van a mostrar en la tabla izq de la ventana
+	private HashMap<Integer,String> acciones = new HashMap<Integer,String>();//Almacenará todas las acciones que serán aceptadas o canceladas
 
 	public JFrame getFrame() {
 		return frame;
@@ -167,19 +167,18 @@ public class VentanaCrearPlaylist {
 				panel__west.setVisible(true);
 				panel__east.setVisible(true);
 				DefaultTableModel model_1 = (DefaultTableModel) table_1.getModel();
-				List<Cancion> canciones_1 = Controlador.getUnicaInstancia().getCancionesPlaylist(textField.getText());
-				for(Cancion c : canciones_1 ) {
+				List<Integer> canciones_1 = new LinkedList<Integer>();
+				for(Cancion c:Controlador.getUnicaInstancia().getCancionesPlaylist(textField.getText())) {
+					canciones_1.add(c.getId());
 					model_1.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
 				}
 				DefaultTableModel model = (DefaultTableModel) table.getModel();
-				canciones = Controlador.getUnicaInstancia().getAllCanciones();
+				canciones.addAll(Controlador.getUnicaInstancia().getAllCanciones());
 				for(Cancion c : canciones ) {
-					if (!canciones_1.contains(c))
+					if (!canciones_1.contains(c.getId())) {
 						model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
-					else 
-						System.out.println(c.getTitulo()+ "repetida");
+					}
 				}
-				
 			}else {
 				JOptionPane.showMessageDialog(ButCrear,"Playlist creada correctamente", "Mensaje", JOptionPane.PLAIN_MESSAGE);
 				nuevaPlaylist = true;
@@ -193,7 +192,7 @@ public class VentanaCrearPlaylist {
 				panel__west.setVisible(true);
 				panel__east.setVisible(true);
 				DefaultTableModel model = (DefaultTableModel) table.getModel();
-				canciones = Controlador.getUnicaInstancia().getAllCanciones();
+				canciones.addAll(Controlador.getUnicaInstancia().getAllCanciones());
 				for(Cancion c : canciones ) {
 					model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
 				}
@@ -280,10 +279,11 @@ public class VentanaCrearPlaylist {
 				String Titulo = model.getValueAt(row, 0).toString();
 				String Interprete = model.getValueAt(row, 1).toString();
 				model.removeRow(row);
-				if (!acciones.containsKey(Controlador.getUnicaInstancia().getCancionTituloeInter(Titulo, Interprete))) {
-					acciones.put(Controlador.getUnicaInstancia().getCancionTituloeInter(Titulo, Interprete), "anadeCancion");
+				Cancion cancion = Controlador.getUnicaInstancia().getCancionTituloeInter(Titulo, Interprete);
+				if (!acciones.containsKey(cancion.getId())) {
+					acciones.put(cancion.getId(), "anadeCancion");
 				} else {
-					acciones.remove(Controlador.getUnicaInstancia().getCancionTituloeInter(Titulo, Interprete), "eliminaCancion");
+					acciones.remove(cancion.getId(), "eliminaCancion");
 				}
 				model_1.addRow(new Object[] { Titulo, Interprete });
 			}
@@ -305,10 +305,11 @@ public class VentanaCrearPlaylist {
 				String Titulo = model_1.getValueAt(row, 0).toString();
 				String Interprete = model_1.getValueAt(row, 1).toString();
 				model_1.removeRow(row);
-				if (!acciones.containsKey(Controlador.getUnicaInstancia().getCancionTituloeInter(Titulo, Interprete))) {
-					acciones.put(Controlador.getUnicaInstancia().getCancionTituloeInter(Titulo, Interprete),"eliminaCancion");
+				Cancion cancion = Controlador.getUnicaInstancia().getCancionTituloeInter(Titulo, Interprete);
+				if (!acciones.containsKey(cancion.getId())) {
+					acciones.put(cancion.getId(),"eliminaCancion");
 				} else {
-					acciones.remove(Controlador.getUnicaInstancia().getCancionTituloeInter(Titulo, Interprete), "anadeCancion");
+					acciones.remove(cancion.getId(), "anadeCancion");
 				}
 				model.addRow(new Object[] { Titulo, Interprete });
 			}
@@ -327,12 +328,13 @@ public class VentanaCrearPlaylist {
 			if(nuevaPlaylist) {
 				controlador.crearPlaylist(textField.getText());
 			}
-			for (Cancion cancion: acciones.keySet()) {
-				String accion = acciones.get(cancion);
+			for (int cancionId: acciones.keySet()) {
+				Cancion cancion = controlador.getCancionPorId(cancionId);
+				String accion = acciones.get(cancionId);
 				if(accion!=null && accion.equals("anadeCancion")) {
 					controlador.anadeCancionPlaylist(textField.getText() , cancion);
 				}else if(accion!=null && accion.equals("eliminaCancion")){
-					controlador.eliminaCancionPlaylist(textField.getText() , cancion);
+					controlador.eliminaCancionPlaylist(textField.getText() , cancion.getId());
 				}
 			}
 			canciones = Controlador.getUnicaInstancia().getCancionesPlaylist(textField.getText());

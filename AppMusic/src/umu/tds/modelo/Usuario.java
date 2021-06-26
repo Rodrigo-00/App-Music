@@ -83,9 +83,9 @@ public class Usuario {
 		playlist.addCancion(cancion);
 		return playlist;
 	}
-	public Playlist removeCancionPlaylist(String play, Cancion cancion) {
+	public Playlist removeCancionPlaylist(String play, int id) {
 		Playlist playlist = this.getPlayList(play);
-		playlist.removeCancion(cancion);
+		playlist.removeCancion(id);
 		return playlist;
 	}
 	
