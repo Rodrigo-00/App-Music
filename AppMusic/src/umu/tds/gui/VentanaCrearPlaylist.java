@@ -86,6 +86,7 @@ public class VentanaCrearPlaylist {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	@SuppressWarnings("serial")
 	private void initialize() {	
 	frame = new JFrame();
 	frame.setBounds(100, 100, 1198, 698);
@@ -175,6 +176,8 @@ public class VentanaCrearPlaylist {
 				for(Cancion c : canciones ) {
 					if (!canciones_1.contains(c))
 						model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
+					else 
+						System.out.println(c.getTitulo()+ "repetida");
 				}
 				
 			}else {
@@ -321,6 +324,9 @@ public class VentanaCrearPlaylist {
 	btnNewButton.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			Controlador controlador = Controlador.getUnicaInstancia();
+			if(nuevaPlaylist) {
+				controlador.crearPlaylist(textField.getText());
+			}
 			for (Cancion cancion: acciones.keySet()) {
 				String accion = acciones.get(cancion);
 				if(accion!=null && accion.equals("anadeCancion")) {
@@ -358,7 +364,12 @@ public class VentanaCrearPlaylist {
 	
 	
 	String[] columns = {"Titulo","Interprete"};
-	table = new JTable(new DefaultTableModel(columns, 0));	
+	table = new JTable(new DefaultTableModel(columns, 0)) {
+		@Override
+		public boolean isCellEditable(int row, int column) { // Evitamos que las celdas sean modificables
+			return false;
+		}
+	};
 	table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	JScrollPane scrollCanciones = new JScrollPane(table); 
 	panel__west.add(scrollCanciones);
@@ -367,8 +378,12 @@ public class VentanaCrearPlaylist {
 	panel_center.add(panel__east, BorderLayout.EAST);
 	panel__east.setVisible(false);
 	
-	
-	table_1 = new JTable(new DefaultTableModel(columns, 0));
+	table_1 = new JTable(new DefaultTableModel(columns, 0)) {
+		@Override
+		public boolean isCellEditable(int row, int column) { // Evitamos que las celdas sean modificables
+			return false;
+		}
+	};
 	table_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	JScrollPane scrollCancionesPlaylist = new JScrollPane(table_1);
 	scrollCancionesPlaylist.setBorder(new TitledBorder(null, "Playlist", TitledBorder.LEADING, TitledBorder.TOP, null, null));

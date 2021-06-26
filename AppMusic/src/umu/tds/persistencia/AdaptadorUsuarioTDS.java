@@ -82,13 +82,12 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 		Usuario usuario = new Usuario(nombre, apellidos, email, login, password, fecha);
 		usuario.setId(eUsuario.getId());
 
-		//Añadimos las canciones a la lista de canciones recientes del usuario
+		//Aï¿½adimos las canciones a la lista de canciones recientes del usuario
 		for (Cancion c : recientes) {
-			System.out.println("Añadimos en el adaptador "+ c.getTitulo());
 			usuario.addReciente(c);
 		}
 		
-		//Añadimos las playlist a la lista de playlist
+		//Aï¿½adimos las playlist a la lista de playlist
 		for (Playlist p : listaPlaylist) {
 			usuario.addPlayList(p);
 		}
