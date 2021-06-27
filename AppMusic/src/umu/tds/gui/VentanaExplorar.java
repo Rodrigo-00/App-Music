@@ -29,6 +29,8 @@ import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import com.itextpdf.text.DocumentException;
+
 import umu.tds.controlador.Controlador;
 import umu.tds.modelo.Cancion;
 
@@ -38,6 +40,7 @@ import javax.swing.UIManager;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.util.LinkedList;
 import java.util.List;
@@ -55,7 +58,7 @@ public class VentanaExplorar {
 	private JTextField txtInterprete;
 	private JTextField txtTitulo;
 	private List<Cancion> canciones;	//Lista donde se almacenan las canciones que se van a mostrar en la tabla de la ventana
-	private Cancion cancActual;	//Cancion que actualmente esta en ejecución o pausada
+	private Cancion cancActual;	//Cancion que actualmente esta en ejecuciï¿½n o pausada
 	private int numCancion; //Alamacenamos el indice de la lista en el que se encuentra la cancion seleccionada
 	private DefaultTableModel model;
 	private JComboBox comboBox;
@@ -125,27 +128,49 @@ public class VentanaExplorar {
 		gbc_btnSalir.gridx = 2;
 		gbc_btnSalir.gridy = 1;
 		panel.add(btnAtras, gbc_btnSalir);
-		
-		JButton btnHaztePremium = new JButton("Hazte Premium");
-		btnHaztePremium.setBackground(Color.YELLOW);
-		btnHaztePremium.setForeground(Color.BLACK);
-		GridBagConstraints gbc_btnHaztePremium = new GridBagConstraints();
-		gbc_btnHaztePremium.insets = new Insets(0, 0, 5, 5);
-		gbc_btnHaztePremium.gridx = 5;
-		gbc_btnHaztePremium.gridy = 1;
-		panel.add(btnHaztePremium, gbc_btnHaztePremium);	
-		btnHaztePremium.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(reproduciendo) Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para pausar la cancion si se esta reproduciendo alguna
-				if(Controlador.getUnicaInstancia().isUsuarioPremium()) {
-					JOptionPane.showMessageDialog(btnHaztePremium, "Ya eres usuaio Premium", "Error", JOptionPane.WARNING_MESSAGE, null);
-				}else{
-					VentanaPremium reg = new VentanaPremium();
-					reg.getFrame().setVisible(true);
-					frmVentanaExplorar.setVisible(false);
+		boolean isPremium = Controlador.getUnicaInstancia().isUsuarioPremium();
+		if (isPremium) {
+			JButton btnPdf = new JButton("Generar pdf");
+			btnPdf.setBackground(Color.YELLOW);
+			btnPdf.setForeground(Color.BLACK);
+			GridBagConstraints gbc_btnHaztePremium = new GridBagConstraints();
+			gbc_btnHaztePremium.insets = new Insets(0, 0, 5, 5);
+			gbc_btnHaztePremium.gridx = 5;
+			gbc_btnHaztePremium.gridy = 1;
+			panel.add(btnPdf, gbc_btnHaztePremium);	
+			btnPdf.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					try {
+						Controlador.getUnicaInstancia().generaPDF();
+					}catch (FileNotFoundException fe){
+						System.out.println(fe.getMessage());
+					}catch (DocumentException d) {
+						System.out.println(d.getMessage());
+					}
 				}
-			}
-		});
+			});
+		} else {
+			JButton btnHaztePremium = new JButton("Hazte Premium");
+			btnHaztePremium.setBackground(Color.YELLOW);
+			btnHaztePremium.setForeground(Color.BLACK);
+			GridBagConstraints gbc_btnHaztePremium = new GridBagConstraints();
+			gbc_btnHaztePremium.insets = new Insets(0, 0, 5, 5);
+			gbc_btnHaztePremium.gridx = 5;
+			gbc_btnHaztePremium.gridy = 1;
+			panel.add(btnHaztePremium, gbc_btnHaztePremium);	
+			btnHaztePremium.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if(reproduciendo) Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para pausar la cancion si se esta reproduciendo alguna
+					if(Controlador.getUnicaInstancia().isUsuarioPremium()) {
+						JOptionPane.showMessageDialog(btnHaztePremium, "Ya eres usuaio Premium", "Error", JOptionPane.WARNING_MESSAGE, null);
+					}else{
+						VentanaPremium reg = new VentanaPremium();
+						reg.getFrame().setVisible(true);
+						frmVentanaExplorar.setVisible(false);
+					}
+				}
+			});
+		}
 		
 		JButton btnSalir = new JButton("Salir");
 		GridBagConstraints gbc_btnSalir_1 = new GridBagConstraints();
@@ -281,7 +306,7 @@ public class VentanaExplorar {
 		table.setEditingColumn(-2);
 
 		
-		//Añadimos inicialmente todas las canciones a la tabla
+		//Aï¿½adimos inicialmente todas las canciones a la tabla
 		canciones = Controlador.getUnicaInstancia().getAllCanciones();
 		for(Cancion c : canciones ) {
 			model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });

@@ -1,6 +1,9 @@
 package umu.tds.modelo;
 
 import java.time.LocalDate;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
 import java.time.Period;
 import java.time.ZoneId;
 import java.util.Calendar;
@@ -9,6 +12,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 public class Usuario {
 	
 	
@@ -210,6 +217,21 @@ public class Usuario {
 	public List<Playlist> getPlayLists() {
 		return playLists;
 	}
-
+	public void creaPDF() throws FileNotFoundException, DocumentException {
+		if(this.premium) {
+			FileOutputStream archivo = new FileOutputStream("./");
+		    Document documento = new Document();
+		    PdfWriter.getInstance(documento, archivo);
+		    documento.open();
+			for(Playlist p : playLists) {
+				List<Cancion> canciones = p.getCanciones();
+			    documento.add(new Paragraph(p.getNombre()+":"));
+			    for (Cancion c: canciones) {
+			    	documento.add(new Paragraph("Titulo: "+c.getTitulo()+", Interprete:"+c.getInterprete()+", Estilo: "+c.getEstilo()));
+			    }
+			}
+			documento.close();
+		}
+	}
 
 }

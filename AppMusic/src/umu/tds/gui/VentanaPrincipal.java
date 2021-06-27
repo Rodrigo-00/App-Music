@@ -1,6 +1,7 @@
 package umu.tds.gui;
 
 import umu.tds.pulsador.*;
+
 import java.awt.BorderLayout;
 
 import java.awt.Font;
@@ -10,6 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+
+import com.itextpdf.text.DocumentException;
 
 import umu.tds.controlador.Controlador;
 
@@ -34,6 +37,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.File;
+import java.io.FileNotFoundException;
 
 import javax.swing.JOptionPane;
 import pulsador.Luz;
@@ -107,25 +111,49 @@ public class VentanaPrincipal implements PropertyChangeListener{
 		gbc_lblNewLabel.gridy = 1;
 		panel.add(lblNewLabel, gbc_lblNewLabel);
 		
-		JButton btnHaztePremium = new JButton("Hazte Premium");
-		btnHaztePremium.setBorderPainted(false);
-		btnHaztePremium.setBackground(Color.YELLOW);
-		GridBagConstraints gbc_btnHaztePremium = new GridBagConstraints();
-		gbc_btnHaztePremium.insets = new Insets(0, 0, 5, 5);
-		gbc_btnHaztePremium.gridx = 5;
-		gbc_btnHaztePremium.gridy = 1;
-		panel.add(btnHaztePremium, gbc_btnHaztePremium);
-		btnHaztePremium.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(Controlador.getUnicaInstancia().isUsuarioPremium()) {
-					JOptionPane.showMessageDialog(btnHaztePremium, "Ya eres usuaio Premium", "Error", JOptionPane.WARNING_MESSAGE, null);
-				}else{
-					VentanaPremium reg = new VentanaPremium();
-					reg.getFrame().setVisible(true);
-					frmVentanaPrincipal.setVisible(false);
+		
+		boolean isPremium = Controlador.getUnicaInstancia().isUsuarioPremium();
+		if (isPremium) {
+			JButton btnPdf = new JButton("Generar pdf");
+			btnPdf.setBackground(Color.YELLOW);
+			btnPdf.setForeground(Color.BLACK);
+			GridBagConstraints gbc_btnHaztePremium = new GridBagConstraints();
+			gbc_btnHaztePremium.insets = new Insets(0, 0, 5, 5);
+			gbc_btnHaztePremium.gridx = 5;
+			gbc_btnHaztePremium.gridy = 1;
+			panel.add(btnPdf, gbc_btnHaztePremium);	
+			btnPdf.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					try {
+						Controlador.getUnicaInstancia().generaPDF();
+					}catch (FileNotFoundException fe){
+						System.out.println(fe.getMessage());
+					}catch (DocumentException d) {
+						System.out.println(d.getMessage());
+					}
 				}
-			}
-		});
+			});
+		} else {
+			JButton btnHaztePremium = new JButton("Hazte Premium");
+			btnHaztePremium.setBorderPainted(false);
+			btnHaztePremium.setBackground(Color.YELLOW);
+			GridBagConstraints gbc_btnHaztePremium = new GridBagConstraints();
+			gbc_btnHaztePremium.insets = new Insets(0, 0, 5, 5);
+			gbc_btnHaztePremium.gridx = 5;
+			gbc_btnHaztePremium.gridy = 1;
+			panel.add(btnHaztePremium, gbc_btnHaztePremium);
+			btnHaztePremium.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if(Controlador.getUnicaInstancia().isUsuarioPremium()) {
+						JOptionPane.showMessageDialog(btnHaztePremium, "Ya eres usuaio Premium", "Error", JOptionPane.WARNING_MESSAGE, null);
+					}else{
+						VentanaPremium reg = new VentanaPremium();
+						reg.getFrame().setVisible(true);
+						frmVentanaPrincipal.setVisible(false);
+					}
+				}
+			});
+		}
 		
 		JButton btnSalir = new JButton("Salir");
 		btnSalir.setBackground(SystemColor.control);

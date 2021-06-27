@@ -12,7 +12,11 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+
+import com.itextpdf.text.DocumentException;
+
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -253,6 +257,10 @@ public final class Controlador implements PropertyChangeListener{
 	
 	public List<Cancion> getCancionesPlaylist(String playlist){
 		return usuarioActual.getCancionesPlaylist(playlist);
+	}
+	
+	public void generaPDF() throws FileNotFoundException, DocumentException {
+		usuarioActual.creaPDF();
 	}
 	
 }
