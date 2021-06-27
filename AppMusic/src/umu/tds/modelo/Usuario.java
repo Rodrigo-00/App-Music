@@ -120,7 +120,7 @@ public class Usuario {
 				return play.getCanciones();
 			}
 		}
-		return null;
+		return new LinkedList<Cancion>();
 	}
 	
 
@@ -217,6 +217,7 @@ public class Usuario {
 	public List<Playlist> getPlayLists() {
 		return playLists;
 	}
+	
 	public void creaPDF() throws FileNotFoundException, DocumentException {
 		if(this.premium) {
 			FileOutputStream archivo = new FileOutputStream("./");

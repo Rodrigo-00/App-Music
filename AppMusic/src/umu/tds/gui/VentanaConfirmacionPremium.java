@@ -24,7 +24,7 @@ public class VentanaConfirmacionPremium {
 
 	private JFrame frame;
 	private JTextField txtgracias;
-	private int anos;	//Guardamos los años de premium seleccionados
+	private int anos;	//Guardamos los aï¿½os de premium seleccionados
 
 	/**
 	 * Create the application.
@@ -63,13 +63,13 @@ public class VentanaConfirmacionPremium {
 		txtgracias.setEditable(false);
 		txtgracias.setFocusable(false);
 		txtgracias.setBackground(Color.CYAN);
-		txtgracias.setText("\u00A1GRACIAS!");
+		txtgracias.setText("Â¡GRACIAS!");
 		txtgracias.setBounds(106, 58, 204, 48);
 		panel.add(txtgracias);
 		txtgracias.setColumns(10);
 		
 		double cantidad = Controlador.getUnicaInstancia().convertirPremium(anos);
-		JLabel lblCantidadPagada = new JLabel("Cantidad pagada: "+ cantidad + "€");
+		JLabel lblCantidadPagada = new JLabel("Cantidad pagada: "+ cantidad + "ï¿½");
 		lblCantidadPagada.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblCantidadPagada.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCantidadPagada.setBounds(106, 144, 204, 14);

@@ -120,7 +120,7 @@ public class VentanaPremium {
 		txtTexto.setForeground(Color.BLACK);
 		txtTexto.setCaretColor(Color.WHITE);
 		txtTexto.setBackground(Color.YELLOW);
-		txtTexto.setText("\u00BFCuanto tiempo deseas ser PREMIUM " + Controlador.getUnicaInstancia().getLoginUsuario()+ "?");
+		txtTexto.setText("¿Cuanto tiempo deseas ser PREMIUM " + Controlador.getUnicaInstancia().getLoginUsuario()+ "?");
 		txtTexto.setBounds(114, 64, 383, 33);
 		panel.add(txtTexto);
 		txtTexto.setColumns(10);
@@ -139,7 +139,7 @@ public class VentanaPremium {
 		double descuento = Controlador.getUnicaInstancia().consultarDescuento();
 		if(descuento > 0) {
 			int des = (int) (descuento *100);
-			JLabel lblNewLabel = new JLabel("�Si decide pagar ahora dispondr� de un " + des + "% de DESCUENTO!");
+			JLabel lblNewLabel = new JLabel("Si decides pagar ahora dipondrá de un " + des + "% de DESCUENTO!");
 			lblNewLabel.setFont(new Font("Nirmala UI", Font.PLAIN, 14));
 			lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 			lblNewLabel.setBounds(61, 108, 491, 20);

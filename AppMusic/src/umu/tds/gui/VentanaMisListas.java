@@ -270,7 +270,6 @@ public class VentanaMisListas {
 					model.removeRow(0); // Eliminamos todas las lineas de la tabla
 				}
 
-				// AQUI EN LA SEGUNDA CONSULTA DICE QUE NO HAY CANCIONES
 				canciones.clear();
 
 				System.out.println("Size: " + canciones.size());
@@ -304,11 +303,13 @@ public class VentanaMisListas {
 		table_1.setEnabled(true);
 		table_1.setBounds(5, 5, 5, 5);
 		
-		String listaseleccionada = list.getSelectedValue();
-		canciones.addAll(Controlador.getUnicaInstancia().getCancionesPlaylist(listaseleccionada));
-		for (Cancion c : canciones)
-			model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
-
+		if(listas.size() > 0) {	//Si hay listas añadimos la primera a la tabla
+			String listaseleccionada = list.getSelectedValue();
+			canciones.addAll(Controlador.getUnicaInstancia().getCancionesPlaylist(listaseleccionada));
+			
+			for (Cancion c : canciones)
+				model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
+		}
 		scrollCancionesPlaylist.setViewportView(table_1);
 
 		JPanel panel_5 = new JPanel();
