@@ -33,6 +33,7 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 	private static final String LOGIN = "login";
 	private static final String PASSWORD = "password";
 	private static final String FECHA_NACIMIENTO = "fechaNacimiento";
+	private static final String PREMIUM = "premium";
 	private static final String RECIENTES = "recientes";
 	private static final String LISTAS = "playLists";
 	
@@ -63,11 +64,11 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 		String login = servPersistencia.recuperarPropiedadEntidad(eUsuario, LOGIN);
 		String password = servPersistencia.recuperarPropiedadEntidad(eUsuario, PASSWORD);
 		String fechaNacimiento = servPersistencia.recuperarPropiedadEntidad(eUsuario, FECHA_NACIMIENTO);
+		String premium = servPersistencia.recuperarPropiedadEntidad(eUsuario, PREMIUM);
 		recientes = obtenerCancionesDesdeId(servPersistencia.recuperarPropiedadEntidad(eUsuario, RECIENTES));
 		listaPlaylist = obtenerPlaylistsDesdeId(servPersistencia.recuperarPropiedadEntidad(eUsuario, LISTAS));
 	
 		System.out.println(fechaNacimiento);
-		
 		
 		
 		//Parseamos la fecha al formato indicado
@@ -81,7 +82,11 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 		
 		Usuario usuario = new Usuario(nombre, apellidos, email, login, password, fecha);
 		usuario.setId(eUsuario.getId());
-
+		
+		//Si es premium lo indicamos
+		if(premium.equals("1"))	usuario.setPremium(true);
+		else usuario.setPremium(false);
+		
 		//A�adimos las canciones a la lista de canciones recientes del usuario
 		for (Cancion c : recientes) {
 			usuario.addReciente(c);
@@ -109,9 +114,15 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 				new Propiedad(LOGIN, usuario.getLogin()), 
 				new Propiedad(PASSWORD, usuario.getPassword()),
 				new Propiedad(FECHA_NACIMIENTO, fechaNacim),
+				new Propiedad(PREMIUM, premiumToString(usuario.isPremium())),
 				new Propiedad(RECIENTES, obtenerIdCanciones(usuario.getRecientes())),
 				new Propiedad(LISTAS, obtenerIdPlaylist(usuario.getPlayLists())))));
 		return eUsuario;
+	}
+	
+	private String premiumToString(Boolean premium) {
+		if(premium) return "1";
+		else return "0";
 	}
 	
 	
@@ -210,6 +221,9 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 			case APELLIDOS:
 				prop.setValor(String.valueOf(usuario.getApellidos()));
 				break;
+			case PREMIUM:
+				prop.setValor(String.valueOf(premiumToString(usuario.isPremium())));
+				break;
 			case RECIENTES:
 				prop.setValor(String.valueOf(obtenerIdCanciones(usuario.getRecientes())));
 				break;
@@ -221,25 +235,6 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 			}
 			servPersistencia.modificarPropiedad(prop);
 		}
-		
-		/*
-		servPersistencia.eliminarPropiedadEntidad(eUsuario, PASSWORD);
-		servPersistencia.anadirPropiedadEntidad(eUsuario, PASSWORD, usuario.getPassword());
-		servPersistencia.eliminarPropiedadEntidad(eUsuario, EMAIL);
-		servPersistencia.anadirPropiedadEntidad(eUsuario, EMAIL, usuario.getEmail());
-		servPersistencia.eliminarPropiedadEntidad(eUsuario, NOMBRE);
-		servPersistencia.anadirPropiedadEntidad(eUsuario, NOMBRE, usuario.getNombre());
-		servPersistencia.eliminarPropiedadEntidad(eUsuario, APELLIDOS);
-		servPersistencia.anadirPropiedadEntidad(eUsuario, APELLIDOS, usuario.getApellidos());
-		
-		String canciones = obtenerIdCanciones(usuario.getRecientes());
-		servPersistencia.eliminarPropiedadEntidad(eUsuario, RECIENTES);
-		servPersistencia.anadirPropiedadEntidad(eUsuario, RECIENTES, canciones);
-		System.out.println("Guardamos en el adaptador " + canciones + usuario.getRecientes());
-		System.out.println("Y la lista contiene");
-		for (Cancion c : usuario.getRecientes()) {
-			System.out.println(c.getTitulo());
-		}*/
 	}
 
 	public Usuario obtenerUsuario(int id) {

@@ -77,7 +77,7 @@ public class VentanaPremium {
 		
 		comboBox = new JComboBox();
 		comboBox.setBounds(259, 139, 99, 22);
-		Object[] anos = {"A�os", "1", "2", "3"};
+		Object[] anos = {"Años", "1", "2", "3"};
 		comboBox.setModel(new DefaultComboBoxModel(anos));
 		panel.add(comboBox);
 		
@@ -101,8 +101,8 @@ public class VentanaPremium {
 		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String seleccionado = (String) comboBox.getSelectedItem();
-				if(seleccionado.equals("A�os")) {
-					JOptionPane.showMessageDialog(btnConfirmar, "Selecciona un periodo v�lido", "Periodo erroneo", JOptionPane.ERROR_MESSAGE, null);
+				if(seleccionado.equals("Años")) {
+					JOptionPane.showMessageDialog(btnConfirmar, "Selecciona un periodo válido", "Periodo erroneo", JOptionPane.ERROR_MESSAGE, null);
 				}else {
 					VentanaConfirmacionPremium reg = new VentanaConfirmacionPremium(Integer.parseInt(seleccionado));
 					reg.getFrame().setVisible(true);
@@ -131,9 +131,9 @@ public class VentanaPremium {
 		lblAppMusic.setBounds(173, 17, 270, 36);
 		panel.add(lblAppMusic);
 		
-		JLabel lblNewLabel_1 = new JLabel("Precio anual: "+ Controlador.PRECIO + "�");
+		JLabel lblNewLabel_1 = new JLabel("Precio anual: "+ Controlador.PRECIO + "€");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblNewLabel_1.setBounds(402, 143, 99, 14);
+		lblNewLabel_1.setBounds(389, 143, 108, 14);
 		panel.add(lblNewLabel_1);
 		
 		double descuento = Controlador.getUnicaInstancia().consultarDescuento();

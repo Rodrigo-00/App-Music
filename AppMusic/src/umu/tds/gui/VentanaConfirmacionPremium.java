@@ -69,7 +69,7 @@ public class VentanaConfirmacionPremium {
 		txtgracias.setColumns(10);
 		
 		double cantidad = Controlador.getUnicaInstancia().convertirPremium(anos);
-		JLabel lblCantidadPagada = new JLabel("Cantidad pagada: "+ cantidad + "�");
+		JLabel lblCantidadPagada = new JLabel("Cantidad pagada: "+ cantidad + "€");
 		lblCantidadPagada.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblCantidadPagada.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCantidadPagada.setBounds(106, 144, 204, 14);

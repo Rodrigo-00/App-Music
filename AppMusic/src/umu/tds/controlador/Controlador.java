@@ -231,7 +231,9 @@ public final class Controlador implements PropertyChangeListener{
 	
 	//El usuario se convierte en premiumm durante un tiempo
 	public double convertirPremium(int tiempo) {
-		return usuarioActual.realizarPago(tiempo);
+		double pago = usuarioActual.realizarPago(tiempo);
+		adaptadorUsuario.updatePerfil(usuarioActual);	//actualizamos al usuario en base de datos
+		return pago;
 	}
 	
 	//Consultar precio a pagar para convertirse en premium
