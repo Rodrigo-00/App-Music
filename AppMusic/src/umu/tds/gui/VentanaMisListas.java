@@ -121,6 +121,7 @@ public class VentanaMisListas {
 		panel.add(btnAtrs, gbc_btnAtrs);
 		btnAtrs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(reproduciendo) Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para pausar la cancion si se esta reproduciendo alguna
 				VentanaPrincipal reg = new VentanaPrincipal();
 				reg.getFrame().setVisible(true);
 				frmVentanaMisListas.setVisible(false);
@@ -184,6 +185,7 @@ public class VentanaMisListas {
 		btnSalir.setActionCommand("Salir");
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(reproduciendo) Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para parar la cancion si se esta reproduciendo alguna
 				VentanaLogin reg = new VentanaLogin();
 				reg.getFrame().setVisible(true);
 				frmVentanaMisListas.setVisible(false);
@@ -202,6 +204,7 @@ public class VentanaMisListas {
 		panel_1.add(btnExplorar);
 		btnExplorar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(reproduciendo) Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para parar la cancion si se esta reproduciendo alguna
 				VentanaExplorar reg = new VentanaExplorar();
 				reg.getFrame().setVisible(true);
 				frmVentanaMisListas.setVisible(false);
@@ -216,10 +219,10 @@ public class VentanaMisListas {
 		panel_1.add(btnLista);
 		btnLista.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
 				int reply = JOptionPane.showConfirmDialog(null, "Desea Crear una nueva Playlist", "Crear Playlist",
 						JOptionPane.YES_NO_OPTION);
 				if (reply == JOptionPane.YES_OPTION) {
+					if(reproduciendo) Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para parar la cancion si se esta reproduciendo alguna
 					VentanaCrearPlaylist reg = new VentanaCrearPlaylist();
 					reg.getFrame().setVisible(true);
 					frmVentanaMisListas.setVisible(false);
@@ -234,6 +237,7 @@ public class VentanaMisListas {
 		panel_1.add(btnRecientes);
 		btnRecientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(reproduciendo) Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para parar la cancion si se esta reproduciendo alguna
 				VentanaRecientes reg = new VentanaRecientes();
 				reg.getFrame().setVisible(true);
 				frmVentanaMisListas.setVisible(false);
@@ -311,6 +315,8 @@ public class VentanaMisListas {
 				model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
 		}
 		scrollCancionesPlaylist.setViewportView(table_1);
+		
+		
 
 		JPanel panel_5 = new JPanel();
 		panel_2.add(panel_5, BorderLayout.SOUTH);
@@ -350,14 +356,12 @@ public class VentanaMisListas {
 				if (reproduciendo) { // Se pulsa el boton de pause
 					reproduciendo = false;
 					Controlador.getUnicaInstancia().pausarCancion(); // Llamamos al controlador para pausar la cancion
-					btnReproducir
-							.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/play.png")));
+					btnReproducir.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/play.png")));
 
 				} else if (row != -1 && canciones.size() > 0) { // Si hay seleccionada alguna fila de la tabla y la
 																// tabla contiene canciones
 					System.out.println("Se ejecuta " + canciones.get(row).getTitulo());
-					btnReproducir
-							.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/pause.png")));
+					btnReproducir.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/pause.png")));
 
 					if (cancActual != null && cancActual.equals(canciones.get(row))) {
 						Controlador.getUnicaInstancia().reanudarCancion(); // Reanudamos la cancion
@@ -378,6 +382,35 @@ public class VentanaMisListas {
 
 			}
 		});
+		
+		//Permitimos que la cancion se reproduzca al clickearla dos veces
+		table_1.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {	//Si se han producido dos clicks se ejecuta la cancion
+					table_1 = (JTable) e.getSource();
+					int row = table_1.rowAtPoint(e.getPoint());
+					try {
+						if((reproduciendo || !reproduciendo) && (cancActual == null || !cancActual.equals(canciones.get(row)))) {
+							if(reproduciendo) Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para pausar la cancion si se esta reproduciendo alguna
+							cancActual = canciones.get(row);
+							Controlador.getUnicaInstancia().reproducirCancion(cancActual);	//Llamamos al controlador para reproducir la cancion
+							numCancion=row;
+						
+						}else if(!reproduciendo && cancActual!= null && cancActual.equals(canciones.get(row))) {
+							Controlador.getUnicaInstancia().reanudarCancion();	//Reanudamos la cancion
+						}
+			
+						btnReproducir.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/pause.png")));	//Cambiamos el icono del boton central
+						reproduciendo = true;
+					} catch (MalformedURLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}   	
+				}
+			}
+		});
+
+		
 
 		JButton btnPosterior = new JButton("");
 		btnPosterior.setIcon(new ImageIcon(

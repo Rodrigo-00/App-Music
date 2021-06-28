@@ -62,7 +62,8 @@ public class CatalogoCanciones {
 	}
 	
 	public List<Cancion> getAll() {
-		return new LinkedList<Cancion>(canciones);	
+		//return new LinkedList<Cancion>(canciones);
+		return canciones;
 	}
 	
 	public List<Cancion> getCancionesInterprete(String interprete){
