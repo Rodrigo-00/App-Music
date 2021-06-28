@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
@@ -221,6 +222,13 @@ public class Ventanaregistro extends JFrame {
 				String nombre = new String(textNombre.getText());
 				String apellidos = new String(textApellidos.getText());
 				
+				//Comprobamos que la fecha indicada es la correcta
+				if(dateNacim.getDate().after(Calendar.getInstance().getTime())) {
+					JOptionPane.showMessageDialog(btnRegistrar, "Inserte una fecha de nacimiento correcta", "Fefcha incorrecta", JOptionPane.ERROR_MESSAGE, null);
+					return;
+				}
+						
+						
 				//Convertimos la fecha al formato deseado
 				String fechaNacim = new SimpleDateFormat("dd/MM/yyyy").format(dateNacim.getDate());
 				Date date = null;
@@ -230,11 +238,6 @@ public class Ventanaregistro extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
-				System.out.println();
-				System.out.println(fechaNacim);
-				System.out.println(date);
-				System.out.println();
 				
 				String email = new String(textEmail.getText());
 				//Faltan mas cosas
