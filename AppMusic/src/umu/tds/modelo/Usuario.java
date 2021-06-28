@@ -28,7 +28,7 @@ public class Usuario {
 	private String password;
 	private Date fechaNacimiento;
 	private Boolean premium;
-	private Playlist masReproducidas;	//Playlist de las canciones más reproducidas en toda la aplicacion que no persistimos
+	private Playlist masReproducidas;	//Playlist de las canciones mï¿½s reproducidas en toda la aplicacion que no persistimos
 	private List<Cancion> recientes;
 	private List<Playlist> playLists;
 	private Descuento descuento;
@@ -159,12 +159,13 @@ public class Usuario {
 	}
 	
 	
-	public void creaPDF() throws FileNotFoundException, DocumentException {
+	public void creaPDF(String path) throws FileNotFoundException, DocumentException {
 		if(this.premium) {
-			FileOutputStream archivo = new FileOutputStream("./");
+			FileOutputStream archivo = new FileOutputStream(path+"/appMusic.pdf");
 		    Document documento = new Document();
 		    PdfWriter.getInstance(documento, archivo);
 		    documento.open();
+		    documento.newPage();
 			for(Playlist p : playLists) {
 				List<Cancion> canciones = p.getCanciones();
 			    documento.add(new Paragraph(p.getNombre()+":"));

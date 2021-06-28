@@ -28,6 +28,7 @@ import java.awt.Insets;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -40,6 +41,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 
 public class VentanaCrearPlaylist {
 
@@ -450,8 +452,12 @@ public class VentanaCrearPlaylist {
 		panel_north.add(btnPdf, gbc_btnHaztePremium);	
 		btnPdf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				JFileChooser chooser = new JFileChooser();
+				chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				chooser.showOpenDialog(frame);
+				File directory = chooser.getSelectedFile();
 				try {
-					Controlador.getUnicaInstancia().generaPDF();
+					Controlador.getUnicaInstancia().generaPDF(directory.getAbsolutePath());
 				}catch (FileNotFoundException fe){
 					System.out.println(fe.getMessage());
 				}catch (DocumentException d) {

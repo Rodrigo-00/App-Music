@@ -125,7 +125,11 @@ public class VentanaPrincipal implements PropertyChangeListener{
 			btnPdf.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					try {
-						Controlador.getUnicaInstancia().generaPDF();
+						JFileChooser chooser = new JFileChooser();
+						chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+						chooser.showOpenDialog(frmVentanaPrincipal);
+						File directory = chooser.getSelectedFile();
+						Controlador.getUnicaInstancia().generaPDF(directory.getAbsolutePath());
 					}catch (FileNotFoundException fe){
 						System.out.println(fe.getMessage());
 					}catch (DocumentException d) {

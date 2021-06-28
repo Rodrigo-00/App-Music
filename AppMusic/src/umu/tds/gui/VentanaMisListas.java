@@ -25,6 +25,7 @@ import umu.tds.modelo.Playlist;
 import java.awt.EventQueue;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.BoxLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -38,6 +39,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.util.LinkedList;
@@ -141,8 +143,12 @@ public class VentanaMisListas {
 			panel.add(btnPdf, gbc_btnHaztePremium);	
 			btnPdf.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					JFileChooser chooser = new JFileChooser();
+					chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+					chooser.showOpenDialog(frmVentanaMisListas);
+					File directory = chooser.getSelectedFile();
 					try {
-						Controlador.getUnicaInstancia().generaPDF();
+						Controlador.getUnicaInstancia().generaPDF(directory.getAbsolutePath());
 					}catch (FileNotFoundException fe){
 						System.out.println(fe.getMessage());
 					}catch (DocumentException d) {
@@ -307,7 +313,7 @@ public class VentanaMisListas {
 		table_1.setEnabled(true);
 		table_1.setBounds(5, 5, 5, 5);
 		
-		if(listas.size() > 0) {	//Si hay listas añadimos la primera a la tabla
+		if(listas.size() > 0) {	//Si hay listas aï¿½adimos la primera a la tabla
 			String listaseleccionada = list.getSelectedValue();
 			canciones = Controlador.getUnicaInstancia().getCancionesPlaylist(listaseleccionada);
 			

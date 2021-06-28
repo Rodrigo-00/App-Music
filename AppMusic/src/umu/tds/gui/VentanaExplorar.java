@@ -26,6 +26,7 @@ import javax.swing.JOptionPane;
 import javax.swing.AbstractListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -40,6 +41,7 @@ import javax.swing.UIManager;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.util.LinkedList;
@@ -140,8 +142,12 @@ public class VentanaExplorar {
 			panel.add(btnPdf, gbc_btnHaztePremium);	
 			btnPdf.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					JFileChooser chooser = new JFileChooser();
+					chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+					chooser.showOpenDialog(frmVentanaExplorar);
+					File directory = chooser.getSelectedFile();
 					try {
-						Controlador.getUnicaInstancia().generaPDF();
+						Controlador.getUnicaInstancia().generaPDF(directory.getAbsolutePath());
 					}catch (FileNotFoundException fe){
 						System.out.println(fe.getMessage());
 					}catch (DocumentException d) {

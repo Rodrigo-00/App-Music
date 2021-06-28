@@ -102,7 +102,7 @@ public final class Controlador implements PropertyChangeListener{
 				usuarioActual.otorgarDescuento();	//Aï¿½adimos el descuento al usuario si este no es ya usuario premium
 			}else {
 				System.out.println("Actualizamos la playlist");
-				//Actualizamos la playlist de canciones más reproducidas
+				//Actualizamos la playlist de canciones mï¿½s reproducidas
 				List<Cancion> masRepro = catalogoCanciones.getMasReproducidas();
 				usuarioActual.crearMasRepro(masRepro);
 			}
@@ -270,8 +270,8 @@ public final class Controlador implements PropertyChangeListener{
 		return usuarioActual.getCancionesPlaylist(playlist);
 	}
 	
-	public void generaPDF() throws FileNotFoundException, DocumentException {
-		usuarioActual.creaPDF();
+	public void generaPDF(String path) throws FileNotFoundException, DocumentException {
+		usuarioActual.creaPDF(path);
 	}
 	
 }
