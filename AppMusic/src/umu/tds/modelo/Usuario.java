@@ -1,6 +1,7 @@
 package umu.tds.modelo;
 
 import java.time.LocalDate;
+import java.awt.Font;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 public class Usuario {
@@ -165,17 +167,13 @@ public class Usuario {
 		    Document documento = new Document();
 		    PdfWriter.getInstance(documento, archivo);
 		    documento.open();
-		    /*
-		      documento.open();
-      documento.add(new Paragraph("Hola Mundo!"));
-      documento.add(new Paragraph("SoloInformaticaYAlgoMas.blogspot.com"));
-      documento.close();
-		     */
+		    documento.add(new Paragraph("Usuario: "+this.login, FontFactory.getFont("arial",40, Font.ITALIC)));
 			for(Playlist p : playLists) {
+				documento.add(new Paragraph(""));
 				List<Cancion> canciones = p.getCanciones();
-			    documento.add(new Paragraph(p.getNombre()+":"));
+			    documento.add(new Paragraph("Playlist "+p.getNombre()+":", FontFactory.getFont("arial", 18)));
 			    for (Cancion c: canciones) {
-			    	documento.add(new Paragraph("Titulo: "+c.getTitulo()+", Interprete:"+c.getInterprete()+", Estilo: "+c.getEstilo()));
+			    	documento.add(new Paragraph("-Titulo: "+c.getTitulo()+", Interprete: "+c.getInterprete()+", Estilo: "+c.getEstilo(),FontFactory.getFont("arial", 10)));
 			    }
 			}
 			if(playLists.isEmpty()) {
