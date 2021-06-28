@@ -165,13 +165,21 @@ public class Usuario {
 		    Document documento = new Document();
 		    PdfWriter.getInstance(documento, archivo);
 		    documento.open();
-		    documento.newPage();
+		    /*
+		      documento.open();
+      documento.add(new Paragraph("Hola Mundo!"));
+      documento.add(new Paragraph("SoloInformaticaYAlgoMas.blogspot.com"));
+      documento.close();
+		     */
 			for(Playlist p : playLists) {
 				List<Cancion> canciones = p.getCanciones();
 			    documento.add(new Paragraph(p.getNombre()+":"));
 			    for (Cancion c: canciones) {
 			    	documento.add(new Paragraph("Titulo: "+c.getTitulo()+", Interprete:"+c.getInterprete()+", Estilo: "+c.getEstilo()));
 			    }
+			}
+			if(playLists.isEmpty()) {
+				documento.add(new Paragraph("No existe ninguna playlist creada"));
 			}
 			documento.close();
 		}

@@ -45,6 +45,7 @@ import pulsador.Luz;
 public class VentanaPrincipal implements PropertyChangeListener{
 
 	private JFrame frmVentanaPrincipal;
+	private Luz luz;
 	
 	public VentanaPrincipal() {
 		initialize();
@@ -53,7 +54,10 @@ public class VentanaPrincipal implements PropertyChangeListener{
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.showOpenDialog(frmVentanaPrincipal);	
 		File currentFile = fileChooser.getSelectedFile();
-		Controlador.getUnicaInstancia().cargarCanciones(currentFile.getPath());
+		if(currentFile==null) {
+			JOptionPane.showMessageDialog(luz, "No se ha seleccionado ningun fichero", "Error", JOptionPane.ERROR_MESSAGE, null);
+		}else
+			Controlador.getUnicaInstancia().cargarCanciones(currentFile.getPath());
 	}
 	
 	public JFrame getFrame() {
@@ -237,7 +241,7 @@ public class VentanaPrincipal implements PropertyChangeListener{
 			}
 		});
 		
-		Luz luz = new Luz();
+		luz = new Luz();
 		panel_1.add(luz);
 		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
 		luz.addEncendidoListener(this);
