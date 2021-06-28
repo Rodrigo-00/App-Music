@@ -274,10 +274,10 @@ public class VentanaMisListas {
 					model.removeRow(0); // Eliminamos todas las lineas de la tabla
 				}
 
-				canciones.clear();
+				//canciones.clear();
 
 				System.out.println("Size: " + canciones.size());
-				canciones.addAll(Controlador.getUnicaInstancia().getCancionesPlaylist(listaseleccionada));
+				canciones = Controlador.getUnicaInstancia().getCancionesPlaylist(listaseleccionada);
 
 				for (Cancion c : canciones) {
 					System.out.println("Aï¿½adimos la cancion tras borrar" + c.getTitulo());
@@ -309,7 +309,7 @@ public class VentanaMisListas {
 		
 		if(listas.size() > 0) {	//Si hay listas añadimos la primera a la tabla
 			String listaseleccionada = list.getSelectedValue();
-			canciones.addAll(Controlador.getUnicaInstancia().getCancionesPlaylist(listaseleccionada));
+			canciones = Controlador.getUnicaInstancia().getCancionesPlaylist(listaseleccionada);
 			
 			for (Cancion c : canciones)
 				model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
