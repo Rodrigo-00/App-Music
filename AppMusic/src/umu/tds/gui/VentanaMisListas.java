@@ -270,6 +270,7 @@ public class VentanaMisListas {
 		list.setBounds(0, 0, 142, 109);
 		// scrollPane_1.setColumnHeaderView(list);
 		JScrollPane scrollPane_1 = new JScrollPane(list);
+		scrollPane_1.setPreferredSize(new Dimension(70, 131));
 		panel_1.add(scrollPane_1);
 		list.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent event) {
@@ -304,10 +305,11 @@ public class VentanaMisListas {
 			}
 		};
 
-		table_1.setPreferredScrollableViewportSize(new Dimension(450, 200));
+		table_1.setPreferredScrollableViewportSize(new Dimension(370, 200));
 		table_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table_1.setBorder(null);
 		scrollCancionesPlaylist = new JScrollPane(table_1);
+		scrollCancionesPlaylist.setPreferredSize(new Dimension(400, 203));
 		panel_4.add(scrollCancionesPlaylist);
 		table_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table_1.setEnabled(true);
