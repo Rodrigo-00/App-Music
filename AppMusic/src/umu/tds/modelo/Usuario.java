@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -18,7 +19,7 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 public class Usuario {
 	
-	
+	private final String MASREPRODUCIDAS = "MAS REPRODUCIDAS";
 	private int id;
 	private String nombre;
 	private String apellidos;
@@ -27,6 +28,7 @@ public class Usuario {
 	private String password;
 	private Date fechaNacimiento;
 	private Boolean premium;
+	private Playlist masReproducidas;	//Playlist de las canciones más reproducidas en toda la aplicacion que no persistimos
 	private List<Cancion> recientes;
 	private List<Playlist> playLists;
 	private Descuento descuento;
@@ -79,8 +81,11 @@ public class Usuario {
 	
 	public List<String> nombresListas(){
 		
-		List<String> nombres = new LinkedList<String>();
-		for(Playlist list : playLists) nombres.add(list.getNombre());
+		List<String> nombres = playLists.stream()
+				.map(p -> p.getNombre())
+				.collect(Collectors.toList());
+				
+		if(premium) nombres.add(0, MASREPRODUCIDAS);
 		return nombres;
 		
 	}
@@ -97,6 +102,9 @@ public class Usuario {
 	}
 	
 	public Playlist getPlayList(String play) {
+		
+		if(premium && play.equals(MASREPRODUCIDAS)) return masReproducidas;
+	
 		for (Playlist playlist:playLists) {
 			if(play.equals(playlist.getNombre()))
 			return playlist;
@@ -114,11 +122,11 @@ public class Usuario {
 	}
 	
 	public List<Cancion> getCancionesPlaylist(String playlist){
+		
+		if(premium && playlist.equals(MASREPRODUCIDAS)) return masReproducidas.getCanciones();
+		
 		for (Playlist play: playLists) {
-			if(play.getNombre().equals(playlist)){
-				System.out.println("Esta la playlist");
-				return play.getCanciones();
-			}
+			if(play.getNombre().equals(playlist)) return play.getCanciones();
 		}
 		return new LinkedList<Cancion>();
 	}
@@ -144,6 +152,35 @@ public class Usuario {
 	public double consultarDescuento() {
 		return descuento.getDescuento();
 	}
+	
+	public void crearMasRepro(List<Cancion> masRepro) {
+		masReproducidas = new Playlist(MASREPRODUCIDAS);
+		masReproducidas.addCanciones(masRepro);
+	}
+	
+	
+	public void creaPDF() throws FileNotFoundException, DocumentException {
+		if(this.premium) {
+			FileOutputStream archivo = new FileOutputStream("./");
+		    Document documento = new Document();
+		    PdfWriter.getInstance(documento, archivo);
+		    documento.open();
+			for(Playlist p : playLists) {
+				List<Cancion> canciones = p.getCanciones();
+			    documento.add(new Paragraph(p.getNombre()+":"));
+			    for (Cancion c: canciones) {
+			    	documento.add(new Paragraph("Titulo: "+c.getTitulo()+", Interprete:"+c.getInterprete()+", Estilo: "+c.getEstilo()));
+			    }
+			}
+			documento.close();
+		}
+	}
+	
+	
+	public Playlist getMasRepro() {
+		return masReproducidas;
+	}
+	
 	
 	public Descuento getDescuento() {
 		return descuento;
@@ -217,22 +254,6 @@ public class Usuario {
 	public List<Playlist> getPlayLists() {
 		return playLists;
 	}
-	
-	public void creaPDF() throws FileNotFoundException, DocumentException {
-		if(this.premium) {
-			FileOutputStream archivo = new FileOutputStream("./");
-		    Document documento = new Document();
-		    PdfWriter.getInstance(documento, archivo);
-		    documento.open();
-			for(Playlist p : playLists) {
-				List<Cancion> canciones = p.getCanciones();
-			    documento.add(new Paragraph(p.getNombre()+":"));
-			    for (Cancion c: canciones) {
-			    	documento.add(new Paragraph("Titulo: "+c.getTitulo()+", Interprete:"+c.getInterprete()+", Estilo: "+c.getEstilo()));
-			    }
-			}
-			documento.close();
-		}
-	}
+
 
 }

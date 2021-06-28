@@ -467,7 +467,7 @@ public class VentanaExplorar {
 		
 		if(((interprete.equals("Interprete") || interprete.equals("")) && (titulo.equals("") || titulo.equals("Titulo")) && comboBox.getSelectedItem().equals("Estilo"))) {
 			//Buscar todas las canciones
-			canciones = Controlador.getUnicaInstancia().getAllCanciones();
+			canciones.addAll(Controlador.getUnicaInstancia().getAllCanciones());
 			for(Cancion c : canciones ) {
 				model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
 			}
@@ -479,7 +479,7 @@ public class VentanaExplorar {
 			
 		}else if(((!interprete.equals("Interprete") && !interprete.equals("")) && (titulo.equals("") || titulo.equals("Titulo")) && comboBox.getSelectedItem().equals("Estilo"))) {
 			//Buscar por interprete
-			canciones = Controlador.getUnicaInstancia().getCancionesInterprete(interprete);
+			canciones.addAll(Controlador.getUnicaInstancia().getCancionesInterprete(interprete));
 			for(Cancion c : canciones ) {
 				model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
 			}
@@ -493,7 +493,7 @@ public class VentanaExplorar {
 			
 		}else if(((!interprete.equals("Interprete") && !interprete.equals("")) && (titulo.equals("") || titulo.equals("Titulo")) && !comboBox.getSelectedItem().equals("Estilo"))) {
 			//Buscar por estilo y autor
-			canciones = Controlador.getUnicaInstancia().getCancionesEstiloInter(estilo, interprete);
+			canciones.addAll(Controlador.getUnicaInstancia().getCancionesEstiloInter(estilo, interprete));
 			for(Cancion c : canciones ) {
 				model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
 			}

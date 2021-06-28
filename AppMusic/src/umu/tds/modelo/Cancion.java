@@ -32,6 +32,11 @@ public class Cancion {
 		return estilo.equals(esti);
 	}
 	
+	public void reproducida() {
+		reproducciones++;
+	}
+	
+	
 	public int getReproducciones() {
 		return reproducciones;
 	}

@@ -62,7 +62,7 @@ public class CatalogoCanciones {
 	}
 	
 	public List<Cancion> getAll() {
-		return canciones;
+		return new LinkedList<Cancion>(canciones);	
 	}
 	
 	public List<Cancion> getCancionesInterprete(String interprete){

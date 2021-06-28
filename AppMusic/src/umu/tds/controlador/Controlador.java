@@ -98,7 +98,14 @@ public final class Controlador implements PropertyChangeListener{
 		Usuario usuario = catalogoUsuarios.getUsuario(nombre);
 		if (usuario != null && usuario.getPassword().equals(password)) {
 			this.usuarioActual = usuario;
-			if(!usuarioActual.isPremium()) usuarioActual.otorgarDescuento();	//Aï¿½adimos el descuento al usuario si este no es ya usuario premium
+			if(!usuarioActual.isPremium()) {
+				usuarioActual.otorgarDescuento();	//Aï¿½adimos el descuento al usuario si este no es ya usuario premium
+			}else {
+				System.out.println("Actualizamos la playlist");
+				//Actualizamos la playlist de canciones más reproducidas
+				List<Cancion> masRepro = catalogoCanciones.getMasReproducidas();
+				usuarioActual.crearMasRepro(masRepro);
+			}
 			return true;
 		}
 		return false;
@@ -127,7 +134,6 @@ public final class Controlador implements PropertyChangeListener{
 	
 	public List<String> nombresListas(){
 		return usuarioActual.nombresListas();
-		
 	}
 	
 	
@@ -199,10 +205,11 @@ public final class Controlador implements PropertyChangeListener{
 		mediaPlayer = new MediaPlayer(hit); 
 		mediaPlayer.play();
 		usuarioActual.addReciente(c);	//Aï¿½adimos la cancion a la lista de canciones recientes del usuario
-		adaptadorUsuario.updatePerfil(usuarioActual);	//Actualizamos en la base de datos el usuario actual
+		c.reproducida();	//Actualizamos las reproducciones de la cancion
 		
-		for(Cancion ca: usuarioActual.getRecientes())
-			System.out.println("CONTIENE "+ca.getTitulo());
+		adaptadorUsuario.updatePerfil(usuarioActual);	//Actualizamos en la base de datos el usuario actual
+		adaptadorCancion.updateCancion(c);	//Actualizamos la cancion
+		
 	}
 	
 	public void pausarCancion() {
@@ -232,6 +239,8 @@ public final class Controlador implements PropertyChangeListener{
 	//El usuario se convierte en premiumm durante un tiempo
 	public double convertirPremium(int tiempo) {
 		double pago = usuarioActual.realizarPago(tiempo);
+		List<Cancion> masRepro = catalogoCanciones.getMasReproducidas();
+		usuarioActual.crearMasRepro(masRepro);
 		adaptadorUsuario.updatePerfil(usuarioActual);	//actualizamos al usuario en base de datos
 		return pago;
 	}
