@@ -1,8 +1,11 @@
 package umu.tds.dominio;
 
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.sound.sampled.ReverbType;
 
 import umu.tds.persistencia.FactoriaDAO;
 import umu.tds.modelo.Cancion;
@@ -59,7 +62,7 @@ public class CatalogoCanciones {
 	}
 	
 	public List<Cancion> getAll() {
-		return new LinkedList<Cancion>(canciones);
+		return canciones;
 	}
 	
 	public List<Cancion> getCancionesInterprete(String interprete){
@@ -125,6 +128,14 @@ public class CatalogoCanciones {
 		lista.add(0, "Estilo");
 		return lista;
 	}
+	
+	public List<Cancion> getMasReproducidas(){	//Devolvemos las canciones mas reproducidas ordenadas de mayor a menor
+		return canciones.stream()
+				.sorted(Comparator.comparing(Cancion::getReproducciones).reversed())
+				.limit(10)
+				.collect(Collectors.toList());
+	}
+	
 	
 }
 

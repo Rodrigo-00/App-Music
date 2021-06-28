@@ -60,7 +60,7 @@ public class VentanaMisListas {
 							// seleccionada
 	private DefaultTableModel model;
 	private JScrollPane scrollCancionesPlaylist;
-	private List<String> listas;
+	private List<String> listas;	//Guardamos el nombre de las listas del usuario
 
 	public VentanaMisListas() {
 		initialize();
@@ -254,7 +254,7 @@ public class VentanaMisListas {
 		JPanel panel_4 = new JPanel();
 		panel_2.add(panel_4, BorderLayout.CENTER);
 
-		listas = Controlador.getUnicaInstancia().nombresListas();
+		listas = Controlador.getUnicaInstancia().nombresListas();	//Obtenemos el nombre de las listas del usuario
 		JList<String> list = new JList(listas.toArray());
 		list.setSelectedIndex(0);
 		list.setBounds(0, 0, 142, 109);
