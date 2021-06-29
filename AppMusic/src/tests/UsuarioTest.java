@@ -14,12 +14,14 @@ public class UsuarioTest {
 	Usuario usuario;
 	Cancion cancion;
 	Playlist playlist;
+	Playlist playlist1;
 	
 	@Before
 	public void usuario() {
 		usuario = new Usuario("Pedro", "Garcia", "p.garcia@um.es", "p.garcia", "pedro", new Date());
 		cancion = new Cancion("titulo", "interprete", "estilo", "rutaFichero");
 		playlist = new Playlist("nombre");
+		playlist1 = new Playlist("nombre1");
 	}
 
 	@Test
@@ -31,7 +33,7 @@ public class UsuarioTest {
 
 	@Test
 	public void testCrearPlayListNoExiste() {
-		Playlist playlist1 = usuario.crearPlayList("nombre");
+		Playlist playlist1 = usuario.crearPlayList("nombre1");
 		assertNotNull(playlist1);
 	}
 	
@@ -43,32 +45,7 @@ public class UsuarioTest {
 	}
 
 	@Test
-	public void testAddPlayList() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testNombresListas() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testAddCancionToPlaylist() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testRemoveCancionPlaylist() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testEliminaPlaylist() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testIsPremium() {
 		fail("Not yet implemented");
 	}
 
@@ -99,36 +76,6 @@ public class UsuarioTest {
 
 	@Test
 	public void testCreaPDF() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetId() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetNombre() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetApellidos() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetEmail() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetLogin() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetPassword() {
 		fail("Not yet implemented");
 	}
 }
