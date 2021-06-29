@@ -25,7 +25,7 @@ import javafx.scene.media.MediaPlayer;
 
 public final class Controlador implements PropertyChangeListener{
 
-	public static final int PRECIO = 20; //precio anual de la aplicaci�n
+	public static final int PRECIO = 20; //precio anual de la aplicación
 	public static final int MINUTOS = 1; //tiempo que esta disponible el descuento temporal
 	
 	private Usuario usuarioActual;
@@ -99,10 +99,9 @@ public final class Controlador implements PropertyChangeListener{
 		if (usuario != null && usuario.getPassword().equals(password)) {
 			this.usuarioActual = usuario;
 			if(!usuarioActual.isPremium()) {
-				usuarioActual.otorgarDescuento();	//A�adimos el descuento al usuario si este no es ya usuario premium
+				usuarioActual.otorgarDescuento();	//Añadimos el descuento al usuario si este no es ya usuario premium
 			}else {
-				System.out.println("Actualizamos la playlist");
-				//Actualizamos la playlist de canciones m�s reproducidas
+				//Actualizamos la playlist de canciones más reproducidas
 				List<Cancion> masRepro = catalogoCanciones.getMasReproducidas();
 				usuarioActual.crearMasRepro(masRepro);
 			}
@@ -140,7 +139,7 @@ public final class Controlador implements PropertyChangeListener{
 	
 	public boolean crearPlaylist(String nombre) {
 		Playlist lista = usuarioActual.crearPlayList(nombre);
-		if(lista != null) {
+		if(lista != null) {	//Si la playlist devuelta no es null, el usuario no tiene una playlist con el mismo nombre
 			adaptadorPlaylist.registrarPlaylist(lista);
 			adaptadorUsuario.updatePerfil(usuarioActual);
 			return true;
@@ -204,7 +203,7 @@ public final class Controlador implements PropertyChangeListener{
 		Media hit = new Media(url.toString()); 
 		mediaPlayer = new MediaPlayer(hit); 
 		mediaPlayer.play();
-		usuarioActual.addReciente(c);	//A�adimos la cancion a la lista de canciones recientes del usuario
+		usuarioActual.addReciente(c);	//Añadimos la cancion a la lista de canciones recientes del usuario
 		c.reproducida();	//Actualizamos las reproducciones de la cancion
 		
 		adaptadorUsuario.updatePerfil(usuarioActual);	//Actualizamos en la base de datos el usuario actual

@@ -18,11 +18,6 @@ import umu.tds.modelo.Usuario;
 import beans.Entidad;
 import beans.Propiedad;
 
-/**
- * 
- * Clase que implementa el Adaptador DAO concreto de Usuario para el tipo H2.
- * 
- */
 public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 
 	private static final String USUARIO = "Usuario";
@@ -131,7 +126,6 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 		List<Playlist> listaPlaylist = new LinkedList<Playlist>();
 		
 		if(listas!= null && !listas.equals("")) {
-			System.out.println("ENTRA");
 			StringTokenizer strTok = new StringTokenizer(listas, " ");
 			AdaptadorPlaylistTDS adaptadorP = AdaptadorPlaylistTDS.getUnicaInstancia();
 			while (strTok.hasMoreTokens()) {
@@ -147,7 +141,6 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 		List<Cancion> listaCanciones = new LinkedList<Cancion>();
 		
 		if(canciones!= null && !canciones.equals("")) {
-			System.out.println("ENTRA");
 			StringTokenizer strTok = new StringTokenizer(canciones, " ");
 			AdaptadorCancionTDS adaptadorC = AdaptadorCancionTDS.getUnicaInstancia();
 			while (strTok.hasMoreTokens()) {
@@ -161,9 +154,7 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 	private String obtenerIdCanciones(List<Cancion> listaCanciones) {
 		String aux = "";
 		for (Cancion c : listaCanciones) {
-			System.out.println("Obtenemos id de "+ c.getTitulo());
 			aux += c.getId() + " ";
-			System.out.println("La lista queda "+ aux);
 		}
 		
 		return aux.trim();
@@ -178,7 +169,6 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 
 	public void registrarUsuario(Usuario usuario) {
 		Entidad eUsuario;
-		System.out.println("Usuario id " + usuario.getId());
 		if(usuario.getId() != 0) {
 			boolean existe = true;
 			try {

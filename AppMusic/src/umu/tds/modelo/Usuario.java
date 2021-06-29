@@ -61,18 +61,14 @@ public class Usuario {
 		System.out.println("Nombre de la playlist a crear " + nombre);
 		
 		for(Playlist list : playLists) {
-			System.out.println(list.getNombre());
 			if(list.getNombre().equals(nombre)) {
-				System.out.println("Existe ya una playlist con el nombre");
 				return null;
 			}
 		}
 		
-		System.out.println("El nombre sigue siendo "+ nombre);
 		Playlist lista = new Playlist(nombre);	//El usuario es el experto en crear una playlist
 		playLists.add(lista);
 		
-		System.out.println("El nombre sigue siendo "+ lista.getNombre());
 		return lista;
 	}
 	
