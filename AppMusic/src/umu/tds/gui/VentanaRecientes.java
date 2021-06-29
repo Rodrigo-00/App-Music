@@ -120,52 +120,44 @@ public class VentanaRecientes {
 		panel.add(btnAtras, gbc_btnSalir);
 		
 		boolean isPremium = Controlador.getUnicaInstancia().isUsuarioPremium();
-		if (isPremium) {
-			JButton btnPdf = new JButton("Generar pdf");
-			btnPdf.setBackground(Color.YELLOW);
-			btnPdf.setForeground(Color.BLACK);
-			GridBagConstraints gbc_btnHaztePremium = new GridBagConstraints();
-			gbc_btnHaztePremium.insets = new Insets(0, 0, 5, 5);
-			gbc_btnHaztePremium.gridx = 5;
-			gbc_btnHaztePremium.gridy = 1;
-			panel.add(btnPdf, gbc_btnHaztePremium);	
-			btnPdf.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
+
+		JButton btnPdfPremium = new JButton();
+		if(isPremium)	btnPdfPremium.setText("Generar pdf");
+		else btnPdfPremium.setText("Hazte premium");
+		
+		btnPdfPremium.setBackground(Color.YELLOW);
+		btnPdfPremium.setForeground(Color.BLACK);
+		GridBagConstraints gbc_btnHaztePremium = new GridBagConstraints();
+		gbc_btnHaztePremium.insets = new Insets(0, 0, 5, 5);
+		gbc_btnHaztePremium.gridx = 5;
+		gbc_btnHaztePremium.gridy = 1;
+		panel.add(btnPdfPremium, gbc_btnHaztePremium);	
+		
+		btnPdfPremium.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//Si es usario premium generamos el pdf sino nos desplazamos a la ventana convertirse en premium
+				if (isPremium) {	
 					JFileChooser chooser = new JFileChooser();
 					chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 					chooser.showOpenDialog(frmVentanaRecientes);
 					File directory = chooser.getSelectedFile();
 					try {
 						Controlador.getUnicaInstancia().generaPDF(directory.getAbsolutePath());
-					}catch (FileNotFoundException fe){
+					} catch (FileNotFoundException fe) {
 						System.out.println(fe.getMessage());
-					}catch (DocumentException d) {
+					} catch (DocumentException d) {
 						System.out.println(d.getMessage());
 					}
+				} else {
+					if (reproduciendo)
+						Controlador.getUnicaInstancia().pararCancion(); // Llamamos al controlador para pausar la
+																		// cancion si se esta reproduciendo alguna
+					VentanaPremium reg = new VentanaPremium();
+					reg.getFrame().setVisible(true);
+					frmVentanaRecientes.setVisible(false);
 				}
-			});
-		} else {
-			JButton btnHaztePremium = new JButton("Hazte Premium");
-			btnHaztePremium.setBackground(Color.YELLOW);
-			btnHaztePremium.setForeground(Color.BLACK);
-			GridBagConstraints gbc_btnHaztePremium = new GridBagConstraints();
-			gbc_btnHaztePremium.insets = new Insets(0, 0, 5, 5);
-			gbc_btnHaztePremium.gridx = 5;
-			gbc_btnHaztePremium.gridy = 1;
-			panel.add(btnHaztePremium, gbc_btnHaztePremium);
-			btnHaztePremium.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					if(reproduciendo) Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para pausar la cancion si se esta reproduciendo alguna
-					if(Controlador.getUnicaInstancia().isUsuarioPremium()) {
-						JOptionPane.showMessageDialog(btnHaztePremium, "Ya eres usuaio Premium", "Error", JOptionPane.WARNING_MESSAGE, null);	//Mostramos un mensaje de alerta
-					}else{
-						VentanaPremium reg = new VentanaPremium();
-						reg.getFrame().setVisible(true);
-						frmVentanaRecientes.setVisible(false);
-					}
-				}
-			});
-		}
+			}
+		});
 		
 		JButton btnSalir = new JButton("Salir");
 		GridBagConstraints gbc_btnSalir_1 = new GridBagConstraints();

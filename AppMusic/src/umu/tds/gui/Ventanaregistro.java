@@ -215,19 +215,16 @@ public class Ventanaregistro extends JFrame {
 				String usuario = textUsuario.getText();
 				String clave1 = new String(textClave.getPassword());
 				String clave2 = new String(textClave2.getPassword());
-				if(!clave1.equals(clave2)) {
-					JOptionPane.showMessageDialog(btnRegistrar, "La contraseña no coincide", "Registro incorrecto", JOptionPane.ERROR_MESSAGE, null);
-					return;
-				}
+				
 				String nombre = new String(textNombre.getText());
+				String email = new String(textEmail.getText());
 				String apellidos = new String(textApellidos.getText());
 				
-				//Comprobamos que la fecha indicada es la correcta
-				if(dateNacim.getDate().after(Calendar.getInstance().getTime())) {
-					JOptionPane.showMessageDialog(btnRegistrar, "Inserte una fecha de nacimiento correcta", "Fefcha incorrecta", JOptionPane.ERROR_MESSAGE, null);
-					return;
-				}
-						
+				
+				boolean correcto = entradaCorrecta(nombre, apellidos,dateNacim.getDate(), clave1, clave2, email, btnRegistrar);
+				if(!correcto) return;
+				
+				
 						
 				//Convertimos la fecha al formato deseado
 				String fechaNacim = new SimpleDateFormat("dd/MM/yyyy").format(dateNacim.getDate());
@@ -239,7 +236,13 @@ public class Ventanaregistro extends JFrame {
 					e1.printStackTrace();
 				}
 				
-				String email = new String(textEmail.getText());
+				//Comprobamos que el nombre de usuario no sea un campo vacío
+				if(usuario.equals("")) {
+					JOptionPane.showMessageDialog(btnRegistrar, "Inserte un usuario válido", "Usuario incorrecto", JOptionPane.ERROR_MESSAGE, null);
+					return;
+				}
+				
+				
 				//Faltan mas cosas
 				if(!Controlador.getUnicaInstancia().registrarUsuario(nombre, apellidos, email, usuario, clave1, date)) {
 					JOptionPane.showMessageDialog(btnRegistrar, "Nombre de usuario ya registrado", "Registro incorrecto", JOptionPane.ERROR_MESSAGE, null);
@@ -261,6 +264,50 @@ public class Ventanaregistro extends JFrame {
 		lblBienvenidoAApp.setHorizontalAlignment(SwingConstants.CENTER);
 		lblBienvenidoAApp.setFont(new Font("Viner Hand ITC", Font.BOLD, 22));
 		contentPane.add(lblBienvenidoAApp, BorderLayout.NORTH);
+	}
+	
+	private boolean entradaCorrecta(String nombre, String apellidos, Date fecha, String clave1, String clave2, String email, JButton btnRegistrar) {
+		
+		//Comprobamos que el campo nombre no esta vacío
+		if(nombre.equals("")) {
+			JOptionPane.showMessageDialog(btnRegistrar, "Inserte un nombre", "Nombre incorrecto", JOptionPane.ERROR_MESSAGE, null);
+			return false;
+		}
+		
+		
+		//Comprobamos que el campo apellidos no esta vacío
+		if(apellidos.equals("")) {
+			JOptionPane.showMessageDialog(btnRegistrar, "Inserte sus apellidos", "Apellido incorrecto", JOptionPane.ERROR_MESSAGE, null);
+			return false;
+		}
+		
+		
+		//Comprobamos que la fecha indicada es la correcta
+		if(fecha == null || fecha.after(Calendar.getInstance().getTime())) {
+			JOptionPane.showMessageDialog(btnRegistrar, "Inserte una fecha de nacimiento correcta", "Fecha incorrecta", JOptionPane.ERROR_MESSAGE, null);
+			return false;
+		}
+
+		//Comprobamos que la contraseña no este vacía
+		if(clave1.equals("")) {
+			JOptionPane.showMessageDialog(btnRegistrar, "Inserte una contraseña válida", "Contraseña incorrecta", JOptionPane.ERROR_MESSAGE, null);
+			return false;
+		}
+		
+		
+		//Comprobamos que las contraseñas sean iguales
+		if(!clave1.equals(clave2)) {
+			JOptionPane.showMessageDialog(btnRegistrar, "La contraseña no coincide", "Registro incorrecto", JOptionPane.ERROR_MESSAGE, null);
+			return false;
+		}
+		
+		//Comprobamos que email no este vacío
+		if(email.equals("")) {
+			JOptionPane.showMessageDialog(btnRegistrar, "Inserte una email válido", "Email incorrecto", JOptionPane.ERROR_MESSAGE, null);
+			return false;
+		}		
+		
+		return true;
 	}
 
 }
