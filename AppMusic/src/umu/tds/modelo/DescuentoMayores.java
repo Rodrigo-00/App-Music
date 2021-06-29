@@ -2,7 +2,7 @@ package umu.tds.modelo;
 
 import umu.tds.controlador.Controlador;
 
-public class descuentoMayores implements Descuento{
+public class DescuentoMayores implements Descuento{
 
 	private static double DESCUENTO = 0.5;
 	

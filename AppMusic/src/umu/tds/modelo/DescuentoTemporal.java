@@ -5,12 +5,12 @@ import java.util.Date;
 
 import umu.tds.controlador.Controlador;
 
-public class descuentoTemporal implements Descuento{
+public class DescuentoTemporal implements Descuento{
 	
 	private static double DESCUENTO = 0.2;
 	private final Date fechaLiminte;
 
-	public descuentoTemporal() {
+	public DescuentoTemporal() {
 		
 		Calendar date = Calendar.getInstance();
 		System.out.println("Current Date and TIme : " + date.getTime());

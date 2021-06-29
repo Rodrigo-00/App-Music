@@ -138,8 +138,8 @@ public class Usuario {
     }
     
 	public void otorgarDescuento() {
-		if(getEdad() >= 65) descuento = new descuentoMayores();
-		else descuento = new descuentoTemporal();
+		if(getEdad() >= 65) descuento = new DescuentoMayores();
+		else descuento = new DescuentoTemporal();
 	}
 	
 	public double realizarPago(int tiempo) {
