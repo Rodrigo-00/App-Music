@@ -2,13 +2,19 @@ package tests;
 
 import static org.junit.Assert.*;
 
-import org.junit.Test;
+import java.util.Date;
+
+import org.junit.*;
+
+import umu.tds.modelo.Cancion;
+import umu.tds.modelo.Usuario;
 
 public class UsuarioTest {
-
-	@Test
-	public void testUsuario() {
-		fail("Not yet implemented");
+	
+	@Before
+	public void usuario() {
+		Usuario usuario = new Usuario("Pedro", "Garcia", "p.garcia@um.es", "p.garcia", "pedro", new Date());
+		Cancion cancion = new Cancion("titulo", "interprete", "estilo", "rutaFichero");
 	}
 
 	@Test
