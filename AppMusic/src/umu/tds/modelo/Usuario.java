@@ -157,7 +157,7 @@ public class Usuario {
 	}
 	
 	
-	public void creaPDF(String path) throws FileNotFoundException, DocumentException {
+	public Document creaPDF(String path) throws FileNotFoundException, DocumentException {
 		if(this.premium) {
 			FileOutputStream archivo = new FileOutputStream(path+"/appMusic.pdf");
 		    Document documento = new Document();
@@ -174,9 +174,12 @@ public class Usuario {
 			}
 			if(playLists.isEmpty()) {
 				documento.add(new Paragraph("No existe ninguna playlist creada"));
+				return null;
 			}
 			documento.close();
+			return documento;
 		}
+		return null;
 	}
 	
 	
@@ -188,11 +191,7 @@ public class Usuario {
 	public Descuento getDescuento() {
 		return descuento;
 	}
-	
-	
-	public Boolean getPremium() {
-		return premium;
-	}
+
 
 	public void setPremium(Boolean premium) {
 		this.premium = premium;
