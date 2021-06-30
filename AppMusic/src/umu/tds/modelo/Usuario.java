@@ -1,17 +1,16 @@
 package umu.tds.modelo;
 
 import java.time.LocalDate;
+
 import java.awt.Font;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 import java.time.Period;
 import java.time.ZoneId;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
 
 import com.itextpdf.text.Document;
@@ -65,11 +64,8 @@ public class Usuario {
 	
 	public Playlist crearPlayList(String nombre) {
 		
-		for(Playlist list : playLists) {
-			if(list.getNombre().equals(nombre)) {
-				return null;
-			}
-		}
+		if(playLists.stream().anyMatch(l->l.getNombre().equals(nombre)))
+			return null;
 		
 		Playlist lista = new Playlist(nombre);	//El usuario es el experto en crear una playlist
 		playLists.add(lista);

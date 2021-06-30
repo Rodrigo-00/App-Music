@@ -1,11 +1,7 @@
 package umu.tds;
 
 import java.awt.EventQueue;
-
-import umu.tds.controlador.Controlador;
 import umu.tds.gui.VentanaLogin;
-import umu.tds.modelo.Descuento;
-import umu.tds.modelo.DescuentoMayores;
 
 public class Lanzador {
 	public static void main(final String[] args){

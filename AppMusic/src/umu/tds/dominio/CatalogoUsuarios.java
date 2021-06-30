@@ -1,11 +1,8 @@
 package umu.tds.dominio;
 
-import java.util.HashMap;
 
 import java.util.LinkedList;
 import java.util.List;
-
-import umu.tds.modelo.Cancion;
 import umu.tds.modelo.Usuario;
 import umu.tds.persistencia.DAOException;
 import umu.tds.persistencia.FactoriaDAO;
@@ -26,9 +23,7 @@ public class CatalogoUsuarios {
 		try {
 			factoria = FactoriaDAO.getInstancia();
 			List<Usuario> listaAsistentes = factoria.getUsuarioDAO().getAll();
-			for (Usuario usuario : listaAsistentes) {
-				usuarios.add(usuario);
-			}
+			listaAsistentes.stream().forEach(u->usuarios.add(u));
 		} catch (DAOException eDAO) {
 			   eDAO.printStackTrace();
 		}

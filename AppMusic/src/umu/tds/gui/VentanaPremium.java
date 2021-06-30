@@ -1,14 +1,10 @@
 package umu.tds.gui;
 
 import java.awt.EventQueue;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import java.awt.BorderLayout;
@@ -33,7 +29,6 @@ public class VentanaPremium {
 	private JFrame frmVentanaPremium;
 	private JTextField txtTexto;
 	private JComboBox comboBox;
-	private JTextField txtSiDecidePagar;
 
 	public JFrame getFrame() {
 		return frmVentanaPremium;

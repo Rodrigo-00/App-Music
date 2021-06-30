@@ -1,11 +1,10 @@
 package umu.tds.dominio;
 
 import java.util.Comparator;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import javax.sound.sampled.ReverbType;
 
 import umu.tds.persistencia.FactoriaDAO;
 import umu.tds.modelo.Cancion;
@@ -52,9 +51,10 @@ public class CatalogoCanciones {
 	
 	
 	private void cargarCanciones() throws DAOException {
+		
 		 List<Cancion> canciones = adaptadorCancion.getAll();
-			 for (Cancion cancion: canciones) 
-				 addCancion(cancion); 
+		 
+		 canciones.stream().forEach(c->addCancion(c));
 	}
 	
 	
@@ -63,8 +63,6 @@ public class CatalogoCanciones {
 		//Obtenemos el objeto asociado a la cancion que se ha reproducido
 		Cancion cancion = (Cancion) canciones.stream()
 				.filter(ca -> ca.getId() == c.getId());
-		
-		System.out.println("Actualizamos la cancion " + cancion.getTitulo());
 		
 		//Actualizamos el objeto
 		cancion.reproducida();

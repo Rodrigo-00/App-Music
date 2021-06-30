@@ -1,27 +1,17 @@
 package umu.tds.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Font;
-
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-
-import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 
 import umu.tds.controlador.Controlador;
 import umu.tds.modelo.Cancion;
-import umu.tds.modelo.Playlist;
 
 import java.awt.EventQueue;
 
@@ -33,9 +23,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.ImageIcon;
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -47,10 +35,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
-import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 import javax.swing.JList;
-import java.awt.FlowLayout;
 
 public class VentanaMisListas {
 
@@ -103,7 +89,6 @@ public class VentanaMisListas {
 		frmVentanaMisListas.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		canciones = new LinkedList<Cancion>();
 
-		JPanel contentPane = (JPanel) frmVentanaMisListas.getContentPane();
 		frmVentanaMisListas.getContentPane().setLayout(new BorderLayout(0, 0));
 
 		JPanel panel = new JPanel();
@@ -283,10 +268,9 @@ public class VentanaMisListas {
 				}
 
 				canciones = Controlador.getUnicaInstancia().getCancionesPlaylist(listaseleccionada);
-
-				for (Cancion c : canciones) {
-					model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
-				}
+				
+				canciones.stream().
+						forEach(c->model.addRow(new Object[] { c.getTitulo(), c.getInterprete() }));
 
 				scrollCancionesPlaylist.setViewportView(table_1);
 			}
@@ -317,8 +301,8 @@ public class VentanaMisListas {
 			String listaseleccionada = list.getSelectedValue();
 			canciones = Controlador.getUnicaInstancia().getCancionesPlaylist(listaseleccionada);
 			
-			for (Cancion c : canciones)
-				model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
+			canciones.stream().
+			forEach(c->model.addRow(new Object[] { c.getTitulo(), c.getInterprete() }));
 		}
 		scrollCancionesPlaylist.setViewportView(table_1);
 		
@@ -355,7 +339,6 @@ public class VentanaMisListas {
 		panel_5.add(btnReproducir);
 		btnReproducir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String seleccionada = (String) list.getSelectedValue();
 
 				int row = table_1.getSelectedRow();
 				if (reproduciendo) { // Se pulsa el boton de pause

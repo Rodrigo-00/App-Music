@@ -1,12 +1,12 @@
 package umu.tds.gui;
 
 import java.awt.BorderLayout;
+
 import java.awt.EventQueue;
 import javax.swing.JOptionPane;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -25,9 +25,6 @@ import javax.swing.SwingConstants;
 import com.toedter.calendar.JDateChooser;
 
 import umu.tds.controlador.Controlador;
-
-import java.awt.Color;
-import com.jgoodies.forms.factories.DefaultComponentFactory;
 import java.awt.Dimension;
 
 public class Ventanaregistro extends JFrame {

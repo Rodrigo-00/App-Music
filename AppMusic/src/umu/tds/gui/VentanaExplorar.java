@@ -1,43 +1,33 @@
 package umu.tds.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Font;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import javax.swing.JButton;
 import javax.swing.BoxLayout;
-import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JTextField;
-import java.awt.FlowLayout;
 import javax.swing.ImageIcon;
 import java.awt.Color;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.AbstractListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-
-import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 
 import umu.tds.controlador.Controlador;
 import umu.tds.modelo.Cancion;
 
 import javax.swing.DefaultComboBoxModel;
-import java.awt.SystemColor;
 import javax.swing.UIManager;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -45,14 +35,9 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
-import java.util.LinkedList;
 import java.util.List;
 import java.awt.event.ActionEvent;
-import javax.swing.JSplitPane;
-import java.awt.Component;
-import javax.swing.DropMode;
 import java.awt.Cursor;
-import javax.swing.JSlider;
 import javax.swing.JScrollPane;
 
 public class VentanaExplorar {
@@ -320,9 +305,7 @@ public class VentanaExplorar {
 		
 		//A�adimos inicialmente todas las canciones a la tabla
 		canciones = Controlador.getUnicaInstancia().getAllCanciones();
-		for(Cancion c : canciones ) {
-			model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
-		}
+		canciones.stream().forEach(c->model.addRow(new Object[] { c.getTitulo(), c.getInterprete() }));
 		scrollPane.setViewportView(table);
 	
 		

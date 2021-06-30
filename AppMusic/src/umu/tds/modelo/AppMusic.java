@@ -2,8 +2,8 @@ package umu.tds.modelo;
 
 import java.time.LocalDate;
 
+
 import umu.tds.controlador.Controlador;
-import umu.tds.dominio.CatalogoUsuarios;
 
 
 //ESTA CLASE CREO QUE SE PUEDE BORRAR

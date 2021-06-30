@@ -3,6 +3,7 @@ package umu.tds.gui;
 import java.awt.EventQueue;
 
 
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -22,9 +23,7 @@ import javax.swing.JTextField;
 import java.awt.Insets;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
-import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
-import javax.swing.Action;
 import java.awt.event.ActionListener;
 
 public class VentanaLogin {
@@ -32,8 +31,6 @@ public class VentanaLogin {
 	private JFrame frmAppmusic;
 	private JTextField textUsuario;
 	private JPasswordField passwordField;
-	private final Action action = new SwingAction();
-	private final Action action_1 = new SwingAction_1();
 
 	/**
 	 * Launch the application.
@@ -167,22 +164,7 @@ public class VentanaLogin {
 		panel_1.add(btnRegister, gbc_btnRegister);
 	}
 
-	private class SwingAction extends AbstractAction {
-		public SwingAction() {
-			putValue(NAME, "SwingAction");
-			putValue(SHORT_DESCRIPTION, "Some short description");
-		}
-		public void actionPerformed(ActionEvent e) {
-		}
-	}
-	private class SwingAction_1 extends AbstractAction {
-		public SwingAction_1() {
-			putValue(NAME, "SwingAction_1");
-			putValue(SHORT_DESCRIPTION, "Some short description");
-		}
-		public void actionPerformed(ActionEvent e) {
-		}
-	}
+	
 	public JFrame getFrame() {
 		return frmAppmusic;
 	}

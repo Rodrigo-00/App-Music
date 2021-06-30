@@ -1,6 +1,5 @@
 package umu.tds.gui;
 
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -18,7 +17,6 @@ import umu.tds.controlador.Controlador;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
-import javax.swing.JTextPane;
 
 public class VentanaConfirmacionPremium {
 

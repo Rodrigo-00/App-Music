@@ -1,7 +1,6 @@
 package umu.tds.gui;
 
 import java.awt.EventQueue;
-import java.awt.Font;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -13,12 +12,8 @@ import java.awt.Color;
 import java.awt.GridBagLayout;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
-import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
-
-import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 
 import umu.tds.controlador.Controlador;
@@ -26,7 +21,6 @@ import umu.tds.modelo.Cancion;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -34,8 +28,6 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
@@ -44,7 +36,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 
 public class VentanaCrearPlaylist {
 
@@ -193,17 +184,13 @@ public class VentanaCrearPlaylist {
 					canciones_1.add(c.getId());
 					model_1.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
 				}
-				for(Cancion c : canciones ) {
-					if (!canciones_1.contains(c.getId())) {
-						model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
-					}
-				}
+				canciones.stream().filter(c->!canciones_1.contains(c.getId())).
+								forEach(c->model.addRow(new Object[] { c.getTitulo(), c.getInterprete() }));
 			}else {
 				JOptionPane.showMessageDialog(ButCrear,"Playlist creada correctamente", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
 				nuevaPlaylist = true;
-				for(Cancion c : canciones ) {
-					model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
-				}
+				canciones.stream().
+							forEach(c->model.addRow(new Object[] { c.getTitulo(), c.getInterprete() }));
 			}
 			textField.setEditable(false);
 			txtInterprete.setVisible(true);

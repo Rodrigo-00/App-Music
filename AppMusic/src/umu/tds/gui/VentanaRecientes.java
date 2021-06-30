@@ -18,7 +18,6 @@ import java.net.MalformedURLException;
 import java.util.List;
 
 import javax.swing.BoxLayout;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -28,13 +27,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-
-import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 
 import umu.tds.controlador.Controlador;
@@ -43,8 +39,6 @@ import umu.tds.modelo.Cancion;
 public class VentanaRecientes {
 
 	JFrame frmVentanaRecientes;
-	private JTextField txtInterprete;
-	private JTextField txtTitulo;
 	private List<Cancion> canciones;	//Lista donde se almacenan las canciones que se van a mostrar en la tabla de la ventana
 	private Cancion cancActual;	//Cancion que actualmente esta en ejecuci�n o pausada
 	private int numCancion; //Alamacenamos el indice de la lista en el que se encuentra la cancion seleccionada
@@ -278,9 +272,9 @@ public class VentanaRecientes {
 		
 		//A�adimos las canciones escuchadas recientemente por el usuario
 		canciones = Controlador.getUnicaInstancia().getRecientes();
-		for(Cancion c : canciones ) {
-			model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
-		}
+		canciones.stream().
+				forEach(c->model.addRow(new Object[] { c.getTitulo(), c.getInterprete() }));
+		
 		scrollPane.setViewportView(table);
 		
 		

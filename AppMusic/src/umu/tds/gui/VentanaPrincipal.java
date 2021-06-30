@@ -1,7 +1,5 @@
 package umu.tds.gui;
 
-import umu.tds.pulsador.*;
-
 import java.awt.BorderLayout;
 
 import java.awt.Font;
@@ -11,8 +9,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-
-import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 
 import umu.tds.controlador.Controlador;
@@ -23,20 +19,15 @@ import java.awt.EventQueue;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.BoxLayout;
-import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import javax.swing.JTextField;
-import java.awt.FlowLayout;
 import javax.swing.ImageIcon;
 import java.awt.Color;
-import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.io.File;
 import java.io.FileNotFoundException;
 

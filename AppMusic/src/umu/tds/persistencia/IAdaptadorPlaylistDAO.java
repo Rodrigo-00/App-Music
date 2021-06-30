@@ -1,8 +1,6 @@
 package umu.tds.persistencia;
 
 import java.util.List;
-
-import umu.tds.modelo.Cancion;
 import umu.tds.modelo.Playlist;
 
 public interface IAdaptadorPlaylistDAO {

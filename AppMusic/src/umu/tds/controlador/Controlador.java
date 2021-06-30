@@ -1,5 +1,6 @@
 package umu.tds.controlador;
 import umu.tds.cargadorCanciones.Canciones;
+
 import umu.tds.cargadorCanciones.CargadorCanciones;
 
 import umu.tds.dominio.*;
@@ -8,15 +9,8 @@ import umu.tds.persistencia.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
-
-import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
-
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.net.URL;
