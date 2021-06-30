@@ -291,6 +291,7 @@ public class VentanaMisListas {
 		// Tabla
 		String[] columns = { "Titulo", "Interprete" };
 		model = new DefaultTableModel(columns, 0);
+		panel_4.setLayout(new BorderLayout(0, 0));
 		table_1 = new JTable(model) {
 			@Override
 			public boolean isCellEditable(int row, int column) { // Evitamos que las celdas sean modificables
