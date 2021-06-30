@@ -334,9 +334,47 @@ public class VentanaCrearPlaylist {
 	
 	JButton btnNewButton_5_1_1 = new JButton("<<");
 	panel.add(btnNewButton_5_1_1);
+	btnNewButton_5_1_1.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			int row = table_1.getSelectedRow();
+			if(row != -1) {
+				DefaultTableModel model = (DefaultTableModel) table.getModel();
+				DefaultTableModel model_1 = (DefaultTableModel) table_1.getModel();
+				String Titulo = model_1.getValueAt(row, 0).toString();
+				String Interprete = model_1.getValueAt(row, 1).toString();
+				model_1.removeRow(row);
+				Cancion cancion = Controlador.getUnicaInstancia().getCancionTituloeInter(Titulo, Interprete);
+				if (!acciones.containsKey(cancion.getId())) {
+					acciones.put(cancion.getId(),"eliminaCancion");
+				} else {
+					acciones.remove(cancion.getId(), "anadeCancion");
+				}
+				model.addRow(new Object[] { Titulo, Interprete });
+			}
+		}
+	});
 	
 	JButton btnNewButton_4_1_1 = new JButton(">>");
 	panel.add(btnNewButton_4_1_1);
+	btnNewButton_4_1_1.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			int row = table.getSelectedRow();
+			if(row != -1) {
+				DefaultTableModel model = (DefaultTableModel) table.getModel();
+				DefaultTableModel model_1 = (DefaultTableModel) table_1.getModel();
+				String Titulo = model.getValueAt(row, 0).toString();
+				String Interprete = model.getValueAt(row, 1).toString();
+				model.removeRow(row);
+				Cancion cancion = Controlador.getUnicaInstancia().getCancionTituloeInter(Titulo, Interprete);
+				if (!acciones.containsKey(cancion.getId())) {
+					acciones.put(cancion.getId(), "anadeCancion");
+				} else {
+					acciones.remove(cancion.getId(), "eliminaCancion");
+				}
+				model_1.addRow(new Object[] { Titulo, Interprete });
+			}
+		}
+	});
 	
 	table_1 = new JTable(new DefaultTableModel(columns, 0)) {
 		@Override
