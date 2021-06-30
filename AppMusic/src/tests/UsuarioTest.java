@@ -61,11 +61,7 @@ public class UsuarioTest {
 		List<String> nombres = new LinkedList<String>();
 		nombres.add(playlist.getNombre());
 		nombres.add(playlist1.getNombre());
-		for (String nombre: usuario.nombresListas()) {
-			if(!nombre.contains(nombre))
-				assertTrue(false);
-		}
-		assertTrue(true);
+		assertTrue(usuario.nombresListas().stream().allMatch(e->nombres.contains(e)));
 	}
 	
 	@Test
@@ -77,18 +73,15 @@ public class UsuarioTest {
 		nombres.add(playlist.getNombre());
 		nombres.add(playlist1.getNombre());
 		nombres.add("MAS REPRODUCIDAS");
-		for (String nombre: usuario.nombresListas()) {
-			if(!nombre.contains(nombre))
-				assertTrue(false);
-		}
-		assertTrue(true);
+		assertTrue(usuario.nombresListas().stream().allMatch(e->nombres.contains(e)));
 	}
 	
 	@Test
 	public void testAddCancionToPlaylist() {
 		usuario.addPlayList(playlist);
 		usuario.addCancionToPlaylist("nombre", cancion);
-		if (playlist.getCanciones().contains(cancion))
+		usuario.addCancionToPlaylist("nombre", cancion1);
+		if(playlist.getCanciones().contains(cancion))
 			assertTrue(true);
 		else
 			assertTrue(false);
