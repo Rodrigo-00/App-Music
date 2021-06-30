@@ -328,9 +328,9 @@ public class VentanaCrearPlaylist {
 	String[] columns = {"Titulo","Interprete"};
 	GridBagLayout gbl_panel__west = new GridBagLayout();
 	gbl_panel__west.columnWidths = new int[]{10, 0, 0, 0, 0, 0, 10, 0};
-	gbl_panel__west.rowHeights = new int[]{10, 10, 10, 10, 10, 0, 0, 10, 0};
-	gbl_panel__west.columnWeights = new double[]{0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
-	gbl_panel__west.rowWeights = new double[]{0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
+	gbl_panel__west.rowHeights = new int[]{10, 10, 0, 10, 50, 0, 0, 10, 0};
+	gbl_panel__west.columnWeights = new double[]{0.0, 0.0, 10.0, 0.0, 10.0, 0.0, 0.0, Double.MIN_VALUE};
+	gbl_panel__west.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 	panel__west.setLayout(gbl_panel__west);
 	table = new JTable(new DefaultTableModel(columns, 0)) {
 		@Override
@@ -341,6 +341,7 @@ public class VentanaCrearPlaylist {
 	table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	JScrollPane scrollCanciones = new JScrollPane(table); 
 	GridBagConstraints gbc_scrollCanciones = new GridBagConstraints();
+	gbc_scrollCanciones.gridwidth = 2;
 	gbc_scrollCanciones.gridheight = 6;
 	gbc_scrollCanciones.insets = new Insets(0, 0, 5, 5);
 	gbc_scrollCanciones.anchor = GridBagConstraints.NORTHWEST;
@@ -357,10 +358,11 @@ public class VentanaCrearPlaylist {
 	table_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	JScrollPane scrollCancionesPlaylist = new JScrollPane(table_1);
 	GridBagConstraints gbc_scrollCancionesPlaylist = new GridBagConstraints();
+	gbc_scrollCancionesPlaylist.gridwidth = 2;
 	gbc_scrollCancionesPlaylist.gridheight = 6;
 	gbc_scrollCancionesPlaylist.anchor = GridBagConstraints.NORTHWEST;
 	gbc_scrollCancionesPlaylist.insets = new Insets(0, 0, 5, 5);
-	gbc_scrollCancionesPlaylist.gridx = 5;
+	gbc_scrollCancionesPlaylist.gridx = 4;
 	gbc_scrollCancionesPlaylist.gridy = 1;
 	panel__west.add(scrollCancionesPlaylist, gbc_scrollCancionesPlaylist);
 	scrollCancionesPlaylist.setBorder(new TitledBorder(null, "Playlist", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -373,11 +375,13 @@ public class VentanaCrearPlaylist {
 	
 	JButton btnNewButton_4_1 = new JButton(">>");
 	GridBagConstraints gbc_btnNewButton_4_1 = new GridBagConstraints();
+	gbc_btnNewButton_4_1.anchor = GridBagConstraints.NORTH;
 	gbc_btnNewButton_4_1.insets = new Insets(0, 0, 5, 5);
 	gbc_btnNewButton_4_1.gridx = 3;
 	gbc_btnNewButton_4_1.gridy = 3;
 	panel__west.add(btnNewButton_4_1, gbc_btnNewButton_4_1);
 	GridBagConstraints gbc_btnNewButton_5_1 = new GridBagConstraints();
+	gbc_btnNewButton_5_1.anchor = GridBagConstraints.NORTH;
 	gbc_btnNewButton_5_1.insets = new Insets(0, 0, 5, 5);
 	gbc_btnNewButton_5_1.gridx = 3;
 	gbc_btnNewButton_5_1.gridy = 5;
