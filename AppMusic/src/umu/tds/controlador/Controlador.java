@@ -13,6 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 
 import java.io.File;

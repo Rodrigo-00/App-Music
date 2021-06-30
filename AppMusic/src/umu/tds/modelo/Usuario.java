@@ -178,7 +178,6 @@ public class Usuario {
 			    }
 			}
 			if(playLists.isEmpty()) {
-				documento.add(new Paragraph("No existe ninguna playlist creada"));
 				return null;
 			}
 			documento.close();

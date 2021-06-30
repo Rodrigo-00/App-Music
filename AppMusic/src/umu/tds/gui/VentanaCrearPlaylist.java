@@ -18,6 +18,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 
 import umu.tds.controlador.Controlador;
@@ -382,12 +383,21 @@ public class VentanaCrearPlaylist {
 				chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				chooser.showOpenDialog(frame);
 				File directory = chooser.getSelectedFile();
-				try {
-					Controlador.getUnicaInstancia().generaPDF(directory.getAbsolutePath());
-				} catch (FileNotFoundException fe) {
-					System.out.println(fe.getMessage());
-				} catch (DocumentException d) {
-					System.out.println(d.getMessage());
+				if(directory!=null) {
+					if(!directory.exists()) {
+						JOptionPane.showMessageDialog(btnPdfPremium, "El directorio seleccionado no existe", "Error", JOptionPane.ERROR_MESSAGE, null);
+					}
+					else {
+						try {
+							Controlador.getUnicaInstancia().generaPDF(directory.getAbsolutePath());
+						} catch (FileNotFoundException fe) {
+							System.out.println(fe.getMessage());
+						} catch (DocumentException d) {
+							System.out.println(d.getMessage());
+						}
+					}
+				}else {
+					JOptionPane.showMessageDialog(btnPdfPremium, "No se ha seleccionado ningun directorio", "Error", JOptionPane.ERROR_MESSAGE, null);
 				}
 			} else {
 				VentanaPremium reg = new VentanaPremium();
