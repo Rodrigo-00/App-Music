@@ -50,10 +50,17 @@ public class Usuario {
 	
 	public void addReciente(Cancion c) {
 		
-		if(!recientes.contains(c) && recientes.size() == 10) recientes.remove(9);	//Borramos la ultima cancion 
-		else if(recientes.contains(c))	recientes.remove(c);	//Borramos la cancion de la posicion donde este
-	
-		recientes.add(0, c);	//A�adimos al inicio la cancion
+		Cancion ca;
+		for(int i = 0; i< recientes.size(); i++) {
+			ca = recientes.get(i);
+			if(ca.getId() == c.getId()) {
+				recientes.remove(i);
+				break;
+			}
+		}
+		
+		if(recientes.size() == 10)	recientes.remove(9); //En la lista de recientes solo pueden haber 10 canciones
+		recientes.add(0, c);	//Añadimos al inicio la cancion
 	}
 	
 	public Playlist crearPlayList(String nombre) {

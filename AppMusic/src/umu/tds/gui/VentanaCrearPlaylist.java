@@ -180,27 +180,18 @@ public class VentanaCrearPlaylist {
 	ButCrear.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			String nombre=textField.getText();
-			System.out.println("EL NOMBRE ES "+nombre);
+			canciones = Controlador.getUnicaInstancia().getAllCanciones();
+			DefaultTableModel model = (DefaultTableModel) table.getModel();
 			boolean reply = Controlador.getUnicaInstancia().crearPlaylist(nombre);
 			if(reply == false) {
 				nuevaPlaylist = false;
 				JOptionPane.showMessageDialog(ButCrear, "Ya existe una lista con ese nombre, pasará a modificarla", "Lista existente", JOptionPane.WARNING_MESSAGE, null);
-				textField.setEditable(false);
-				txtInterprete.setVisible(true);
-				txtTitulo.setVisible(true);
-				comboBox.setVisible(true);
-				btnBuscar.setVisible(true);
-				panel_south.setVisible(true);
-				panel__center.setVisible(true);
-				ButCrear.setVisible(false);
 				DefaultTableModel model_1 = (DefaultTableModel) table_1.getModel();
 				List<Integer> canciones_1 = new LinkedList<Integer>();
 				for(Cancion c:Controlador.getUnicaInstancia().getCancionesPlaylist(textField.getText())) {
 					canciones_1.add(c.getId());
 					model_1.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
 				}
-				DefaultTableModel model = (DefaultTableModel) table.getModel();
-				canciones.addAll(Controlador.getUnicaInstancia().getAllCanciones());
 				for(Cancion c : canciones ) {
 					if (!canciones_1.contains(c.getId())) {
 						model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
@@ -209,20 +200,18 @@ public class VentanaCrearPlaylist {
 			}else {
 				JOptionPane.showMessageDialog(ButCrear,"Playlist creada correctamente", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
 				nuevaPlaylist = true;
-				textField.setEditable(false);
-				txtInterprete.setVisible(true);
-				txtTitulo.setVisible(true);
-				comboBox.setVisible(true);
-				btnBuscar.setVisible(true);
-				panel_south.setVisible(true);
-				panel__center.setVisible(true);
-				ButCrear.setVisible(false);
-				DefaultTableModel model = (DefaultTableModel) table.getModel();
-				canciones.addAll(Controlador.getUnicaInstancia().getAllCanciones());
 				for(Cancion c : canciones ) {
 					model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
 				}
 			}
+			textField.setEditable(false);
+			txtInterprete.setVisible(true);
+			txtTitulo.setVisible(true);
+			comboBox.setVisible(true);
+			btnBuscar.setVisible(true);
+			panel_south.setVisible(true);
+			panel__center.setVisible(true);
+			ButCrear.setVisible(false);
 		}
 	});
 	

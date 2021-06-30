@@ -124,15 +124,6 @@ public class AdaptadorCancionTDS implements IAdaptadorCancionDAO{
 			}
 			servPersistencia.modificarPropiedad(prop);
 		}
-		
-		/*
-		Entidad eCancion = servPersistencia.recuperarEntidad(cancion.getId());
-		servPersistencia.eliminarPropiedadEntidad(eCancion, RUTA_FICHERO);
-		servPersistencia.anadirPropiedadEntidad(eCancion, RUTA_FICHERO, cancion.getRutaFichero());
-		servPersistencia.eliminarPropiedadEntidad(eCancion, ESTILO);
-		servPersistencia.anadirPropiedadEntidad(eCancion, ESTILO, cancion.getEstilo());
-		servPersistencia.eliminarPropiedadEntidad(eCancion, REPRODUCCIONES);
-		servPersistencia.anadirPropiedadEntidad(eCancion, REPRODUCCIONES, String.valueOf(cancion.getReproducciones()));*/
 	}
 	
 	@Override

@@ -49,7 +49,6 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 
 	private Usuario entidadToUsuario(Entidad eUsuario) {
 		
-		System.out.println("ENTRAMOS EN ENTIDADTOUSUARIO");
 		List<Cancion> recientes = new LinkedList<Cancion>();
 		List<Playlist> listaPlaylist = new LinkedList<Playlist>();
 		
@@ -63,7 +62,6 @@ public final class AdaptadorUsuarioTDS implements IAdaptadorUsuarioDAO {
 		recientes = obtenerCancionesDesdeId(servPersistencia.recuperarPropiedadEntidad(eUsuario, RECIENTES));
 		listaPlaylist = obtenerPlaylistsDesdeId(servPersistencia.recuperarPropiedadEntidad(eUsuario, LISTAS));
 	
-		System.out.println(fechaNacimiento);
 		
 		
 		//Parseamos la fecha al formato indicado

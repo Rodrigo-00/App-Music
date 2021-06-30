@@ -12,5 +12,4 @@ public interface IAdaptadorPlaylistDAO {
 	public boolean delete(Playlist lista);
 	public void updatePlaylist(Playlist lista);
 	public List<Playlist> getAll();
-	//public List<Playlist> getAll(int idUsuario);
 }

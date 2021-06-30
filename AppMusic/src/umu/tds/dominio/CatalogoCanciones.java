@@ -57,6 +57,23 @@ public class CatalogoCanciones {
 				 addCancion(cancion); 
 	}
 	
+	
+	public void reproducida(Cancion c) {
+		
+		//Obtenemos el objeto asociado a la cancion que se ha reproducido
+		Cancion cancion = (Cancion) canciones.stream()
+				.filter(ca -> ca.getId() == c.getId());
+		
+		System.out.println("Actualizamos la cancion " + cancion.getTitulo());
+		
+		//Actualizamos el objeto
+		cancion.reproducida();
+		
+		//Actualizamos en la base de datos la cancion
+		adaptadorCancion.updateCancion(cancion);
+	}
+	
+	
 	public void removeCancion (Cancion cancion) {
 		canciones.remove(cancion);
 	}

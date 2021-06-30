@@ -204,10 +204,8 @@ public final class Controlador implements PropertyChangeListener{
 		mediaPlayer = new MediaPlayer(hit); 
 		mediaPlayer.play();
 		usuarioActual.addReciente(c);	//Añadimos la cancion a la lista de canciones recientes del usuario
-		c.reproducida();	//Actualizamos las reproducciones de la cancion
-		
 		adaptadorUsuario.updatePerfil(usuarioActual);	//Actualizamos en la base de datos el usuario actual
-		adaptadorCancion.updateCancion(c);	//Actualizamos la cancion
+		catalogoCanciones.reproducida(c);	//Delegamos en el catalogo de canciones para actualizar la cancion puesto que hay varios objetos para una misma cancion
 		
 	}
 	
