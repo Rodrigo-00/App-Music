@@ -206,7 +206,7 @@ public final class Controlador implements PropertyChangeListener{
 		usuarioActual.addReciente(c);	//Añadimos la cancion a la lista de canciones recientes del usuario
 		adaptadorUsuario.updatePerfil(usuarioActual);	//Actualizamos en la base de datos el usuario actual
 		catalogoCanciones.reproducida(c);	//Delegamos en el catalogo de canciones para actualizar la cancion puesto que hay varios objetos para una misma cancion
-		
+		 
 	}
 	
 	public void pausarCancion() {
