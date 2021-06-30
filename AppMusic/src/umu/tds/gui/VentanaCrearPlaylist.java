@@ -42,6 +42,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
+import java.awt.Dimension;
 
 public class VentanaCrearPlaylist {
 
@@ -52,10 +53,8 @@ public class VentanaCrearPlaylist {
 	private JTable table;
 	private JTable table_1;
 	private JButton btnBuscar;
-	private JPanel panel__center;
 	private JPanel panel_south;
 	private JPanel panel__west;
-	private JPanel panel__east;
 	private JComboBox comboBox;
 	private boolean nuevaPlaylist;
 	private List<Cancion> canciones = new LinkedList<Cancion>();	//Lista donde se almacenan las canciones que se van a mostrar en la tabla izq de la ventana
@@ -94,7 +93,8 @@ public class VentanaCrearPlaylist {
 	@SuppressWarnings("serial")
 	private void initialize() {	
 	frame = new JFrame();
-	frame.setBounds(100, 100, 1198, 698);
+	frame.setMinimumSize(new Dimension(1200, 700));
+	frame.setBounds(100, 100, 1198, 700);
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	
 	JPanel panel_west = new JPanel();
@@ -188,10 +188,8 @@ public class VentanaCrearPlaylist {
 				txtTitulo.setVisible(true);
 				comboBox.setVisible(true);
 				btnBuscar.setVisible(true);
-				panel__center.setVisible(true);
 				panel_south.setVisible(true);
 				panel__west.setVisible(true);
-				panel__east.setVisible(true);
 				DefaultTableModel model_1 = (DefaultTableModel) table_1.getModel();
 				List<Integer> canciones_1 = new LinkedList<Integer>();
 				for(Cancion c:Controlador.getUnicaInstancia().getCancionesPlaylist(textField.getText())) {
@@ -213,10 +211,8 @@ public class VentanaCrearPlaylist {
 				txtTitulo.setVisible(true);
 				comboBox.setVisible(true);
 				btnBuscar.setVisible(true);
-				panel__center.setVisible(true);
 				panel_south.setVisible(true);
 				panel__west.setVisible(true);
-				panel__east.setVisible(true);
 				DefaultTableModel model = (DefaultTableModel) table.getModel();
 				canciones.addAll(Controlador.getUnicaInstancia().getAllCanciones());
 				for(Cancion c : canciones ) {
@@ -280,68 +276,6 @@ public class VentanaCrearPlaylist {
 		}
 	});
 	
-	panel__center = new JPanel();
-	panel_center.add(panel__center, BorderLayout.CENTER);
-	GridBagLayout gbl_panel__center = new GridBagLayout();
-	gbl_panel__center.columnWidths = new int[]{15, 0, 15, 0};
-	gbl_panel__center.rowHeights = new int[]{84, 78, 80, 0};
-	gbl_panel__center.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
-	gbl_panel__center.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
-	panel__center.setLayout(gbl_panel__center);
-	panel__center.setVisible(false);
-	
-	JButton btnNewButton_4 = new JButton(">>");
-	GridBagConstraints gbc_btnNewButton_4 = new GridBagConstraints();
-	gbc_btnNewButton_4.insets = new Insets(0, 0, 5, 5);
-	gbc_btnNewButton_4.gridx = 1;
-	gbc_btnNewButton_4.gridy = 1;
-	panel__center.add(btnNewButton_4, gbc_btnNewButton_4);
-	btnNewButton_4.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			int row = table.getSelectedRow();
-			if(row != -1) {
-				DefaultTableModel model = (DefaultTableModel) table.getModel();
-				DefaultTableModel model_1 = (DefaultTableModel) table_1.getModel();
-				String Titulo = model.getValueAt(row, 0).toString();
-				String Interprete = model.getValueAt(row, 1).toString();
-				model.removeRow(row);
-				Cancion cancion = Controlador.getUnicaInstancia().getCancionTituloeInter(Titulo, Interprete);
-				if (!acciones.containsKey(cancion.getId())) {
-					acciones.put(cancion.getId(), "anadeCancion");
-				} else {
-					acciones.remove(cancion.getId(), "eliminaCancion");
-				}
-				model_1.addRow(new Object[] { Titulo, Interprete });
-			}
-		}
-	});
-	
-	JButton btnNewButton_5 = new JButton("<<");
-	GridBagConstraints gbc_btnNewButton_5 = new GridBagConstraints();
-	gbc_btnNewButton_5.insets = new Insets(0, 0, 5, 5);
-	gbc_btnNewButton_5.gridx = 1;
-	gbc_btnNewButton_5.gridy = 2;
-	panel__center.add(btnNewButton_5, gbc_btnNewButton_5);
-	btnNewButton_5.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			int row = table_1.getSelectedRow();
-			if(row != -1) {
-				DefaultTableModel model = (DefaultTableModel) table.getModel();
-				DefaultTableModel model_1 = (DefaultTableModel) table_1.getModel();
-				String Titulo = model_1.getValueAt(row, 0).toString();
-				String Interprete = model_1.getValueAt(row, 1).toString();
-				model_1.removeRow(row);
-				Cancion cancion = Controlador.getUnicaInstancia().getCancionTituloeInter(Titulo, Interprete);
-				if (!acciones.containsKey(cancion.getId())) {
-					acciones.put(cancion.getId(),"eliminaCancion");
-				} else {
-					acciones.remove(cancion.getId(), "anadeCancion");
-				}
-				model.addRow(new Object[] { Titulo, Interprete });
-			}
-		}
-	});
-	
 	panel_south = new JPanel();
 	panel_center.add(panel_south, BorderLayout.SOUTH);
 	panel_south.setVisible(false);
@@ -392,6 +326,12 @@ public class VentanaCrearPlaylist {
 	
 	
 	String[] columns = {"Titulo","Interprete"};
+	GridBagLayout gbl_panel__west = new GridBagLayout();
+	gbl_panel__west.columnWidths = new int[]{10, 0, 0, 0, 0, 0, 10, 0};
+	gbl_panel__west.rowHeights = new int[]{10, 10, 10, 10, 10, 0, 0, 10, 0};
+	gbl_panel__west.columnWeights = new double[]{0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
+	gbl_panel__west.rowWeights = new double[]{0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
+	panel__west.setLayout(gbl_panel__west);
 	table = new JTable(new DefaultTableModel(columns, 0)) {
 		@Override
 		public boolean isCellEditable(int row, int column) { // Evitamos que las celdas sean modificables
@@ -400,11 +340,13 @@ public class VentanaCrearPlaylist {
 	};
 	table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	JScrollPane scrollCanciones = new JScrollPane(table); 
-	panel__west.add(scrollCanciones);
-	
-	panel__east = new JPanel();
-	panel_center.add(panel__east, BorderLayout.EAST);
-	panel__east.setVisible(false);
+	GridBagConstraints gbc_scrollCanciones = new GridBagConstraints();
+	gbc_scrollCanciones.gridheight = 6;
+	gbc_scrollCanciones.insets = new Insets(0, 0, 5, 5);
+	gbc_scrollCanciones.anchor = GridBagConstraints.NORTHWEST;
+	gbc_scrollCanciones.gridx = 1;
+	gbc_scrollCanciones.gridy = 1;
+	panel__west.add(scrollCanciones, gbc_scrollCanciones);
 	
 	table_1 = new JTable(new DefaultTableModel(columns, 0)) {
 		@Override
@@ -414,8 +356,32 @@ public class VentanaCrearPlaylist {
 	};
 	table_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	JScrollPane scrollCancionesPlaylist = new JScrollPane(table_1);
+	GridBagConstraints gbc_scrollCancionesPlaylist = new GridBagConstraints();
+	gbc_scrollCancionesPlaylist.gridheight = 6;
+	gbc_scrollCancionesPlaylist.anchor = GridBagConstraints.NORTHWEST;
+	gbc_scrollCancionesPlaylist.insets = new Insets(0, 0, 5, 5);
+	gbc_scrollCancionesPlaylist.gridx = 5;
+	gbc_scrollCancionesPlaylist.gridy = 1;
+	panel__west.add(scrollCancionesPlaylist, gbc_scrollCancionesPlaylist);
 	scrollCancionesPlaylist.setBorder(new TitledBorder(null, "Playlist", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-	panel__east.add(scrollCancionesPlaylist);
+	
+	JButton btnNewButton_5_1 = new JButton("<<");
+	btnNewButton_5_1.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent arg0) {
+		}
+	});
+	
+	JButton btnNewButton_4_1 = new JButton(">>");
+	GridBagConstraints gbc_btnNewButton_4_1 = new GridBagConstraints();
+	gbc_btnNewButton_4_1.insets = new Insets(0, 0, 5, 5);
+	gbc_btnNewButton_4_1.gridx = 3;
+	gbc_btnNewButton_4_1.gridy = 3;
+	panel__west.add(btnNewButton_4_1, gbc_btnNewButton_4_1);
+	GridBagConstraints gbc_btnNewButton_5_1 = new GridBagConstraints();
+	gbc_btnNewButton_5_1.insets = new Insets(0, 0, 5, 5);
+	gbc_btnNewButton_5_1.gridx = 3;
+	gbc_btnNewButton_5_1.gridy = 5;
+	panel__west.add(btnNewButton_5_1, gbc_btnNewButton_5_1);
 	
 	
 	JPanel panel_north = new JPanel();

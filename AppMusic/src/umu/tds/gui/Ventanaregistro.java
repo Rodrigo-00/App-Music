@@ -28,6 +28,7 @@ import umu.tds.controlador.Controlador;
 
 import java.awt.Color;
 import com.jgoodies.forms.factories.DefaultComponentFactory;
+import java.awt.Dimension;
 
 public class Ventanaregistro extends JFrame {
 
@@ -59,21 +60,22 @@ public class Ventanaregistro extends JFrame {
 	 * Create the frame.
 	 */
 	public Ventanaregistro() {
+		setMinimumSize(new Dimension(570, 370));
 		setTitle("AppMusic");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 483, 368);
+		setBounds(100, 100, 572, 369);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
 		JPanel panel = new JPanel();
-		contentPane.add(panel, BorderLayout.SOUTH);
+		contentPane.add(panel, BorderLayout.CENTER);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{20, 0, 0, 0, 20, 20, 0};
-		gbl_panel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0};
+		gbl_panel.rowHeights = new int[]{10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 0, 0};
 		gbl_panel.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
 		JLabel lblNombre = new JLabel("Nombre:");
@@ -120,7 +122,7 @@ public class Ventanaregistro extends JFrame {
 		JDateChooser dateNacim = new JDateChooser();
 		GridBagConstraints gbc_dateNacim = new GridBagConstraints();
 		gbc_dateNacim.insets = new Insets(0, 0, 5, 5);
-		gbc_dateNacim.fill = GridBagConstraints.BOTH;
+		gbc_dateNacim.fill = GridBagConstraints.HORIZONTAL;
 		gbc_dateNacim.gridx = 2;
 		gbc_dateNacim.gridy = 3;
 		panel.add(dateNacim, gbc_dateNacim);

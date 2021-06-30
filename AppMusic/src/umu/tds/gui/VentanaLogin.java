@@ -63,8 +63,9 @@ public class VentanaLogin {
 	 */
 	private void initialize() {
 		frmAppmusic = new JFrame();
+		frmAppmusic.setMinimumSize(new Dimension(450, 320));
 		frmAppmusic.setTitle("AppMusic");
-		frmAppmusic.setBounds(100, 100, 450, 300);
+		frmAppmusic.setBounds(100, 100, 479, 294);
 		frmAppmusic.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JLabel lblAppMusic = new JLabel("APP MUSIC");
@@ -77,7 +78,7 @@ public class VentanaLogin {
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setPreferredSize(new Dimension(300, 200));
+		panel_1.setPreferredSize(new Dimension(400, 200));
 		panel.add(panel_1);
 		GridBagLayout gbl_panel_1 = new GridBagLayout();
 		gbl_panel_1.columnWidths = new int[]{20, 0, 153, 153, 0, 0};

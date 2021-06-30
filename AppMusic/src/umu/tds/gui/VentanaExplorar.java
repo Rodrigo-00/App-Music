@@ -97,8 +97,9 @@ public class VentanaExplorar {
 	
 	public void initialize() {
 		frmVentanaExplorar = new JFrame();
+		frmVentanaExplorar.setMinimumSize(new Dimension(690, 370));
 		frmVentanaExplorar.setTitle("AppMusic");
-		frmVentanaExplorar.setBounds(100, 100, 583, 368);
+		frmVentanaExplorar.setBounds(100, 100, 691, 372);
 		frmVentanaExplorar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		reproduciendo = false;
 		cancActual = null;

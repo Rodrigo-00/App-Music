@@ -85,8 +85,9 @@ public class VentanaRecientes {
 	
 	public void initialize() {
 		frmVentanaRecientes = new JFrame();
+		frmVentanaRecientes.setMinimumSize(new Dimension(690, 370));
 		frmVentanaRecientes.setTitle("AppMusic");
-		frmVentanaRecientes.setBounds(100, 100, 583, 368);
+		frmVentanaRecientes.setBounds(100, 100, 690, 370);
 		frmVentanaRecientes.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		reproduciendo = false;
 		cancActual = null;

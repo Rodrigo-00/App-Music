@@ -97,6 +97,7 @@ public class VentanaMisListas {
 	public void initialize() {
 		frmVentanaMisListas = new JFrame();
 		frmVentanaMisListas.setTitle("AppMusic");
+		frmVentanaMisListas.setMinimumSize(new Dimension(690, 370));
 		frmVentanaMisListas.setBounds(100, 100, 641, 390);
 		frmVentanaMisListas.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		canciones = new LinkedList<Cancion>();
@@ -301,7 +302,7 @@ public class VentanaMisListas {
 		table_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table_1.setBorder(null);
 		scrollCancionesPlaylist = new JScrollPane(table_1);
-		scrollCancionesPlaylist.setPreferredSize(new Dimension(400, 203));
+		scrollCancionesPlaylist.setPreferredSize(new Dimension(373, 200));
 		panel_4.add(scrollCancionesPlaylist);
 		table_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table_1.setEnabled(true);

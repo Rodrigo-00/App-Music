@@ -86,8 +86,9 @@ public class VentanaPrincipal implements PropertyChangeListener{
 	
 	public void initialize() {
 		frmVentanaPrincipal = new JFrame();
+		frmVentanaPrincipal.setMinimumSize(new Dimension(690, 370));
 		frmVentanaPrincipal.setTitle("AppMusic");
-		frmVentanaPrincipal.setBounds(100, 100, 583, 368);
+		frmVentanaPrincipal.setBounds(100, 100, 690, 370);
 		frmVentanaPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel contentPane = (JPanel) frmVentanaPrincipal.getContentPane();
