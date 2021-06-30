@@ -178,5 +178,4 @@ public class UsuarioTest {
 		usuario.addPlayList(playlist1);
 		assertNotNull(usuario.creaPDF("/home/raul/Escritorio/"));
 	}
-	
 }
