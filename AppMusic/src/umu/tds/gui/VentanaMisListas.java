@@ -109,20 +109,20 @@ public class VentanaMisListas {
 		panel.setBackground(Color.LIGHT_GRAY);
 		frmVentanaMisListas.getContentPane().add(panel, BorderLayout.NORTH);
 		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[] { 10, 10, 10, 0, 0, 0, 0, 26, 65, 0, 0 };
+		gbl_panel.columnWidths = new int[] { 50, 155, 50, 155, 50, 155, 44, 0 };
 		gbl_panel.rowHeights = new int[] { 10, 0, 10, 0 };
-		gbl_panel.columnWeights = new double[] { 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, Double.MIN_VALUE };
+		gbl_panel.columnWeights = new double[] { 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		gbl_panel.rowWeights = new double[] { 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		panel.setLayout(gbl_panel);
 
-		JButton btnAtrs = new JButton("Menu Principal");
+		JButton btnMenuPrincipal = new JButton("Menu Principal");
 		GridBagConstraints gbc_btnAtrs = new GridBagConstraints();
 		gbc_btnAtrs.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnAtrs.insets = new Insets(0, 0, 5, 5);
-		gbc_btnAtrs.gridx = 2;
+		gbc_btnAtrs.gridx = 1;
 		gbc_btnAtrs.gridy = 1;
-		panel.add(btnAtrs, gbc_btnAtrs);
-		btnAtrs.addActionListener(new ActionListener() {
+		panel.add(btnMenuPrincipal, gbc_btnAtrs);
+		btnMenuPrincipal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(reproduciendo) Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para pausar la cancion si se esta reproduciendo alguna
 				VentanaPrincipal reg = new VentanaPrincipal();
@@ -141,10 +141,28 @@ public class VentanaMisListas {
 		btnPdfPremium.setBackground(Color.YELLOW);
 		btnPdfPremium.setForeground(Color.BLACK);
 		GridBagConstraints gbc_btnHaztePremium = new GridBagConstraints();
+		gbc_btnHaztePremium.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnHaztePremium.insets = new Insets(0, 0, 5, 5);
-		gbc_btnHaztePremium.gridx = 5;
+		gbc_btnHaztePremium.gridx = 3;
 		gbc_btnHaztePremium.gridy = 1;
 		panel.add(btnPdfPremium, gbc_btnHaztePremium);	
+		
+		JButton Salir = new JButton("Salir");
+		GridBagConstraints gbc_btnAtrs_1 = new GridBagConstraints();
+		gbc_btnAtrs_1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnAtrs_1.insets = new Insets(0, 0, 5, 5);
+		gbc_btnAtrs_1.gridx = 5;
+		gbc_btnAtrs_1.gridy = 1;
+		panel.add(Salir, gbc_btnAtrs_1);
+		Salir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(reproduciendo) Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para pausar la cancion si se esta reproduciendo alguna
+				VentanaLogin reg = new VentanaLogin();
+				reg.getFrame().setVisible(true);
+				frmVentanaMisListas.setVisible(false);
+			}
+		});
+		
 		
 		btnPdfPremium.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -169,25 +187,6 @@ public class VentanaMisListas {
 					reg.getFrame().setVisible(true);
 					frmVentanaMisListas.setVisible(false);
 				}
-			}
-		});
-
-		JButton btnSalir = new JButton("Salir");
-		btnSalir.setBackground(SystemColor.control);
-		btnSalir.setBorderPainted(false);
-		GridBagConstraints gbc_btnSalir = new GridBagConstraints();
-		gbc_btnSalir.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnSalir.insets = new Insets(0, 0, 5, 5);
-		gbc_btnSalir.gridx = 8;
-		gbc_btnSalir.gridy = 1;
-		panel.add(btnSalir, gbc_btnSalir);
-		btnSalir.setActionCommand("Salir");
-		btnSalir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(reproduciendo) Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para parar la cancion si se esta reproduciendo alguna
-				VentanaLogin reg = new VentanaLogin();
-				reg.getFrame().setVisible(true);
-				frmVentanaMisListas.setVisible(false);
 			}
 		});
 
@@ -268,19 +267,14 @@ public class VentanaMisListas {
 		list.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent event) {
 				String listaseleccionada = list.getSelectedValue();
-				System.out.println("-------------------");
 				int filas = model.getRowCount();
 				for (int i = 1; i <= filas; i++) {
 					model.removeRow(0); // Eliminamos todas las lineas de la tabla
 				}
 
-				//canciones.clear();
-
-				System.out.println("Size: " + canciones.size());
 				canciones = Controlador.getUnicaInstancia().getCancionesPlaylist(listaseleccionada);
 
 				for (Cancion c : canciones) {
-					System.out.println("A�adimos la cancion tras borrar" + c.getTitulo());
 					model.addRow(new Object[] { c.getTitulo(), c.getInterprete() });
 				}
 
@@ -352,7 +346,6 @@ public class VentanaMisListas {
 		btnReproducir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String seleccionada = (String) list.getSelectedValue();
-				System.out.println("Playlist a reproducir " + seleccionada);
 
 				int row = table_1.getSelectedRow();
 				if (reproduciendo) { // Se pulsa el boton de pause
@@ -362,7 +355,6 @@ public class VentanaMisListas {
 
 				} else if (row != -1 && canciones.size() > 0) { // Si hay seleccionada alguna fila de la tabla y la
 																// tabla contiene canciones
-					System.out.println("Se ejecuta " + canciones.get(row).getTitulo());
 					btnReproducir.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/pause.png")));
 
 					if (cancActual != null && cancActual.equals(canciones.get(row))) {

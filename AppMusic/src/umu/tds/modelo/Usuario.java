@@ -58,8 +58,6 @@ public class Usuario {
 	
 	public Playlist crearPlayList(String nombre) {
 		
-		System.out.println("Nombre de la playlist a crear " + nombre);
-		
 		for(Playlist list : playLists) {
 			if(list.getNombre().equals(nombre)) {
 				return null;

@@ -1,6 +1,7 @@
 eclipse.preferences.version=1
 encoding//src/umu/tds/controlador/Controlador.java=UTF-8
 encoding//src/umu/tds/gui/VentanaConfirmacionPremium.java=UTF-8
+encoding//src/umu/tds/gui/VentanaCrearPlaylist.java=UTF-8
 encoding//src/umu/tds/gui/VentanaPremium.java=UTF-8
 encoding//src/umu/tds/gui/Ventanaregistro.java=UTF-8
 encoding//src/umu/tds/modelo/Usuario.java=UTF-8

@@ -98,9 +98,9 @@ public class VentanaPrincipal implements PropertyChangeListener{
 		panel.setBackground(Color.LIGHT_GRAY);
 		frmVentanaPrincipal.getContentPane().add(panel, BorderLayout.NORTH);
 		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[]{10, 10, 10, 0, 10, 0, 0, 10, 0};
+		gbl_panel.columnWidths = new int[]{10, 10, 10, 0, 50, 155, 50, 155, 44, 0};
 		gbl_panel.rowHeights = new int[]{10, 0, 10, 0};
-		gbl_panel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_panel.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
@@ -126,10 +126,26 @@ public class VentanaPrincipal implements PropertyChangeListener{
 		btnPdfPremium.setBackground(Color.YELLOW);
 		btnPdfPremium.setForeground(Color.BLACK);
 		GridBagConstraints gbc_btnHaztePremium = new GridBagConstraints();
+		gbc_btnHaztePremium.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnHaztePremium.insets = new Insets(0, 0, 5, 5);
 		gbc_btnHaztePremium.gridx = 5;
 		gbc_btnHaztePremium.gridy = 1;
 		panel.add(btnPdfPremium, gbc_btnHaztePremium);	
+		
+		JButton btnSalir = new JButton("Salir");
+		GridBagConstraints gbc_btnSalir = new GridBagConstraints();
+		gbc_btnSalir.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnSalir.insets = new Insets(0, 0, 5, 5);
+		gbc_btnSalir.gridx = 7;
+		gbc_btnSalir.gridy = 1;
+		panel.add(btnSalir, gbc_btnSalir);
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaLogin reg = new VentanaLogin();
+				reg.getFrame().setVisible(true);
+				frmVentanaPrincipal.setVisible(false);
+			}
+		});
 		
 		btnPdfPremium.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -151,23 +167,6 @@ public class VentanaPrincipal implements PropertyChangeListener{
 					reg.getFrame().setVisible(true);
 					frmVentanaPrincipal.setVisible(false);
 				}
-			}
-		});
-		
-		JButton btnSalir = new JButton("Salir");
-		btnSalir.setBackground(SystemColor.control);
-		btnSalir.setBorderPainted(false);
-		GridBagConstraints gbc_btnSalir = new GridBagConstraints();
-		gbc_btnSalir.insets = new Insets(0, 0, 5, 5);
-		gbc_btnSalir.gridx = 6;
-		gbc_btnSalir.gridy = 1;
-		panel.add(btnSalir, gbc_btnSalir);
-		btnSalir.setActionCommand("Salir");
-		btnSalir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				VentanaLogin reg = new VentanaLogin();
-				reg.getFrame().setVisible(true);
-				frmVentanaPrincipal.setVisible(false);
 			}
 		});
 		

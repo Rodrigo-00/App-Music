@@ -62,7 +62,6 @@ public class CatalogoCanciones {
 	}
 	
 	public List<Cancion> getAll() {
-		//return new LinkedList<Cancion>(canciones);
 		return canciones;
 	}
 	

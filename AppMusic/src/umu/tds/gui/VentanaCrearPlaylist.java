@@ -184,7 +184,7 @@ public class VentanaCrearPlaylist {
 			boolean reply = Controlador.getUnicaInstancia().crearPlaylist(nombre);
 			if(reply == false) {
 				nuevaPlaylist = false;
-				JOptionPane.showMessageDialog(ButCrear, "Ya existe una lista con ese nombre", "Lista existente", JOptionPane.WARNING_MESSAGE, null);
+				JOptionPane.showMessageDialog(ButCrear, "Ya existe una lista con ese nombre, pasará a modificarla", "Lista existente", JOptionPane.WARNING_MESSAGE, null);
 				textField.setEditable(false);
 				txtInterprete.setVisible(true);
 				txtTitulo.setVisible(true);
@@ -192,6 +192,7 @@ public class VentanaCrearPlaylist {
 				btnBuscar.setVisible(true);
 				panel_south.setVisible(true);
 				panel__center.setVisible(true);
+				ButCrear.setVisible(false);
 				DefaultTableModel model_1 = (DefaultTableModel) table_1.getModel();
 				List<Integer> canciones_1 = new LinkedList<Integer>();
 				for(Cancion c:Controlador.getUnicaInstancia().getCancionesPlaylist(textField.getText())) {
@@ -206,7 +207,7 @@ public class VentanaCrearPlaylist {
 					}
 				}
 			}else {
-				JOptionPane.showMessageDialog(ButCrear,"Playlist creada correctamente", "Mensaje", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(ButCrear,"Playlist creada correctamente", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
 				nuevaPlaylist = true;
 				textField.setEditable(false);
 				txtInterprete.setVisible(true);
@@ -215,6 +216,7 @@ public class VentanaCrearPlaylist {
 				btnBuscar.setVisible(true);
 				panel_south.setVisible(true);
 				panel__center.setVisible(true);
+				ButCrear.setVisible(false);
 				DefaultTableModel model = (DefaultTableModel) table.getModel();
 				canciones.addAll(Controlador.getUnicaInstancia().getAllCanciones());
 				for(Cancion c : canciones ) {
@@ -265,7 +267,6 @@ public class VentanaCrearPlaylist {
 	btnBuscar.setVisible(false);
 	btnBuscar.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			frame.setVisible(false);
 			
 			//Extraemos los datos seleccionados
 			String interprete = txtInterprete.getText();
@@ -273,8 +274,6 @@ public class VentanaCrearPlaylist {
 			String estilo = (String) comboBox.getSelectedItem();
 			
 			mostrarCanciones(interprete, titulo, estilo);	//Mostramos las canciones en la tabla
-
-			frame.setVisible(true);
 		}
 	});
 	
@@ -301,7 +300,6 @@ public class VentanaCrearPlaylist {
 			}
 			canciones = Controlador.getUnicaInstancia().getCancionesPlaylist(textField.getText());
 			
-			System.out.println("Size: "+canciones.size());
 			VentanaPrincipal reg = new VentanaPrincipal();
 			reg.getFrame().setVisible(true);
 			frame.setVisible(false);
@@ -366,23 +364,11 @@ public class VentanaCrearPlaylist {
 	panel_north.setBackground(Color.LIGHT_GRAY);
 	frame.getContentPane().add(panel_north, BorderLayout.NORTH);
 	GridBagLayout gbl_panel_north = new GridBagLayout();
-	gbl_panel_north.columnWidths = new int[]{10, 10, 10, 0, 10, 0, 0, 10, 0};
+	gbl_panel_north.columnWidths = new int[]{10, 155, 50, 155, 44, 0};
 	gbl_panel_north.rowHeights = new int[]{10, 0, 10, 0};
-	gbl_panel_north.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
+	gbl_panel_north.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 	gbl_panel_north.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 	panel_north.setLayout(gbl_panel_north);
-	
-	JLabel lblNewLabel_1 = new JLabel("Hola "+ Controlador.getUnicaInstancia().getLoginUsuario());
-	lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-	lblNewLabel_1.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 20));
-	GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
-	gbc_lblNewLabel_1.fill = GridBagConstraints.HORIZONTAL;
-	gbc_lblNewLabel_1.anchor = GridBagConstraints.NORTH;
-	gbc_lblNewLabel_1.gridwidth = 3;
-	gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
-	gbc_lblNewLabel_1.gridx = 1;
-	gbc_lblNewLabel_1.gridy = 1;
-	panel_north.add(lblNewLabel_1, gbc_lblNewLabel_1);
 	
 	boolean isPremium = Controlador.getUnicaInstancia().isUsuarioPremium();
 	JButton btnPdfPremium = new JButton();
@@ -392,8 +378,9 @@ public class VentanaCrearPlaylist {
 	btnPdfPremium.setBackground(Color.YELLOW);
 	btnPdfPremium.setForeground(Color.BLACK);
 	GridBagConstraints gbc_btnHaztePremium = new GridBagConstraints();
+	gbc_btnHaztePremium.fill = GridBagConstraints.HORIZONTAL;
 	gbc_btnHaztePremium.insets = new Insets(0, 0, 5, 5);
-	gbc_btnHaztePremium.gridx = 5;
+	gbc_btnHaztePremium.gridx = 1;
 	gbc_btnHaztePremium.gridy = 1;
 	panel_north.add(btnPdfPremium, gbc_btnHaztePremium);	
 	
@@ -421,15 +408,21 @@ public class VentanaCrearPlaylist {
 		}
 	});
 	
-	JButton btnSalir_1 = new JButton("Salir");
-	btnSalir_1.setBorderPainted(false);
-	btnSalir_1.setBackground(SystemColor.window);
-	btnSalir_1.setActionCommand("Salir");
-	GridBagConstraints gbc_btnSalir_1 = new GridBagConstraints();
-	gbc_btnSalir_1.insets = new Insets(0, 0, 5, 5);
-	gbc_btnSalir_1.gridx = 6;
-	gbc_btnSalir_1.gridy = 1;
-	panel_north.add(btnSalir_1, gbc_btnSalir_1);
+	
+	JButton btnMenuPrincipal = new JButton("Menu Principal");
+	GridBagConstraints gbc_btnAtrs = new GridBagConstraints();
+	gbc_btnAtrs.fill = GridBagConstraints.HORIZONTAL;
+	gbc_btnAtrs.insets = new Insets(0, 0, 5, 5);
+	gbc_btnAtrs.gridx = 3;
+	gbc_btnAtrs.gridy = 1;
+	panel_north.add(btnMenuPrincipal, gbc_btnAtrs);
+	btnMenuPrincipal.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			VentanaPrincipal reg = new VentanaPrincipal();
+			reg.getFrame().setVisible(true);
+			frame.setVisible(false);
+		}
+	});
 }
 	
 	
@@ -451,7 +444,7 @@ private void mostrarCanciones(String interprete, String titulo, String estilo) {
 			songs.add(song);
 		}
 		
-		canciones.clear();//Vaciamos la lista de canciones
+		//canciones.clear();//Vaciamos la lista de canciones
 		List<Cancion> cancionesPrev = new LinkedList<Cancion>();
 		
 		if(((interprete.equals("Interprete") || interprete.equals("")) && (titulo.equals("") || titulo.equals("Titulo")) && comboBox.getSelectedItem().equals("Estilo"))) {
