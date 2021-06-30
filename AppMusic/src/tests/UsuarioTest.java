@@ -61,7 +61,8 @@ public class UsuarioTest {
 		List<String> nombres = new LinkedList<String>();
 		nombres.add(playlist.getNombre());
 		nombres.add(playlist1.getNombre());
-		assertTrue(usuario.nombresListas().stream().allMatch(e->nombres.contains(e)));
+		assertTrue(usuario.nombresListas().stream().
+				allMatch(e->nombres.contains(e)));
 	}
 	
 	@Test
@@ -73,7 +74,8 @@ public class UsuarioTest {
 		nombres.add(playlist.getNombre());
 		nombres.add(playlist1.getNombre());
 		nombres.add("MAS REPRODUCIDAS");
-		assertTrue(usuario.nombresListas().stream().allMatch(e->nombres.contains(e)));
+		assertTrue(usuario.nombresListas().stream().
+				allMatch(e->nombres.contains(e)));
 	}
 	
 	@Test
