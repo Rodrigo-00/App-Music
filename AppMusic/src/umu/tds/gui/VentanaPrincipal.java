@@ -48,7 +48,10 @@ public class VentanaPrincipal implements PropertyChangeListener{
 		File currentFile = fileChooser.getSelectedFile();
 		if(currentFile==null) {
 			JOptionPane.showMessageDialog(luz, "No se ha seleccionado ningun fichero", "Aviso", JOptionPane.INFORMATION_MESSAGE, null);
-		}else
+		}else if(!currentFile.exists()) {
+			JOptionPane.showMessageDialog(luz, "No existe el fichero seleccionado", "Error", JOptionPane.ERROR_MESSAGE, null);
+		}
+		else
 			Controlador.getUnicaInstancia().cargarCanciones(currentFile.getPath());
 	}
 	

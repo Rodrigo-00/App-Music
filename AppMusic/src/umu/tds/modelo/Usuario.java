@@ -165,6 +165,10 @@ public class Usuario {
 		    PdfWriter.getInstance(documento, archivo);
 		    documento.open();
 		    documento.add(new Paragraph("Usuario: "+this.login, FontFactory.getFont("arial",40, Font.ITALIC)));
+		    if(playLists.isEmpty()) {
+				documento.add(new Paragraph("No has creado ninguna playlist todavia.", FontFactory.getFont("arial", 18)));
+				return documento;
+			}
 			for(Playlist p : playLists) {
 				documento.add(new Paragraph(""));
 				List<Cancion> canciones = p.getCanciones();
@@ -173,13 +177,10 @@ public class Usuario {
 			    	documento.add(new Paragraph("-Titulo: "+c.getTitulo()+", Interprete: "+c.getInterprete()+", Estilo: "+c.getEstilo(),FontFactory.getFont("arial", 10)));
 			    }
 			}
-			if(playLists.isEmpty()) {
-				documento.add(new Paragraph("No has creado ninguna playlist todavia.", FontFactory.getFont("arial", 18)));
-				return documento;
-			}
 			documento.close();
 			return documento;
 		}
+		System.out.println("no");
 		return null;
 	}
 	
