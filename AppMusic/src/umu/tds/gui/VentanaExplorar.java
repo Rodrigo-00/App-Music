@@ -46,7 +46,7 @@ public class VentanaExplorar {
 	private JTextField txtInterprete;
 	private JTextField txtTitulo;
 	private List<Cancion> canciones;	//Lista donde se almacenan las canciones que se van a mostrar en la tabla de la ventana
-	private Cancion cancActual;	//Cancion que actualmente esta en ejecuci�n o pausada
+	private Cancion cancActual;	//Cancion que actualmente esta en ejecución o pausada
 	private int numCancion; //Alamacenamos el indice de la lista en el que se encuentra la cancion seleccionada
 	private DefaultTableModel model;
 	private JComboBox comboBox;
@@ -156,7 +156,7 @@ public class VentanaExplorar {
 							}
 						}
 					}else {
-						JOptionPane.showMessageDialog(btnPdfPremium, "No se ha seleccionado ningun directorio", "Error", JOptionPane.ERROR_MESSAGE, null);
+						JOptionPane.showMessageDialog(btnPdfPremium, "No se ha seleccionado ningun directorio", "Aviso", JOptionPane.INFORMATION_MESSAGE, null);
 					}
 				} else {
 					if (reproduciendo)
@@ -337,7 +337,7 @@ public class VentanaExplorar {
 		btnAtrasar.setMaximumSize(new Dimension(92, 25));
 		btnAtrasar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(numCancion != 0 && reproduciendo) {
+				if(numCancion != 0 && reproduciendo) {	//Se esta reproduciendo una cancion
 					cancActual = canciones.get(numCancion-1);	//Establecemos la cancion actual
 					numCancion--;	
 					table.setRowSelectionInterval(numCancion, numCancion);	
@@ -348,6 +348,12 @@ public class VentanaExplorar {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}	
+				}else{
+					int indice = table.getSelectedRow();
+					if(indice > 0) {
+						numCancion = indice - 1;
+						table.setRowSelectionInterval(numCancion, numCancion);	//Seleccionamos la cancion anterior
+					}
 				}
 			}
 		});
@@ -430,7 +436,8 @@ public class VentanaExplorar {
 				if(numCancion != canciones.size()-1 && reproduciendo) {
 					cancActual = canciones.get(numCancion+1);	//Establecemos la cancion actual
 					numCancion++;	
-					table.setRowSelectionInterval(numCancion, numCancion);	
+					table.setRowSelectionInterval(numCancion, numCancion);	//Seleccionamos la cancion que vamos a reproducir
+					
 					Controlador.getUnicaInstancia().pararCancion();   //Llamamos al controlador para pausar la cancion si se esta reproduciendo alguna
 					try {
 						Controlador.getUnicaInstancia().reproducirCancion(cancActual);	//Llamamos al controlador para reproducir la cancion
@@ -438,6 +445,12 @@ public class VentanaExplorar {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}	
+				}else {
+					int indice = table.getSelectedRow();
+					if(indice < canciones.size()-1) {
+						numCancion = indice + 1;
+						table.setRowSelectionInterval(numCancion, numCancion);	//Seleccionamos la cancion anterior
+					} 
 				}
 			}
 		});

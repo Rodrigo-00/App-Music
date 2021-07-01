@@ -172,7 +172,7 @@ public class VentanaMisListas {
 							}
 						}
 					}else {
-						JOptionPane.showMessageDialog(btnPdfPremium, "No se ha seleccionado ningun directorio", "Error", JOptionPane.ERROR_MESSAGE, null);
+						JOptionPane.showMessageDialog(btnPdfPremium, "No se ha seleccionado ningun directorio", "Aviso", JOptionPane.INFORMATION_MESSAGE, null);
 					}
 				} else {
 					if (reproduciendo)
@@ -330,6 +330,12 @@ public class VentanaMisListas {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
+				}else{
+					int indice = table_1.getSelectedRow();
+					if(indice > 0) {
+						numCancion = indice - 1;
+						table_1.setRowSelectionInterval(numCancion, numCancion);	//Seleccionamos la cancion anterior
+					}
 				}
 			}
 		});
@@ -418,6 +424,12 @@ public class VentanaMisListas {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
+				}else {
+					int indice = table_1.getSelectedRow();
+					if(indice < canciones.size()-1) {
+						numCancion = indice + 1;
+						table_1.setRowSelectionInterval(numCancion, numCancion);	//Seleccionamos la cancion anterior
+					} 
 				}
 			}
 		});

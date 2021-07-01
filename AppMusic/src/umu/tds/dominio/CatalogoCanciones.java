@@ -73,8 +73,6 @@ public class CatalogoCanciones {
 		//Actualizamos el objeto
 		cancion.reproducida();
 		
-		System.out.println("Cancion reproducida "+ cancion.getTitulo() +" "+ cancion.getReproducciones());
-		
 		//Actualizamos en la base de datos la cancion
 		adaptadorCancion.updateCancion(cancion);
 	}

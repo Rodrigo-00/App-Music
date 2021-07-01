@@ -15,6 +15,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.BoxLayout;
@@ -86,6 +87,7 @@ public class VentanaRecientes {
 		frmVentanaRecientes.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		reproduciendo = false;
 		cancActual = null;
+		canciones = new LinkedList<Cancion>();
 		
 		JPanel contentPane = (JPanel) frmVentanaRecientes.getContentPane();
 		frmVentanaRecientes.getContentPane().setLayout(new BorderLayout(0, 0));
@@ -153,7 +155,7 @@ public class VentanaRecientes {
 							}
 						}
 					}else {
-						JOptionPane.showMessageDialog(btnPdfPremium, "No se ha seleccionado ningun directorio", "Error", JOptionPane.ERROR_MESSAGE, null);
+						JOptionPane.showMessageDialog(btnPdfPremium, "No se ha seleccionado ningun directorio", "Aviso", JOptionPane.INFORMATION_MESSAGE, null);
 					}
 				} else {
 					if (reproduciendo)
@@ -271,7 +273,7 @@ public class VentanaRecientes {
 
 		
 		//A�adimos las canciones escuchadas recientemente por el usuario
-		canciones = Controlador.getUnicaInstancia().getRecientes();
+		canciones.addAll(Controlador.getUnicaInstancia().getRecientes());
 		canciones.stream().
 				forEach(c->model.addRow(new Object[] { c.getTitulo(), c.getInterprete() }));
 		
@@ -299,6 +301,12 @@ public class VentanaRecientes {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}	
+				}else{
+					int indice = table.getSelectedRow();
+					if(indice > 0) {
+						numCancion = indice - 1;
+						table.setRowSelectionInterval(numCancion, numCancion);	//Seleccionamos la cancion anterior
+					}
 				}
 			}
 		});
@@ -323,7 +331,6 @@ public class VentanaRecientes {
 					btnReproducirPausar.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/play.png")));
 					
 				}else if(row != -1 && canciones.size() > 0) {	//Si hay seleccionada alguna fila de la tabla y la tabla contiene canciones 	
-						System.out.println("Se ejecuta "+ canciones.get(row).getTitulo());
 						btnReproducirPausar.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/pause.png")));
 						
 						if(cancActual!= null && cancActual.equals(canciones.get(row))){
@@ -389,6 +396,12 @@ public class VentanaRecientes {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}	
+				}else {
+					int indice = table.getSelectedRow();
+					if(indice < canciones.size()-1) {
+						numCancion = indice + 1;
+						table.setRowSelectionInterval(numCancion, numCancion);	//Seleccionamos la cancion anterior
+					} 
 				}
 			}
 		});

@@ -47,7 +47,7 @@ public class VentanaPrincipal implements PropertyChangeListener{
 		fileChooser.showOpenDialog(frmVentanaPrincipal);	
 		File currentFile = fileChooser.getSelectedFile();
 		if(currentFile==null) {
-			JOptionPane.showMessageDialog(luz, "No se ha seleccionado ningun fichero", "Error", JOptionPane.ERROR_MESSAGE, null);
+			JOptionPane.showMessageDialog(luz, "No se ha seleccionado ningun fichero", "Aviso", JOptionPane.INFORMATION_MESSAGE, null);
 		}else
 			Controlador.getUnicaInstancia().cargarCanciones(currentFile.getPath());
 	}
@@ -161,7 +161,7 @@ public class VentanaPrincipal implements PropertyChangeListener{
 							}
 						}
 					}else {
-						JOptionPane.showMessageDialog(btnPdfPremium, "No se ha seleccionado ningun directorio", "Error", JOptionPane.ERROR_MESSAGE, null);
+						JOptionPane.showMessageDialog(btnPdfPremium, "No se ha seleccionado ningun directorio", "Aviso", JOptionPane.INFORMATION_MESSAGE, null);
 					}
 				} else {
 					VentanaPremium reg = new VentanaPremium();

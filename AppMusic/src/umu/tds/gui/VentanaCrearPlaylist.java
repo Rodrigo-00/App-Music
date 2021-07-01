@@ -422,7 +422,7 @@ public class VentanaCrearPlaylist {
 						}
 					}
 				}else {
-					JOptionPane.showMessageDialog(btnPdfPremium, "No se ha seleccionado ningun directorio", "Error", JOptionPane.ERROR_MESSAGE, null);
+					JOptionPane.showMessageDialog(btnPdfPremium, "No se ha seleccionado ningun directorio", "Aviso", JOptionPane.INFORMATION_MESSAGE, null);
 				}
 			} else {
 				VentanaPremium reg = new VentanaPremium();
