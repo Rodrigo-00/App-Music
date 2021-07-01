@@ -28,7 +28,6 @@ public class VentanaPremium {
 
 	private JFrame frmVentanaPremium;
 	private JTextField txtTexto;
-	private JComboBox comboBox;
 
 	public JFrame getFrame() {
 		return frmVentanaPremium;
@@ -69,12 +68,7 @@ public class VentanaPremium {
 		JPanel panel = new JPanel();
 		frmVentanaPremium.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
-		
-		comboBox = new JComboBox();
-		comboBox.setBounds(259, 139, 99, 22);
 		Object[] anos = {"Años", "1", "2", "3"};
-		comboBox.setModel(new DefaultComboBoxModel(anos));
-		panel.add(comboBox);
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBounds(173, 255, 110, 23);
@@ -95,14 +89,9 @@ public class VentanaPremium {
 		panel.add(btnConfirmar);
 		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String seleccionado = (String) comboBox.getSelectedItem();
-				if(seleccionado.equals("Años")) {
-					JOptionPane.showMessageDialog(btnConfirmar, "Selecciona un periodo válido", "Periodo erroneo", JOptionPane.ERROR_MESSAGE, null);
-				}else {
-					VentanaConfirmacionPremium reg = new VentanaConfirmacionPremium(Integer.parseInt(seleccionado));
-					reg.getFrame().setVisible(true);
-					frmVentanaPremium.setVisible(false);
-				}
+				VentanaConfirmacionPremium reg = new VentanaConfirmacionPremium();
+				reg.getFrame().setVisible(true);
+				frmVentanaPremium.setVisible(false);
 			}
 		});
 		
@@ -115,7 +104,7 @@ public class VentanaPremium {
 		txtTexto.setForeground(Color.BLACK);
 		txtTexto.setCaretColor(Color.WHITE);
 		txtTexto.setBackground(Color.YELLOW);
-		txtTexto.setText("¿Cuanto tiempo deseas ser PREMIUM " + Controlador.getUnicaInstancia().getLoginUsuario()+ "?");
+		txtTexto.setText("¡Conviertete en PREMIUM " + Controlador.getUnicaInstancia().getLoginUsuario()+ "!");
 		txtTexto.setBounds(114, 64, 383, 33);
 		panel.add(txtTexto);
 		txtTexto.setColumns(10);
@@ -126,15 +115,16 @@ public class VentanaPremium {
 		lblAppMusic.setBounds(173, 17, 270, 36);
 		panel.add(lblAppMusic);
 		
-		JLabel lblNewLabel_1 = new JLabel("Precio anual: "+ Controlador.PRECIO + "€");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblNewLabel_1.setBounds(389, 143, 108, 14);
+		JLabel lblNewLabel_1 = new JLabel("Precio premium: "+ Controlador.PRECIO + "€");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.ITALIC, 17));
+		lblNewLabel_1.setBounds(173, 150, 270, 57);
 		panel.add(lblNewLabel_1);
 		
 		double descuento = Controlador.getUnicaInstancia().consultarDescuento();
 		if(descuento > 0) {
 			int des = (int) (descuento *100);
-			JLabel lblNewLabel = new JLabel("Si decides pagar ahora dipondrá de un " + des + "% de DESCUENTO!");
+			JLabel lblNewLabel = new JLabel("¡Si decides pagar ahora dipondrá de un " + des + "% de DESCUENTO!");
 			lblNewLabel.setFont(new Font("Nirmala UI", Font.PLAIN, 14));
 			lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 			lblNewLabel.setBounds(61, 108, 491, 20);

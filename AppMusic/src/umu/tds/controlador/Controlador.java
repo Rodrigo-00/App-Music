@@ -20,8 +20,8 @@ import javafx.scene.media.MediaPlayer;
 
 public final class Controlador implements PropertyChangeListener{
 
-	public static final int PRECIO = 20; //precio anual de la aplicación
-	public static final int MINUTOS = 1; //tiempo que esta disponible el descuento temporal
+	public static final int PRECIO = 20; //precio de subscripción premium
+	public static final int MINUTOS = 1; //tiempo que esta disponible el descuento temporal cada vez que se conecta el usuario
 	
 	private Usuario usuarioActual;
 	private static Controlador unicaInstancia;
@@ -229,10 +229,10 @@ public final class Controlador implements PropertyChangeListener{
 	}
 	
 	//El usuario se convierte en premiumm durante un tiempo
-	public double convertirPremium(int tiempo) {
-		double pago = usuarioActual.realizarPago(tiempo);
+	public double convertirPremium() {
+		double pago = usuarioActual.realizarPago();
 		List<Cancion> masRepro = catalogoCanciones.getMasReproducidas();
-		usuarioActual.crearMasRepro(masRepro);
+		usuarioActual.crearMasRepro(masRepro);	
 		adaptadorUsuario.updatePerfil(usuarioActual);	//actualizamos al usuario en base de datos
 		return pago;
 	}

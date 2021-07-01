@@ -1,6 +1,6 @@
 package umu.tds.modelo;
 
 public interface Descuento {
-	public double aplicarDescuento(int tiempo);
+	public double aplicarDescuento();
 	public double getDescuento();
 }

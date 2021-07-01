@@ -143,9 +143,9 @@ public class Usuario {
 		else descuento = new DescuentoTemporal();
 	}
 	
-	public double realizarPago(int tiempo) {
+	public double realizarPago() {
 		premium = true;
-		return descuento.aplicarDescuento(tiempo);
+		return descuento.aplicarDescuento();
 	}
 	
 	public double consultarDescuento() {

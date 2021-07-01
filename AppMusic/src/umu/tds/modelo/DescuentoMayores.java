@@ -7,9 +7,8 @@ public class DescuentoMayores implements Descuento{
 	private static double DESCUENTO = 0.5;
 	
 	@Override
-	public double aplicarDescuento(int tiempo) {
-		double total = Controlador.PRECIO *tiempo;
-		return DESCUENTO*total;
+	public double aplicarDescuento() {
+		return DESCUENTO*Controlador.PRECIO;
 	}
 
 	@Override

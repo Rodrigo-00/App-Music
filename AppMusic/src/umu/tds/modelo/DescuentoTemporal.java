@@ -19,11 +19,10 @@ public class DescuentoTemporal implements Descuento{
 	}
 	
 	@Override
-	public double aplicarDescuento(int tiempo) {
+	public double aplicarDescuento() {
 
-		double total = tiempo * Controlador.PRECIO;		//Precio total
-		if(fechaLiminte.after(Calendar.getInstance().getTime())) return total-total*DESCUENTO;	//Aplicamos el descuento si no ha expirado el tiempo
-		else return total;
+		if(fechaLiminte.after(Calendar.getInstance().getTime())) return Controlador.PRECIO-Controlador.PRECIO*DESCUENTO;	//Aplicamos el descuento si no ha expirado el tiempo
+		else return Controlador.PRECIO;
 	}
 
 	@Override
