@@ -249,7 +249,7 @@ public class VentanaPrincipal implements PropertyChangeListener{
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setPreferredSize(new Dimension(10, 200));
-		panel_2.add(panel_4, BorderLayout.SOUTH);
+		panel_2.add(panel_4, BorderLayout.CENTER);
 		
 		JLabel label = new JLabel("");
 		label.setPreferredSize(new Dimension(225, 200));
