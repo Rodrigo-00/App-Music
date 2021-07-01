@@ -51,8 +51,13 @@ public class VentanaPrincipal implements PropertyChangeListener{
 		}else if(!currentFile.exists()) {
 			JOptionPane.showMessageDialog(luz, "No existe el fichero seleccionado", "Error", JOptionPane.ERROR_MESSAGE, null);
 		}
-		else
-			Controlador.getUnicaInstancia().cargarCanciones(currentFile.getPath());
+		else {
+			String extension = currentFile.getName().substring(currentFile.getName().lastIndexOf('.') + 1);
+			if (extension.equals(".xml"))
+				Controlador.getUnicaInstancia().cargarCanciones(currentFile.getPath());
+			else
+				JOptionPane.showMessageDialog(luz, "El fichero seleccionado debe tener extension '.xml'", "Error", JOptionPane.ERROR_MESSAGE, null);
+		}
 	}
 	
 	public JFrame getFrame() {
