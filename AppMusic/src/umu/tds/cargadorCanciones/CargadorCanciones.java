@@ -29,11 +29,9 @@ public class CargadorCanciones implements Serializable{
 		nuevaCancion.removePropertyChangeListener(listener);
 	}
 	
-	public Canciones setArchivoCanciones(String nuevasCanciones) {
+	public void setArchivoCanciones(String nuevasCanciones) {
 		String old = archivoCanciones;
 		String nuevo = nuevasCanciones;
-		Canciones canciones = MapperCancionesXMLtoJava.cargarCanciones(nuevasCanciones);
 		nuevaCancion.firePropertyChange("arhivoCanciones", old, nuevo);
-		return canciones;
 	}
 }

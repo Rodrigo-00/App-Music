@@ -2,7 +2,7 @@ package umu.tds.controlador;
 import umu.tds.cargadorCanciones.Canciones;
 
 import umu.tds.cargadorCanciones.CargadorCanciones;
-
+import umu.tds.cargadorCanciones.MapperCancionesXMLtoJava;
 import umu.tds.dominio.*;
 import umu.tds.modelo.*;
 import umu.tds.persistencia.*;
@@ -50,6 +50,12 @@ public final class Controlador implements PropertyChangeListener{
 	}
 	
 	public void propertyChange(PropertyChangeEvent evento) {
+		Canciones canciones = MapperCancionesXMLtoJava.cargarCanciones(evento.getNewValue().toString());
+		for(umu.tds.cargadorCanciones.Cancion cancion: canciones.getCancion()) {
+			Cancion song = new Cancion(cancion.getTitulo(), cancion.getInterprete(), cancion.getEstilo(), cancion.getURL());
+			adaptadorCancion.registrarCancion(song);
+			catalogoCanciones.addCancion(song);
+		}
 	}
 	
 	private void inicializarAdaptadores() {
@@ -143,15 +149,10 @@ public final class Controlador implements PropertyChangeListener{
 		
 	}
 	
-	public void cargarCanciones(String fichero) {
+	public void cargarCanciones(String fichero){
 		CargadorCanciones cargador = CargadorCanciones.getUnicaInstancia();
 		cargador.addCancionesListener(this);
-		Canciones canciones = cargador.setArchivoCanciones(fichero);
-		for(umu.tds.cargadorCanciones.Cancion cancion: canciones.getCancion()) {
-			Cancion song = new Cancion(cancion.getTitulo(), cancion.getInterprete(), cancion.getEstilo(), cancion.getURL());
-			adaptadorCancion.registrarCancion(song);
-			catalogoCanciones.addCancion(song);
-		}
+		cargador.setArchivoCanciones(fichero);
 	}
 	
 	public List<Cancion> getAllCanciones(){
