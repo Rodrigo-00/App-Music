@@ -108,68 +108,66 @@ public class VentanaPrincipal implements PropertyChangeListener{
 		gbc_lblNewLabel.gridy = 1;
 		panel.add(lblNewLabel, gbc_lblNewLabel);
 		
-		
-		boolean isPremium = Controlador.getUnicaInstancia().isUsuarioPremium();
-
-		JButton btnPdfPremium = new JButton();
-		if(isPremium)	btnPdfPremium.setText("Generar pdf");
-		else btnPdfPremium.setText("Hazte premium");
-		
-		btnPdfPremium.setBackground(Color.YELLOW);
-		btnPdfPremium.setForeground(Color.BLACK);
-		GridBagConstraints gbc_btnHaztePremium = new GridBagConstraints();
-		gbc_btnHaztePremium.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnHaztePremium.insets = new Insets(0, 0, 5, 5);
-		gbc_btnHaztePremium.gridx = 5;
-		gbc_btnHaztePremium.gridy = 1;
-		panel.add(btnPdfPremium, gbc_btnHaztePremium);	
-		
-		JButton btnSalir = new JButton("Salir");
-		GridBagConstraints gbc_btnSalir = new GridBagConstraints();
-		gbc_btnSalir.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnSalir.insets = new Insets(0, 0, 5, 5);
-		gbc_btnSalir.gridx = 7;
-		gbc_btnSalir.gridy = 1;
-		panel.add(btnSalir, gbc_btnSalir);
-		btnSalir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				VentanaLogin reg = new VentanaLogin();
-				reg.getFrame().setVisible(true);
-				frmVentanaPrincipal.setVisible(false);
-			}
-		});
-		
-		btnPdfPremium.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//Si es usario premium generamos el pdf sino nos desplazamos a la ventana convertirse en premium
-				if (isPremium) {	
-					JFileChooser chooser = new JFileChooser();
-					chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-					chooser.showOpenDialog(frmVentanaPrincipal);
-					File directory = chooser.getSelectedFile();
-					if(directory!=null) {
-						if(!directory.exists()) {
-							JOptionPane.showMessageDialog(btnPdfPremium, "El directorio seleccionado no existe", "Error", JOptionPane.ERROR_MESSAGE, null);
-						}
-						else {
-							try {
-								Controlador.getUnicaInstancia().generaPDF(directory.getAbsolutePath());
-							} catch (FileNotFoundException fe) {
-								System.out.println(fe.getMessage());
-							} catch (DocumentException d) {
-								System.out.println(d.getMessage());
-							}
-						}
-					}else {
-						JOptionPane.showMessageDialog(btnPdfPremium, "No se ha seleccionado ningun directorio", "Aviso", JOptionPane.INFORMATION_MESSAGE, null);
+				JButton btnPdfPremium = new JButton();
+				boolean isPremium = Controlador.getUnicaInstancia().isUsuarioPremium();
+				if(isPremium)	btnPdfPremium.setText("Generar pdf");
+				else btnPdfPremium.setText("Hazte premium");
+				
+				btnPdfPremium.setBackground(Color.YELLOW);
+				btnPdfPremium.setForeground(Color.BLACK);
+				GridBagConstraints gbc_btnHaztePremium = new GridBagConstraints();
+				gbc_btnHaztePremium.fill = GridBagConstraints.HORIZONTAL;
+				gbc_btnHaztePremium.insets = new Insets(0, 0, 5, 5);
+				gbc_btnHaztePremium.gridx = 5;
+				gbc_btnHaztePremium.gridy = 1;
+				panel.add(btnPdfPremium, gbc_btnHaztePremium);	
+				
+				JButton btnSalir = new JButton("Salir");
+				GridBagConstraints gbc_btnSalir = new GridBagConstraints();
+				gbc_btnSalir.fill = GridBagConstraints.HORIZONTAL;
+				gbc_btnSalir.insets = new Insets(0, 0, 5, 5);
+				gbc_btnSalir.gridx = 7;
+				gbc_btnSalir.gridy = 1;
+				panel.add(btnSalir, gbc_btnSalir);
+				btnSalir.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						VentanaLogin reg = new VentanaLogin();
+						reg.getFrame().setVisible(true);
+						frmVentanaPrincipal.setVisible(false);
 					}
-				} else {
-					VentanaPremium reg = new VentanaPremium();
-					reg.getFrame().setVisible(true);
-					frmVentanaPrincipal.setVisible(false);
-				}
-			}
-		});
+				});
+				
+				btnPdfPremium.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						//Si es usario premium generamos el pdf sino nos desplazamos a la ventana convertirse en premium
+						if (isPremium) {	
+							JFileChooser chooser = new JFileChooser();
+							chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+							chooser.showOpenDialog(frmVentanaPrincipal);
+							File directory = chooser.getSelectedFile();
+							if(directory!=null) {
+								if(!directory.exists()) {
+									JOptionPane.showMessageDialog(btnPdfPremium, "El directorio seleccionado no existe", "Error", JOptionPane.ERROR_MESSAGE, null);
+								}
+								else {
+									try {
+										Controlador.getUnicaInstancia().generaPDF(directory.getAbsolutePath());
+									} catch (FileNotFoundException fe) {
+										System.out.println(fe.getMessage());
+									} catch (DocumentException d) {
+										System.out.println(d.getMessage());
+									}
+								}
+							}else {
+								JOptionPane.showMessageDialog(btnPdfPremium, "No se ha seleccionado ningun directorio", "Aviso", JOptionPane.INFORMATION_MESSAGE, null);
+							}
+						} else {
+							VentanaPremium reg = new VentanaPremium();
+							reg.getFrame().setVisible(true);
+							frmVentanaPrincipal.setVisible(false);
+						}
+					}
+				});
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Color.LIGHT_GRAY);
@@ -234,6 +232,30 @@ public class VentanaPrincipal implements PropertyChangeListener{
 		
 		luz = new Luz();
 		panel_1.add(luz);
+		
+		JPanel panel_2 = new JPanel();
+		frmVentanaPrincipal.getContentPane().add(panel_2, BorderLayout.CENTER);
+		panel_2.setLayout(new BorderLayout(0, 0));
+		
+		JPanel panel_3 = new JPanel();
+		panel_2.add(panel_3, BorderLayout.NORTH);
+		
+		JLabel lblBienvenidoaAAppmusic = new JLabel("Bienvenido/a a AppMusic");
+		panel_3.add(lblBienvenidoaAAppmusic);
+		lblBienvenidoaAAppmusic.setVerticalAlignment(SwingConstants.TOP);
+		lblBienvenidoaAAppmusic.setVerticalTextPosition(SwingConstants.TOP);
+		lblBienvenidoaAAppmusic.setHorizontalAlignment(SwingConstants.CENTER);
+		lblBienvenidoaAAppmusic.setFont(new Font("DejaVu Math TeX Gyre", Font.BOLD, 25));
+		
+		JPanel panel_4 = new JPanel();
+		panel_4.setPreferredSize(new Dimension(10, 200));
+		panel_2.add(panel_4, BorderLayout.SOUTH);
+		
+		JLabel label = new JLabel("");
+		label.setPreferredSize(new Dimension(225, 200));
+		panel_4.add(label);
+		label.setHorizontalAlignment(SwingConstants.RIGHT);
+		label.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/umu/tds/imagenes/logo.jpeg")));
 		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
 		luz.addEncendidoListener(this);
 		

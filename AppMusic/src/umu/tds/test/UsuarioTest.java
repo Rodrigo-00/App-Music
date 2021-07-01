@@ -1,4 +1,4 @@
-package tests;
+package umu.tds.test;
 
 import static org.junit.Assert.*;
 
