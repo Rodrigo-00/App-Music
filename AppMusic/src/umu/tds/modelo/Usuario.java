@@ -174,7 +174,8 @@ public class Usuario {
 			    }
 			}
 			if(playLists.isEmpty()) {
-				return null;
+				documento.add(new Paragraph("No has creado ninguna playlist todavia.", FontFactory.getFont("arial", 18)));
+				return documento;
 			}
 			documento.close();
 			return documento;

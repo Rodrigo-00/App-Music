@@ -166,12 +166,6 @@ public class UsuarioTest {
 	}
 	
 	@Test
-	public void testCreaPDFSinPlaylists() throws FileNotFoundException, DocumentException {
-		usuario.setPremium(true);
-		assertNull(usuario.creaPDF("/home/raul/Escritorio/"));
-	}
-	
-	@Test
 	public void testCreaPDF() throws FileNotFoundException, DocumentException {
 		usuario.setPremium(true);
 		usuario.addPlayList(playlist);
