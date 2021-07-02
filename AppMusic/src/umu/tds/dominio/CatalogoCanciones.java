@@ -56,7 +56,7 @@ public class CatalogoCanciones {
 	
 	private void cargarCanciones() throws DAOException {
 		
-		 List<Cancion> canciones = LinkedList<Cancion>(adaptadorCancion.getAll());
+		 List<Cancion> canciones =  new LinkedList<Cancion>(adaptadorCancion.getAll());
 		 File file = new File("../../../../canciones");
 		 System.out.println(file.exists());
 		 
