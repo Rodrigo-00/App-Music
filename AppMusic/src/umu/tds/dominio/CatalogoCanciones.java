@@ -1,5 +1,8 @@
 package umu.tds.dominio;
 
+import java.io.File;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.Comparator;
 
 import java.util.LinkedList;
@@ -35,6 +38,7 @@ public class CatalogoCanciones {
 			adaptadorCancion = dao.getCancionDAO();
 			canciones = new LinkedList<Cancion>();
 			cargarCanciones();
+			
 		} catch (DAOException e) {
 			e.printStackTrace();
 		}	
@@ -52,7 +56,9 @@ public class CatalogoCanciones {
 	
 	private void cargarCanciones() throws DAOException {
 		
-		 List<Cancion> canciones = adaptadorCancion.getAll();
+		 List<Cancion> canciones = LinkedList<Cancion>(adaptadorCancion.getAll());
+		 File file = new File("../../../../canciones");
+		 System.out.println(file.exists());
 		 
 		 canciones.stream().forEach(c->addCancion(c));
 	}
