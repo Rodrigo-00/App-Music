@@ -55,9 +55,6 @@ public class VentanaPrincipal implements PropertyChangeListener{
 			String extension = currentFile.getName().substring(currentFile.getName().lastIndexOf('.') + 1);
 			if (extension.equals("xml"))
 				Controlador.getUnicaInstancia().cargarCanciones(currentFile.getPath());
-			else if(extension.equals("rar")) {
-				
-			}
 			else
 				JOptionPane.showMessageDialog(luz, "El fichero seleccionado debe tener extension '.xml' o '.mp3'", "Error", JOptionPane.ERROR_MESSAGE, null);
 		}
