@@ -64,7 +64,7 @@ public class Usuario {
 	
 	public Playlist crearPlayList(String nombre) {
 		
-		if(playLists.stream().anyMatch(l->l.getNombre().equals(nombre)))
+		if(getPlayList(nombre) != null)	//Si ya tenemos una playlist con el nombre devolvemos null
 			return null;
 		
 		Playlist lista = new Playlist(nombre);	//El usuario es el experto en crear una playlist
