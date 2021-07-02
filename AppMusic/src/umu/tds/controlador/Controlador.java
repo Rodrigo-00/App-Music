@@ -43,7 +43,6 @@ public final class Controlador implements PropertyChangeListener{
 
 	public static Controlador getUnicaInstancia() {
 		if (unicaInstancia == null) {
-			System.out.println("Crea nueva instancia");
 			unicaInstancia = new Controlador();
 		}
 		return unicaInstancia;

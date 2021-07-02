@@ -134,7 +134,6 @@ public class Usuario {
     private int getEdad() {	//Devuelve la edad del usuario
     	LocalDate localDate = fechaNacimiento.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     	Period period = Period.between(localDate, LocalDate.now());
-    	System.out.println(period.getYears());
     	return period.getYears();
     }
     
@@ -180,7 +179,6 @@ public class Usuario {
 			documento.close();
 			return documento;
 		}
-		System.out.println("no");
 		return null;
 	}
 	

@@ -230,7 +230,6 @@ public class Ventanaregistro extends JFrame {
 				Date date = null;
 				try {
 					date = new SimpleDateFormat("dd/MM/yyyy").parse(fechaNacim);	
-					System.out.println(date.getTime());
 				} catch (ParseException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

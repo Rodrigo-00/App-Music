@@ -378,7 +378,6 @@ public class VentanaExplorar {
 					btnReproducirPausar.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/play.png")));
 					
 				}else if(row != -1 && canciones.size() > 0) {	//Si hay seleccionada alguna fila de la tabla y la tabla contiene canciones 	
-						System.out.println("Se ejecuta "+ canciones.get(row).getTitulo());
 						btnReproducirPausar.setIcon(new ImageIcon(VentanaExplorar.class.getResource("/umu/tds/imagenes/pause.png")));
 						
 						if(cancActual!= null && cancActual.equals(canciones.get(row))){
