@@ -92,9 +92,9 @@ public final class Controlador implements PropertyChangeListener{
 	public boolean esUsuarioRegistrado(String login) {
 		return catalogoUsuarios.getUsuario(login) != null;
 	}
+	
 
 	public boolean loginUsuario(String nombre, String password) {
-		
 		Usuario usuario = catalogoUsuarios.getUsuario(nombre);
 		if (usuario != null && usuario.getPassword().equals(password)) {
 			this.usuarioActual = usuario;
