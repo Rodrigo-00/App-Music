@@ -42,7 +42,7 @@ public final class Controlador implements PropertyChangeListener{
 		usuarioActual = null;
 		inicializarAdaptadores();
 		inicializarCatalogos();
-		activarReproductor();
+		activarReproductor(); 
 	}
 
 	public static Controlador getUnicaInstancia() {
