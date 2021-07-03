@@ -64,8 +64,7 @@ public class CatalogoCanciones {
 			 for (File mp3 : dir.listFiles()) {
 				 String interprete = mp3.getName().substring(0, mp3.getName().lastIndexOf('-')-1);
 				 String titulo = mp3.getName().substring(mp3.getName().lastIndexOf('-')+1, mp3.getName().lastIndexOf('.'));
-				 String ruta = "file://"+mp3.getAbsolutePath();
-				 System.out.println(ruta);
+				 String ruta = mp3.getPath();
 				 Cancion cancion = new Cancion(titulo, interprete, dir.getName(),ruta);
 				 addCancion(cancion);
 			 }

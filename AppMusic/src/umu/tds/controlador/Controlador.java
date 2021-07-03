@@ -47,6 +47,7 @@ public final class Controlador implements PropertyChangeListener{
 
 	public static Controlador getUnicaInstancia() {
 		if (unicaInstancia == null) {
+			System.out.println("Crea nueva instancia");
 			unicaInstancia = new Controlador();
 		}
 		return unicaInstancia;
@@ -209,9 +210,10 @@ public final class Controlador implements PropertyChangeListener{
 			catalogoCanciones.reproducida(c);	//Delegamos en el catalogo de canciones para actualizar la cancion puesto que hay varios objetos para una misma cancion
 		}
 		else {
-			String ruta = c.getRutaFichero();
 			try {
-				Media hit = new Media(new File(ruta).toURI().toString());   
+				String ruta= c.getRutaFichero();
+				Media hit = new Media(new File(ruta).toURI().toString().replace("file:", "file://"));   
+				System.out.println(hit.getSource());
 				mediaPlayer = new MediaPlayer(hit); 
 				mediaPlayer.play();
 				usuarioActual.addReciente(c);	//Añadimos la cancion a la lista de canciones recientes del usuario
@@ -220,6 +222,7 @@ public final class Controlador implements PropertyChangeListener{
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+
 		}
 		 
 	}
