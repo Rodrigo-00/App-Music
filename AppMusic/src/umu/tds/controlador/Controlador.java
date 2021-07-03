@@ -47,7 +47,6 @@ public final class Controlador implements PropertyChangeListener{
 
 	public static Controlador getUnicaInstancia() {
 		if (unicaInstancia == null) {
-			System.out.println("Crea nueva instancia");
 			unicaInstancia = new Controlador();
 		}
 		return unicaInstancia;
@@ -199,9 +198,9 @@ public final class Controlador implements PropertyChangeListener{
 	}
 	
 	public void reproducirCancion(Cancion c) throws MalformedURLException{
-		if (c.getRutaFichero().contains("https://")) {
+		
+		if (c.getRutaFichero().contains("https://") || c.getRutaFichero().contains("http://")) {	//Reproducimos una de las canciones que se cargan
 			URL url = new URL(c.getRutaFichero());
-			System.out.println(url.toString());
 			Media hit = new Media(url.toString());   
 			mediaPlayer = new MediaPlayer(hit); 
 			mediaPlayer.play();
@@ -209,11 +208,10 @@ public final class Controlador implements PropertyChangeListener{
 			adaptadorUsuario.updatePerfil(usuarioActual);	//Actualizamos en la base de datos el usuario actual
 			catalogoCanciones.reproducida(c);	//Delegamos en el catalogo de canciones para actualizar la cancion puesto que hay varios objetos para una misma cancion
 		}
-		else {
-			try {
+		else {	//Reproducimos una de las canciones que vienen ya con el proyecto
+			try { 
 				String ruta= c.getRutaFichero();
 				Media hit = new Media(new File(ruta).toURI().toString().replace("file:", "file://"));   
-				System.out.println(hit.getSource());
 				mediaPlayer = new MediaPlayer(hit); 
 				mediaPlayer.play();
 				usuarioActual.addReciente(c);	//Añadimos la cancion a la lista de canciones recientes del usuario
