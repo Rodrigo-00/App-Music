@@ -11,8 +11,12 @@ import java.beans.PropertyChangeListener;
 import java.util.Date;
 import java.util.List;
 import com.itextpdf.text.DocumentException;
+
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 import javafx.scene.media.Media; 
@@ -43,6 +47,7 @@ public final class Controlador implements PropertyChangeListener{
 
 	public static Controlador getUnicaInstancia() {
 		if (unicaInstancia == null) {
+			System.out.println("Crea nueva instancia");
 			unicaInstancia = new Controlador();
 		}
 		return unicaInstancia;
@@ -193,14 +198,32 @@ public final class Controlador implements PropertyChangeListener{
 		return  catalogoCanciones.getEstilos();
 	}
 	
-	public void reproducirCancion(Cancion c) throws MalformedURLException {
-		URL url = new URL(c.getRutaFichero());
-		Media hit = new Media(url.toString());   
-		mediaPlayer = new MediaPlayer(hit); 
-		mediaPlayer.play();
-		usuarioActual.addReciente(c);	//Añadimos la cancion a la lista de canciones recientes del usuario
-		adaptadorUsuario.updatePerfil(usuarioActual);	//Actualizamos en la base de datos el usuario actual
-		catalogoCanciones.reproducida(c);	//Delegamos en el catalogo de canciones para actualizar la cancion puesto que hay varios objetos para una misma cancion
+	public void reproducirCancion(Cancion c) throws MalformedURLException{
+		if (c.getRutaFichero().contains("https://")) {
+			URL url = new URL(c.getRutaFichero());
+			System.out.println(url.toString());
+			Media hit = new Media(url.toString());   
+			mediaPlayer = new MediaPlayer(hit); 
+			mediaPlayer.play();
+			usuarioActual.addReciente(c);	//Añadimos la cancion a la lista de canciones recientes del usuario
+			adaptadorUsuario.updatePerfil(usuarioActual);	//Actualizamos en la base de datos el usuario actual
+			catalogoCanciones.reproducida(c);	//Delegamos en el catalogo de canciones para actualizar la cancion puesto que hay varios objetos para una misma cancion
+		}
+		else {
+			try {
+				String ruta= c.getRutaFichero();
+				Media hit = new Media(new File(ruta).toURI().toString().replace("file:", "file://"));   
+				System.out.println(hit.getSource());
+				mediaPlayer = new MediaPlayer(hit); 
+				mediaPlayer.play();
+				usuarioActual.addReciente(c);	//Añadimos la cancion a la lista de canciones recientes del usuario
+				adaptadorUsuario.updatePerfil(usuarioActual);	//Actualizamos en la base de datos el usuario actual
+				catalogoCanciones.reproducida(c);	//Delegamos en el catalogo de canciones para actualizar la cancion puesto que hay varios objetos para una misma cancion
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		}
 		 
 	}
 	

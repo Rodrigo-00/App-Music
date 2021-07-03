@@ -57,10 +57,18 @@ public class CatalogoCanciones {
 	private void cargarCanciones() throws DAOException {
 		
 		 List<Cancion> canciones =  new LinkedList<Cancion>(adaptadorCancion.getAll());
-		 File file = new File("../../../../canciones");
-		 System.out.println(file.exists());
-		 
 		 canciones.stream().forEach(c->addCancion(c));
+		 
+		 File file = new File("./canciones");
+		 for (File dir: file.listFiles()) {
+			 for (File mp3 : dir.listFiles()) {
+				 String interprete = mp3.getName().substring(0, mp3.getName().lastIndexOf('-')-1);
+				 String titulo = mp3.getName().substring(mp3.getName().lastIndexOf('-')+1, mp3.getName().lastIndexOf('.'));
+				 String ruta = mp3.getPath();
+				 Cancion cancion = new Cancion(titulo, interprete, dir.getName(),ruta);
+				 addCancion(cancion);
+			 }
+		 }
 	}
 	
 	

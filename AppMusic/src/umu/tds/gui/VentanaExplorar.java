@@ -35,6 +35,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.Cursor;
