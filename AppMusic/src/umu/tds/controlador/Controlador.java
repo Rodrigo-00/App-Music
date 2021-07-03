@@ -212,7 +212,6 @@ public final class Controlador implements PropertyChangeListener{
 		else {
 			String ruta = c.getRutaFichero();
 			try {
-				System.out.println(new File(ruta).toURI().toString());
 				Media hit = new Media(new File(ruta).toURI().toString());   
 				mediaPlayer = new MediaPlayer(hit); 
 				mediaPlayer.play();
