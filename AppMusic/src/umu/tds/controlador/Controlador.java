@@ -220,7 +220,6 @@ public final class Controlador implements PropertyChangeListener{
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
 		}
 		 
 	}
